@@ -80,7 +80,8 @@
                 <div class="container-fluid">
                     @yield('content')
                 </div>
-                @yield('modalsalert')
+                @yield('modalscreatealert')
+                @yield('modalseditalert')
             </section>
 
         </div>

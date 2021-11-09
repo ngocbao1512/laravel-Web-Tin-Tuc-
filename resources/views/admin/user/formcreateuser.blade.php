@@ -83,13 +83,25 @@
                     <hr>
                     <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
 
+                        <div class="tm-product-img-dummy mx-auto" style=" background-color : rgb(243, 243, 243); min-height : 20vh;
+                            border-radius : 10px; display: flex; justify-content : center; text-align : center;"
+                            onclick="document.getElementById('patient_pic').click();">
+                            <img id="preview_image" src="https://static.thenounproject.com/png/104062-200.png" alt="" style="max-width: 100%; max-height : 30vh;" />
+                        </div>
                         
+                        <div class="custom-file mt-3 mb-3">
+                            <input id="patient_pic" type="file" style="display:none;" name="avatar" required id="image"/>
+                            
+                        </div>
+                        <hr>
                         
+        
                     </div>
                     <hr>
 
                     <button  type="button" class="btn btn-primary btn-block text-uppercase " data-dismiss="modal" id="mainbutton" aria-label="Close"
-                     style="color:white;background-color:rgb(24 89 230);">
+                     style="color:white;background-color:rgb(24 89 230);"
+                     onclick="createUser(this);" disabled>
                      Create User
                     </button>
                 </div>

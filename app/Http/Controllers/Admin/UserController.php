@@ -26,19 +26,27 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-
         $data = $request->only([
+            'email',
+            'password',
             'first_name',
             'middle_name',
             'last_name',
-            'email',
-            'password',
             'username',
         ]);
+        $file = $request->file;
+        if($file)
+        {
+            $image_name = encodeImage($file->hashName());
+            $file->move('storage/avatar',$image_name);
+            $data['avatar'] = $image_name;
+        }else{
+            $data['avatar'] = 'image-default';
+        }
 
         try {
-            $newUser = $this->modelUser->create($data);
-            return $this->responseSuccess($newUser, 'Add User Success');
+            $newUser = $this->userRepository->create($data);
+            return $this->responseSuccess('Add User Success', $newUser);
         } catch (\Exception $e) {
             \Log::error($e);
             return $this->responseError($e);
@@ -48,16 +56,14 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = $this->modelUser->findOrFail($id);
-
         return view('admin.user.show',[
-            'user' => $user,
+            'user' => $this->userRepository->find($id),
         ]);
     }
 
     public function update(Request $request, $id)
     {
-        //
+        
     }
 
     public function destroy(Request $request)
@@ -65,17 +71,16 @@ class UserController extends Controller
         $data = $request->all();
         
         $userId = isset($data['user_id']) ? $data['user_id'] : 0;
-        $userId = 0;
-        $user = $this->modelUser->find($userId);
 
-        if(is_null($user)){
-            return $this->responseError(404, "User not found");
-        }
-        dd($user);
+        
         try {
-            $user->delete();
+            // $this->userRepository->delete($userId);
 
-            return responseSuccess(null,'delete success');
+            return $this->responseSuccess('delete success',[
+                'user_form' => view('admin.user.show',[
+                    'user' => $this->userRepository->find($userId),
+                ])->render(),
+            ]);
         } catch (\Exception $e) {
             \Log::error($e);
             return $this->responseError($e);

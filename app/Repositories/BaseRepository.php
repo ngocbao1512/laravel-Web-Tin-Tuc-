@@ -28,8 +28,8 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
     public function  getAll()
-    {
-        return $this->model->paginate(50);
+    {   
+        return $this->model->all();
     }
 
     public function find($id)
