@@ -33,5 +33,6 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('client-menu', ClientMenu::class);
         Blade::component('admin-menu', AdminMenu::class);
         Blade::component('alert-delete',AlertDelete::class);
+        Blade::component('form-user',FormUser::class);
     }
 }

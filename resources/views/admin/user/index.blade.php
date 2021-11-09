@@ -60,7 +60,11 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
       <div class="col-sm-12">
         <div id="example1_filter" class="dataTables_filter">
           <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4"><div class="row"><div class="col-sm-12 col-md-6"><div class="dt-buttons btn-group flex-wrap">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-primary">
+            <button type="button"
+             class="btn btn-primary" 
+             data-toggle="modal"
+             data-target="#modal-primary"
+            >
               <span> <i class="fas fa-user-plus"></i> add user</span>
             </button>
             
@@ -98,28 +102,41 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
               </tr>
             </thead>
             <tbody>
-              @foreach ($users as $user)
-              <a href="#">
-                <tr class="odd">
-                  <td class="dtr-control sorting_1" tabindex="0">{{$user->first_name." ".$user->middle_name." ".$user->last_name}}</td>
-                  <td>{{$user->email}}</td>
-                  <td>{{$user->username}}</td>
-                  <td>bien tap</td>
-                  <td><a href="{{route('admin.users.show',['user'=>$user->id])}}"><i class="fas fa-angle-double-right"></i></a></td>
-                  <td>
-                    <button><i class="fas fa-user-edit"></i></button>
-                    <button class="confirm-delete"  
-                      style="background-color: #50697f;"
+              @if (isset($users))
+                @foreach ($users as $user)
+                <a href="#">
+                  <tr class="odd">
+                    <td class="dtr-control sorting_1" tabindex="0">{{$user->first_name." ".$user->middle_name." ".$user->last_name}}</td>
+                    <td>{{$user->email}}</td>
+                    <td>{{$user->username}}</td>
+                    <td>bien tap</td>
+                    <td><a href="{{route('admin.users.show',['user'=>$user->id])}}"><i class="fas fa-angle-double-right"></i></a></td>
+                    <td>
+                      <button type="button" class="btn btn-primary"
                       data-toggle="modal" 
+                      data-target="#modal-default"
+                      data-firstname = "{{$user->firstname}}"
+                      data-middlename = "{{$user->middlname}}"
+                      data-lastname = "{{$user->lastname}}"
                       data-userid="{{$user->id}}"
-                      onclick="deleteUser(this);"
+                      data-useremail="{{$user->email}}"
+                      data-username="{{$user->username}}"
                       >
-                      <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                    </button>
-                  </td>
-                  </tr>
-              </a>
-              @endforeach
+                        <span> <i class="fas fa-user-edit"></i></span>
+                      </button>
+                      <button class="btn btn-primary confirm-delete"  
+                        style="background-color: #50697f;"
+                        data-toggle="modal" 
+                        data-userid="{{$user->id}}"
+                        onclick="deleteUser(this);"
+                        >
+                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                      </button>
+                    </td>
+                    </tr>
+                </a>
+                @endforeach
+              @endif
             </tbody>
             
           </table>
@@ -131,7 +148,7 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
               
 @endsection
 
-@section('modalsalert')
+@section('modalscreatealert')
 <div class="modal fade" id="modal-primary" style="display: none;" aria-hidden="true" >
   <div class="modal-dialog" style="min-width: 85vw;">
     <div class="modal-content" style="background-color: rgb(206 236 234 / 93%);">
@@ -141,13 +158,32 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
         </button>
       </div>
       <div class="modal-body">
-        @include('partials.formuser')
+        @include('admin.user.formcreateuser')
       </div>
     </div>
     <!-- /.modal-content -->
   </div>
   <!-- /.modal-dialog -->
 </div>
+@endsection
+
+@section('modalseditalert')
+  <div class="modal fade" id="modal-default" style="display: none;" aria-hidden="true" >
+    <div class="modal-dialog" style="min-width: 85vw;">
+      <div class="modal-content" style="background-color: rgb(206 236 234 / 93%);">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          @include('admin.user.formedituser')
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
 @endsection
 
 @section('footer')
@@ -161,40 +197,6 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
   @include('admin.user.script')
 <script>
   $(document).ready(function() {
-    
-
-     $('#mainbutton').click(function(e) {
-       e.preventDefault();
-       var first_name = $('#first_name').val();
-       var middle_name = $('#middle_name').val();
-       var last_name = $('#last_name').val();
-       var password = $('#password').val();
-       var repeat_password = $('#repeat_password').val();
-       var email = $('#email').val();
-       var username = $('#user_name').val();
-       var url = "{{ route('admin.users.store') }}";
-       $.ajax(url, {
-             type: 'POST',
-             data: {
-              first_name: first_name,
-              middle_name: middle_name,
-              last_name: last_name,
-              password: password,
-              repeat_password: repeat_password,
-              email: email,
-              username: username,
-             },
-             success:function(data) {
-                 console.log('success');
-             },
-             error:function(data) {
-                 console.log('some thing went wrongkkk');
-             }
-         });
-
-      });
-
-     
 
   });
 </script>
