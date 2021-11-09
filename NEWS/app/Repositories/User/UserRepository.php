@@ -10,8 +10,5 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return \App\Models\User::class;
     }
 
-    public function getUserName()
-    {
-        return $this->model->select('username')->take(5)->get();
-    }
+    
 }

@@ -49,12 +49,25 @@ abstract class BaseRepository implements RepositoryInterface
         $result = $this->model->find($id);
         if($result)
         {
+            $result->update($arrtribute);
+            return true;
+        }
+        return false;
+    }
+
+    public function delete($id)
+    {
+        $result = $this->model->find($id);
+        if($result)
+        {
             $result->delete();
 
             return true;
         }
         return false;
     }
+
+    
 
 
 }
