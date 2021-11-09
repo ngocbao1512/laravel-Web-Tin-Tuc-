@@ -32,22 +32,22 @@ https://templatemo.com/tm-553-xtra-blog
             </div>
             <nav class="tm-nav" id="tm-nav">
                 <ul>
-                    <li class="tm-nav-item">
+                    <li class="tm-nav-item" id="bloghome">
                         <a href="{{route('client.index')}}" class="tm-nav-link">
                             <i class="fas fa-home"></i> Blog Home
                         </a>
                     </li>
-                    <li class="tm-nav-item">
+                    <li class="tm-nav-item" id="singlepost">
                         <a href="{{route('client.post')}}" class="tm-nav-link">
                             <i class="fas fa-pen"></i> Single Post
                         </a>
                     </li>
-                    <li class="tm-nav-item active">
+                    <li class="tm-nav-item" id="aboutxtra">
                         <a href="{{route('client.about')}}" class="tm-nav-link">
                             <i class="fas fa-users"></i> About Xtra
                         </a>
                     </li>
-                    <li class="tm-nav-item">
+                    <li class="tm-nav-item" id="contactus">
                         <a href="{{route('client.contact')}}" class="tm-nav-link">
                             <i class="far fa-comments"></i> Contact Us
                         </a>
@@ -76,6 +76,7 @@ https://templatemo.com/tm-553-xtra-blog
     {{$slot}}
     <script src="/theme-client/js/jquery.min.js"></script>
     <script src="/theme-client/js/templatemo-script.js"></script>
+    @yield('active')
 </body>
 
 </html>

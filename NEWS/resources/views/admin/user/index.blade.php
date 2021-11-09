@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    All Blog
+    All User
 @endsection
 
 @section('css')
@@ -40,7 +40,7 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
     <li class="nav-item menu-open">
       <a href="#" class="nav-link active">
           <p>
-              Blog
+              USER
           </p>
       </a>
   </li>
@@ -49,9 +49,10 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
 
 
 @section('content')
+<x-alert-delete></x-alert-delete>
     <div class="card">
       <div class="card-header">
-        <h3 class="card-title">DataTable Of All Blog</h3>
+        <h3 class="card-title">DataTable Of All User</h3>
       </div>
       <div class="card-body">
         
@@ -60,7 +61,7 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
         <div id="example1_filter" class="dataTables_filter">
           <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4"><div class="row"><div class="col-sm-12 col-md-6"><div class="dt-buttons btn-group flex-wrap">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-primary">
-              <span> <i class="fas fa-user-plus"></i> add blog</span>
+              <span> <i class="fas fa-user-plus"></i> add user</span>
             </button>
             
           </div>
@@ -97,29 +98,28 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
               </tr>
             </thead>
             <tbody>
-              <tr class="odd">
-                <td class="dtr-control sorting_1" tabindex="0">Gecko</td>
-                <td>Firefox 1.0</td>
-                <td>Win 98+ / OSX.2+</td>
-                <td>1.7</td>
-                <td>A</td>
-                <td>
-                  <button><i class="fas fa-user-edit"></i></button>
-                  <button class="btn-danger"><i class="fas fa-user-slash"></i></button>
-                </td>
-                
-              </tr>
-              <tr class="even">
-                <td class="sorting_1 dtr-control">Gecko</td>
-                <td>Camino 1.5</td>
-                <td>OSX.3+</td>
-                <td>1.8</td>
-                <td>A</td>
-                <td>
-                  <button><i class="fas fa-user-edit"></i></button>
-                  <button class="btn-danger"><i class="fas fa-user-slash"></i></button>
-                </td>
-              </tr>
+              @foreach ($users as $user)
+              <a href="#">
+                <tr class="odd">
+                  <td class="dtr-control sorting_1" tabindex="0">{{$user->first_name." ".$user->middle_name." ".$user->last_name}}</td>
+                  <td>{{$user->email}}</td>
+                  <td>{{$user->username}}</td>
+                  <td>bien tap</td>
+                  <td><a href="{{route('admin.users.show',['user'=>$user->id])}}"><i class="fas fa-angle-double-right"></i></a></td>
+                  <td>
+                    <button><i class="fas fa-user-edit"></i></button>
+                    <button class="confirm-delete"  
+                      style="background-color: #50697f;"
+                      data-toggle="modal" 
+                      data-userid="{{$user->id}}"
+                      onclick="deleteUser(this);"
+                      >
+                      <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                    </button>
+                  </td>
+                  </tr>
+              </a>
+              @endforeach
             </tbody>
             
           </table>
@@ -132,18 +132,17 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
 @endsection
 
 @section('modalsalert')
-<div class="modal fade" id="modal-primary" style="display: none;" aria-hidden="true">
+<div class="modal fade" id="modal-primary" style="display: none;" aria-hidden="true" >
   <div class="modal-dialog" style="min-width: 85vw;">
-    <div class="modal-content bg-primary" >
+    <div class="modal-content" style="background-color: rgb(206 236 234 / 93%);">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
       </div>
       <div class="modal-body">
-        @include('partials.formblog')
+        @include('partials.formuser')
       </div>
-      
     </div>
     <!-- /.modal-content -->
   </div>
@@ -158,3 +157,46 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
   <strong>Copyright © 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
 @endsection
 
+@section('js')
+  @include('admin.user.script')
+<script>
+  $(document).ready(function() {
+    
+
+     $('#mainbutton').click(function(e) {
+       e.preventDefault();
+       var first_name = $('#first_name').val();
+       var middle_name = $('#middle_name').val();
+       var last_name = $('#last_name').val();
+       var password = $('#password').val();
+       var repeat_password = $('#repeat_password').val();
+       var email = $('#email').val();
+       var username = $('#user_name').val();
+       var url = "{{ route('admin.users.store') }}";
+       $.ajax(url, {
+             type: 'POST',
+             data: {
+              first_name: first_name,
+              middle_name: middle_name,
+              last_name: last_name,
+              password: password,
+              repeat_password: repeat_password,
+              email: email,
+              username: username,
+             },
+             success:function(data) {
+                 console.log('success');
+             },
+             error:function(data) {
+                 console.log('some thing went wrongkkk');
+             }
+         });
+
+      });
+
+     
+
+  });
+</script>
+
+@endsection

@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    All Post
+    {{$user->username}}
 @endsection
 
 @section('css')
@@ -30,16 +30,23 @@
 
 
 @section('sidebar')
-    <li class="nav-item menu-open">
-        <a href="#" class="nav-link active">
-            <p>
-                Post
-            </p>
-        </a>
-        
+  <li class="nav-item menu-open">
+    <a href="#" class="nav-link">
+        <p>
+            Post
+        </p>
+    </a>
+  </li>
+  <li class="nav-item menu-open">
+  <a href="#" class="nav-link active">
+      <p>
+          USER
+      </p>
+  </a>
+  </li>
 @endsection
 
 
 @section('content')
-    
+    {{$user->username}}
 @endsection
