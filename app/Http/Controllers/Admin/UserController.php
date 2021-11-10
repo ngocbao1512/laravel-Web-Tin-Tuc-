@@ -3,18 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\User\UserRepository;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
     protected $userRepository;
 
-    public function __construct(
-        UserRepositoryInterface $userRepository
-        )
+    public function __construct()
     {
-        $this->userRepository = $userRepository;
+        parent::__construct();
+        $this->userRepository = new UserRepository();
     }
 
     public function index()
@@ -24,16 +23,11 @@ class UserController extends Controller
         ]);   
     }
 
-    public function store(Request $request)
+    public function store()
     {
-        $data = $request->only([
-            'email',
-            'password',
-            'first_name',
-            'middle_name',
-            'last_name',
-            'username',
-        ]);
+        $data = $this->data;
+        dd($data);
+
         $file = $request->file;
         if($file)
         {
@@ -63,14 +57,47 @@ class UserController extends Controller
 
     public function find(Request $request)
     {
-        $data = $request->all();
+        $userId = $request->userid;
 
-        return $this->responseSuccess('find success',$this->userRepository->find($userId));
+        return $this->responseSuccess('find success',[
+            'user_form' => view('admin.user.formedituser',[
+                'user' => $this->userRepository->find($userId),
+            ])->render(),
+            
+        ]);
 
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
+        $userid = $request->userid;
+
+        $data = $request->only([
+            'email',
+            'password',
+            'first_name',
+            'middle_name',
+            'last_name',
+            'username',
+        ]);
+
+        $file = $request->file;
+        if($file)
+        {
+            $image_name = encodeImage($file->hashName());
+            $file->move('storage/avatar',$image_name);
+            $data['avatar'] = $image_name;
+        }else{
+            $data['avatar'] = 'image-default';
+        }
+
+        try {
+            $this->userRepository->update($userid,$data);
+            return $this->responseSuccess('update User Success');
+        } catch (\Exception $e) {
+            \Log::error($e);
+            return $this->responseError($e);
+        }
         
     }
 
@@ -93,5 +120,14 @@ class UserController extends Controller
             \Log::error($e);
             return $this->responseError($e);
         }
+    }
+
+    public function getModal(Request $request)
+    {
+        $data = $request->all();
+
+        $urlmodal = isset($data['urlmodal']) ? $data['urlmodal'] : 'admin.user.formcreateuser';
+        
+        return view("$urlmodal")->render();
     }
 }

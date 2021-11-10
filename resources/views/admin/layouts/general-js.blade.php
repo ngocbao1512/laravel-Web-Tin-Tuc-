@@ -5,6 +5,8 @@
       }
     });
 
+    BASE_CRUD.init('{{route('admin.users.find')}}', 'admin.user.formcreateuser')
+
     function confirm(text, runFunction, dismissFunction)
     {
 
@@ -49,12 +51,23 @@
         return false;
     }
 
-    function alertForm()
+    function alertForm(text, type="info")
     {
-        var form = document.createElement('x-form-user');
-        
+        Swal.fire({
+            icon: type,
+            text: text,
+        });
 
+        console.log(text);
+        
     }
+
+
+
+    
+
+    
+    
 
 
 

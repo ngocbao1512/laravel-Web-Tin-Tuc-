@@ -1,11 +1,11 @@
-<div class="row" > 
+<div class="row">
+
     <div class="col-12" style="min-height: 70vh">
         <div class="float-center">
             <p class="tm-block-title d-inline-block float-center" style="font-size: 30px">Add User</p>
         </div>
         <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
             <form class="tm-edit-product-form" enctype="multipart/form-data">
-                @csrf
                 <div class="row tm-edit-product-row">
                     <div class="col-xl-6 col-lg-6 col-md-12">
                         <div class="form-group">
@@ -81,6 +81,9 @@
                         
                     </div>
                     <hr>
+                    <div id=data-items>
+
+                    </div>
                     <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
 
                         <div class="tm-product-img-dummy mx-auto" style=" background-color : rgb(243, 243, 243); min-height : 20vh;
@@ -101,7 +104,7 @@
 
                     <button  type="button" class="btn btn-primary btn-block text-uppercase "
                      style="color:white;background-color:rgb(24 89 230);"
-                     onclick="createUser(this);">
+                     onclick="saveData(this,'save','do you want to create user');">
                      Create User
                     </button>
                 </div>
@@ -111,5 +114,7 @@
 </div>
 
 @section('readFileImage')
-  @include('partials.readFileImage')
+    @include('partials.readFileImage')
 @endsection
+
+

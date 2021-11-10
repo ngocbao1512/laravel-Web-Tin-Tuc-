@@ -33,7 +33,9 @@
         confirm("Do you want to delete this user ?", runFunction);
     }
 
-    function createUser(button) {
+
+    function getFormData()
+    {
         var first_name = $('#first_name').val();
         var middle_name = $('#middle_name').val();
         var last_name = $('#last_name').val();
@@ -41,12 +43,10 @@
         var repassword = $('#repeat_password').val();
         var email = $('#email').val();
         var username = $('#user_name').val();
+        var formData = new FormData();
         if(!checkFormUser()){
             return false;
         }
-        var url = "{{ route('admin.users.store') }}";
-
-        var formData = new FormData();
         formData.append('file', $('#patient_pic')[0].files[0]);
         formData.append('first_name', first_name);
         formData.append('middle_name',middle_name);
@@ -54,9 +54,24 @@
         formData.append('password',password);
         formData.append('email',email);
         formData.append('username',username);
-        
+       
+        return formData;
+    }
 
+    function saveData(button, method='save', messageConfirm, userId = null)
+    {
+        console.log("okok");
+        var formData = getFormData();
+        if(!formData) return false;
+        formData.append('userid',userId);
         console.log(formData);
+        var url = ''
+        if(method == 'update'){
+            url =  "{{ route('admin.users.update') }}"
+        }else {
+            url = "{{ route('admin.users.store') }}"
+        }
+
         var runFunction = function() {
             $.ajax({
                 url: url,
@@ -81,35 +96,7 @@
             });
         };
         
-        confirm("do you want to create this user ?", runFunction);
-    }
-
-    function editUser(button)
-    {
-        var button = $(button)
-        var userId = button.data('userid');
-        
-        var runFunction = function(){
-            $.ajax({
-                url: '{{route("admin.users.find")}}',
-                type: 'POST',
-                data: {
-                    'userid' : userId,
-                },
-                success:function(data){
-                    if(data.status==200){
-                        
-                    }else{
-
-                    }
-
-                },
-                error:function(data){
-                    console.log('some thing went wrong');
-                }
-            })
-        } 
-
+        confirm(messageConfirm + "?", runFunction);
     }
 
     function checkFormUser()
@@ -145,6 +132,63 @@
         }
 
         return true;
+    }
+
+    BASE_CRUD = {
+        _urlLoadDataItems: null,
+        _showModalDetail: null,
+        _urlModalCreate: null,
+        _userid: null,
+        
+        
+        init(urlLoadDataItems, urlModalCreate, showModalDetail) {
+            this._urlLoadDataItems = urlLoadDataItems;  
+            this._showModalDetail = showModalDetail;
+            this._urlModalCreate = urlModalCreate;
+        },
+
+        loadDataItems(paramURL = null, userid = null){
+            let url = paramURL;
+            if(url === null) url = this._urlLoadDataItems;
+            this._userid = userid;
+            $.ajax({
+                url,
+                type: "POST",
+                data:{
+                    'userid' : userid
+                },
+                success: function(res) {
+                    $('#modal-body').html(res.data.user_form)
+                    console.log(res.form_user.user)
+                },
+                error: function(){
+                    alert('some thing went wrong. please try again!!!')
+                },
+            })
+        },
+
+        modalCreate(paramURL = null, paramURLModal = null){
+            let url = (paramURL==null) ? this._urlModalCreate : paramURL;
+            console.log(url);
+            let urlModal = (paramURLModal === null ) ? this._urlModalCreate : paramURLModal
+            console.log(urlModal)
+            $.ajax({
+                url,
+                type: "POST",
+                data: {
+                    'urlmodal' : urlModal
+                },
+                success: function(res) {
+                    console.log(res);
+                    $('#modal-body').html(res);
+                },
+                error: function(){
+                    alert('some thing went wrong. please try again laster')
+                },
+            })
+        }
+
+
     }
 
     

@@ -55,7 +55,6 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
         <h3 class="card-title">DataTable Of All User</h3>
       </div>
       <div class="card-body">
-        
      
       <div class="col-sm-12">
         <div id="example1_filter" class="dataTables_filter">
@@ -67,6 +66,7 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
                   class="btn btn-primary" 
                   data-toggle="modal"
                   data-target="#modal-primary"
+                  onclick="BASE_CRUD.modalCreate('{{route('admin.users.getmodal')}}', 'admin.user.formcreateuser' )"
                   >
                     <span> <i class="fas fa-user-plus"></i> add user</span>
                   </button>
@@ -118,13 +118,9 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
                     <td>
                       <button type="button" class="btn btn-primary"
                       data-toggle="modal" 
-                      data-target="#modal-default"
-                      data-firstname = "{{$user->firstname}}"
-                      data-middlename = "{{$user->middlname}}"
-                      data-lastname = "{{$user->lastname}}"
-                      data-userid="{{$user->id}}"
-                      data-useremail="{{$user->email}}"
-                      data-username="{{$user->username}}"
+                      data-target="#modal-primary"
+                      data-userid = "{{$user->id}}"
+                      onclick="BASE_CRUD.loadDataItems('{{route('admin.users.find')}}','{{$user->id}}')"
                       >
                         <span> <i class="fas fa-user-edit"></i></span>
                       </button>
@@ -161,8 +157,8 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <div class="modal-body">
-        @include('admin.user.formcreateuser')
+      <div class="modal-body" id="modal-body">
+
       </div>
     </div>
     <!-- /.modal-content -->
@@ -171,24 +167,7 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
 </div>
 @endsection
 
-@section('modalseditalert')
-  <div class="modal fade" id="modal-default" style="display: none;" aria-hidden="true" >
-    <div class="modal-dialog" style="min-width: 85vw;">
-      <div class="modal-content" style="background-color: rgb(206 236 234 / 93%);">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          @include('admin.user.formedituser')
-        </div>
-      </div>
-      <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-  </div>
-@endsection
+
 
 @section('footer')
   <div class="float-right d-none d-sm-block">
@@ -201,8 +180,9 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
   @include('admin.user.script')
 <script>
   $(document).ready(function() {
-
+   
   });
 </script>
 
 @endsection
+

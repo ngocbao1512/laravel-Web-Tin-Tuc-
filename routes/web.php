@@ -54,6 +54,8 @@ Route::name('admin.')->prefix('admin')->group(function () {
    Route::get('users/$userid',[AdminUserController::class,'show'])->name('users.show');
    Route::post('users/destroy',[AdminUserController::class,'destroy'])->name('users.destroy');
    Route::post('users/store',[AdminUserController::class,'store'])->name('users.store');
+   Route::post('users/user',[AdminUserController::class,'update'])->name('users.update');
    Route::post('users/find',[AdminUserController::class,'find'])->name('users.find');
+   Route::post('users/getmodal',[AdminUserController::class,'getModal'])->name('users.getmodal');
 
 });
