@@ -61,6 +61,14 @@ class UserController extends Controller
         ]);
     }
 
+    public function find(Request $request)
+    {
+        $data = $request->all();
+
+        return $this->responseSuccess('find success',$this->userRepository->find($userId));
+
+    }
+
     public function update(Request $request, $id)
     {
         
