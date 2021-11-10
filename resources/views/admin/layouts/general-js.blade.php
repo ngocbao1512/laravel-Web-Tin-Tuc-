@@ -5,7 +5,8 @@
       }
     });
 
-    function confirm(text, runFunction, dismissFunction){
+    function confirm(text, runFunction, dismissFunction)
+    {
 
         var dismissFunction = dismissFunction == undefined ? 
             function(){
@@ -30,16 +31,31 @@
         });
     }
 
-    function alert(text, type="info"){
+    function alert(text, type="info")
+    {
         Swal.fire({
             icon: type,
             html: text
         });
     }
 
-    function validateForm()
+    function checkEmpty($value,$msgerror="empty")
     {
-        
+        if($value != '')
+        {
+            return true;
+        } 
+        alert($msgerror);
+        return false;
     }
+
+    function alertForm()
+    {
+        var form = document.createElement('x-form-user');
+        
+
+    }
+
+
 
 </script>

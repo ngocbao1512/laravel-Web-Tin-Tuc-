@@ -99,9 +99,9 @@
                     </div>
                     <hr>
 
-                    <button  type="button" class="btn btn-primary btn-block text-uppercase " data-dismiss="modal" id="mainbutton" aria-label="Close"
+                    <button  type="button" class="btn btn-primary btn-block text-uppercase "
                      style="color:white;background-color:rgb(24 89 230);"
-                     onclick="createUser(this);" disabled>
+                     onclick="createUser(this);">
                      Create User
                     </button>
                 </div>

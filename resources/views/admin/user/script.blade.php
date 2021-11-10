@@ -35,6 +35,7 @@
 
     function createUser(button) {
         var first_name = $('#first_name').val();
+<<<<<<< HEAD
         if(first_name == ""){
             alert("Empty First Name","error");
             return false;
@@ -44,6 +45,17 @@
         var password = $('#password').val();
         var email = $('#email').val();
         var username = $('#user_name').val();
+=======
+        var middle_name = $('#middle_name').val();
+        var last_name = $('#last_name').val();
+        var password = $('#password').val();
+        var repassword = $('#repeat_password').val();
+        var email = $('#email').val();
+        var username = $('#user_name').val();
+        if(!checkFormUser()){
+            return false;
+        }
+>>>>>>> fd8508c6a007f0b9806bc08fcc39d42e1ac136e8
         var url = "{{ route('admin.users.store') }}";
 
         var formData = new FormData();
@@ -82,21 +94,69 @@
         };
         
         confirm("do you want to create this user ?", runFunction);
-        console.log("okssk");
     }
 
-    function getDataToEdit(button)
-    {
-        var button = $(button);
-    }
     function editUser(button)
     {
+        var button = $(button)
         var userId = button.data('userid');
-        var username = button.data('username');
-        var firstname = button.data('firstname');
-        var middlename = button.data('middlename');
-        var lastname = button.data
+        
+        var runFunction = function(){
+            $.ajax({
+                url: '{{route("admin.users.find")}}',
+                type: 'POST',
+                data: {
+                    'userid' : userId,
+                },
+                success:function(data){
+                    if(data.status==200){
+                        
+                    }else{
 
+                    }
+
+                },
+                error:function(data){
+                    console.log('some thing went wrong');
+                }
+            })
+        } 
+
+    }
+
+    function checkFormUser()
+    {
+
+        if(!checkEmpty($('#first_name').val(), 'please press fill field your first name')){
+            return false;
+        }
+
+        if(!checkEmpty($('#middle_name').val(), 'please press fill field your middle name')){
+            return false;
+        }
+
+        if(!checkEmpty($('#last_name').val(), 'please press fill field your last name')){
+            return false;
+        }
+
+        if(!checkEmpty($('#password').val(), 'please press fill field your password')){
+            return false;
+        }
+
+        if($('#repeat_password').val() != $('#password').val()){
+            alert("some thing wrong in your password. let press again!!");
+            return false;
+        }
+
+        if(!checkEmpty($('#email').val(), 'please press fill field your email')){
+            return false;
+        }
+
+        if(!checkEmpty($('#user_name').val(), 'please press fill field your user name')){
+            return false;
+        }
+
+        return true;
     }
 
     
