@@ -9,7 +9,7 @@ abstract class BaseRepository implements RepositoryInterface
     protected $model;
 
     // khoi tao 
-    public function __contruct()
+    public function __construct()
     {
         $this->setModel();
     }
@@ -17,9 +17,6 @@ abstract class BaseRepository implements RepositoryInterface
     // lay model tuong ung 
     abstract public function getModel();
 
-    /* 
-    * set model 
-    */
     public function setModel()
     {
         $this->model = app()->make(
@@ -39,17 +36,18 @@ abstract class BaseRepository implements RepositoryInterface
         return $result;
     }
 
-    public function create($arrtribute = [])
+    public function create($request)
     {
-        return $this->model->create($arrtribute);
+        $request->all();
+        return $this->model->create($request);
     }
 
-    public function update($id, $arrtribute = [])
+    public function update($request)
     {
-        $result = $this->model->find($id);
+        $result = $this->model->find($request->userid);
         if($result)
         {
-            $result->update($arrtribute);
+            $result->update($request->all());
             return true;
         }
         return false;
@@ -61,13 +59,8 @@ abstract class BaseRepository implements RepositoryInterface
         if($result)
         {
             $result->delete();
-
             return true;
         }
         return false;
     }
-
-    
-
-
 }

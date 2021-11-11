@@ -12,16 +12,9 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    protected $data;
+    
 
-    public function __contruct(Request $request = null)
-    {
-        if(is_null($request)){
-            $this->data = [];
-        }else{
-            $this->data = array_merge($request->all(), $request->json()->all());
-        }
-    }
+    
 
     public function responseSuccess($message='success', $data = null)
     {

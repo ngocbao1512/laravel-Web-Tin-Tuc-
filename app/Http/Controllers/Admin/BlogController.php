@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Http\Request;
 use App\Models\Blog;
 
-class BlogController extends Controller
+class BlogController extends AdminController
 {
     protected $modelBlog;
     

@@ -7,9 +7,9 @@ interface RepositoryInterface
 
     public function find($id);
 
-    public function create($attributes = []);
+    public function create($request);
 
-    public function update($id, $attributes = []);
+    public function update($request);
 
     public function delete($id);
 

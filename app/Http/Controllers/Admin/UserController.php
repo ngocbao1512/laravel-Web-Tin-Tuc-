@@ -1,19 +1,18 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\AdminController;
 use App\Repositories\User\UserRepository;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class UserController extends AdminController
 {
     protected $userRepository;
 
     public function __construct()
     {
         parent::__construct();
-        $this->userRepository = new UserRepository();
+        $this->userRepository = new UserRepository;
     }
 
     public function index()
@@ -23,29 +22,15 @@ class UserController extends Controller
         ]);   
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        $data = $this->data;
-        dd($data);
-
-        $file = $request->file;
-        if($file)
-        {
-            $image_name = encodeImage($file->hashName());
-            $file->move('storage/avatar',$image_name);
-            $data['avatar'] = $image_name;
-        }else{
-            $data['avatar'] = 'image-default';
-        }
-
         try {
-            $newUser = $this->userRepository->create($data);
+            $newUser = $this->userRepository->create($request);
             return $this->responseSuccess('Add User Success', $newUser);
         } catch (\Exception $e) {
             \Log::error($e);
             return $this->responseError($e);
         }
-        
     }
 
     public function show($id)
@@ -57,42 +42,24 @@ class UserController extends Controller
 
     public function find(Request $request)
     {
-        $userId = $request->userid;
-
-        return $this->responseSuccess('find success',[
-            'user_form' => view('admin.user.formedituser',[
-                'user' => $this->userRepository->find($userId),
-            ])->render(),
+        try {
+            return $this->responseSuccess('find success',[
+                'user_form' => view('admin.user.formedituser',[
+                    'user' => $this->userRepository->find($request->all()),
+                ])->render(),
+                
+            ]);
             
-        ]);
-
+        } catch (\Exception $e) {
+            \Log::error($e);
+            return $this->responseError($e);
+        }
     }
 
     public function update(Request $request)
     {
-        $userid = $request->userid;
-
-        $data = $request->only([
-            'email',
-            'password',
-            'first_name',
-            'middle_name',
-            'last_name',
-            'username',
-        ]);
-
-        $file = $request->file;
-        if($file)
-        {
-            $image_name = encodeImage($file->hashName());
-            $file->move('storage/avatar',$image_name);
-            $data['avatar'] = $image_name;
-        }else{
-            $data['avatar'] = 'image-default';
-        }
-
         try {
-            $this->userRepository->update($userid,$data);
+            $this->userRepository->update($request);
             return $this->responseSuccess('update User Success');
         } catch (\Exception $e) {
             \Log::error($e);
@@ -103,19 +70,12 @@ class UserController extends Controller
 
     public function destroy(Request $request)
     {
-        $data = $request->all();
-        
-        $userId = isset($data['user_id']) ? $data['user_id'] : 0;
-
-        
         try {
-            // $this->userRepository->delete($userId);
-
-            return $this->responseSuccess('delete success',[
-                'user_form' => view('admin.user.show',[
-                    'user' => $this->userRepository->find($userId),
-                ])->render(),
-            ]);
+            if($this->userRepository->delete($request))
+            {
+            return $this->responseSuccess('delete success');
+            }
+            return false;
         } catch (\Exception $e) {
             \Log::error($e);
             return $this->responseError($e);

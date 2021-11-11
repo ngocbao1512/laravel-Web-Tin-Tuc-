@@ -159,7 +159,7 @@
                 },
                 success: function(res) {
                     $('#modal-body').html(res.data.user_form)
-                    console.log(res.form_user.user)
+                    console.log(res.data.user_form.user)
                 },
                 error: function(){
                     alert('some thing went wrong. please try again!!!')
