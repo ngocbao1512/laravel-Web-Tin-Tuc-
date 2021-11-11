@@ -8,11 +8,13 @@
             };
             reader.readAsDataURL(input.files[0]);
          }
-     }
-    
-     $("#patient_pic").on("change",function(){
-        readURL(this,"#preview_image")
-    });
+    }
+
+    function initReadImage(input){
+        var targetId = input.data(targetId);
+        readURL(input, targetId);
+    }
+
     
 </script> 
 

@@ -11,11 +11,7 @@ use Illuminate\Http\Request;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
     
-
-    
-
     public function responseSuccess($message='success', $data = null)
     {
         return response()->json([

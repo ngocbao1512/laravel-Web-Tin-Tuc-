@@ -31,10 +31,12 @@
   @yield('css')
 </head>
 <body class="sidebar-mini sidebar-closed sidebar-collapse" style="height: auto">
+    
+
     <div class="wrapper">
 
         <!-- header -->
-    
+        
 
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             @yield('header')
@@ -78,7 +80,9 @@
             <!-- Content Header (Page header) -->
             <section class="content">
                 <div class="container-fluid">
+                    
                     @yield('content')
+                    
                 </div>
                 @yield('modalscreatealert')
                 @yield('modalseditalert')
@@ -135,6 +139,15 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @include('admin.layouts.general-js')
 @yield('js')
-@yield('readFileImage')
+<script>
+    $(document).ready(function(){
+        $(document).ajaxStart(function() {
+            $("#loading").show();
+        });
+        $(document).ajaxStop(function() {
+            $("#loading").hide();
+        });
+    });
+</script>
 </body>
 </html>

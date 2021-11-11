@@ -46,7 +46,8 @@ Route::name('client.')->prefix('client')->group(function () {
 
 Route::name('admin.')->prefix('admin')->group(function () {
 
-   Route::resource('blogs', AdminBlogController::class);
+   //Route::resource('blogs', AdminBlogController::class);
+   Route::get('blogs',[AdminBlogController::class,'index'])->name('blogs');
 
 
    //Route::resource('users', AdminUserController::class);

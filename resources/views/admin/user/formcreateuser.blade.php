@@ -93,7 +93,7 @@
                         </div>
                         
                         <div class="custom-file mt-3 mb-3">
-                            <input id="patient_pic" type="file" style="display:none;" name="avatar" required id="image"/>
+                            <input id="patient_pic" type="file" style="display:none;" name="avatar" required/>
                             
                         </div>
                         <hr>
@@ -112,9 +112,6 @@
         </div>
     </div>         
 </div>
-
-@section('readFileImage')
-    @include('partials.readFileImage')
-@endsection
+@include('partials.readFileImage')
 
 

@@ -33,44 +33,62 @@
         confirm("Do you want to delete this user ?", runFunction);
     }
 
+    function getValueInput(idGetValue,userId){
+        var nameid = idGetValue + "-" + userId;
+        var value = $(nameid).val()
+        
+        if(value){
+            return $(nameid).val();
+        }
+        return false;
+    }
 
-    function getFormData()
+    function getFormData(userId)
     {
-        var first_name = $('#first_name').val();
-        var middle_name = $('#middle_name').val();
-        var last_name = $('#last_name').val();
-        var password = $('#password').val();
-        var repassword = $('#repeat_password').val();
-        var email = $('#email').val();
-        var username = $('#user_name').val();
         var formData = new FormData();
-        if(!checkFormUser()){
+        if(userId != null){
+            formData.append('user_id', userId);
+        } else {
+            userId = 0;
+        }
+        var first_name = getValueInput('#first_name',userId)
+        var middle_name =  getValueInput('#middle_name',userId)
+        var last_name =  getValueInput('#last_name',userId)
+        var password =  getValueInput('#password',userId)
+        var repassword =  getValueInput('#repeat_password',userId)
+        var email =  getValueInput('#email',userId)
+        var username =  getValueInput('#user_name',userId)
+        var idInputFile = "#input-avatar-"+userId
+        console.log("ok");
+        console.log($(idInputFile)[0].files[0]);
+        
+        if(!checkFormUser(userId)){
             return false;
         }
-        formData.append('file', $('#patient_pic')[0].files[0]);
+        
+        formData.append('avatar', $(idInputFile)[0].files[0]);
         formData.append('first_name', first_name);
         formData.append('middle_name',middle_name);
         formData.append('last_name',last_name);
         formData.append('password',password);
         formData.append('email',email);
         formData.append('username',username);
+        
        
         return formData;
     }
 
-    function saveData(button, method='save', messageConfirm, userId = null)
+    function saveData(button, messageConfirm, userId = null)
     {
         console.log("okok");
-        var formData = getFormData();
-        if(!formData) return false;
-        formData.append('userid',userId);
-        console.log(formData);
         var url = ''
-        if(method == 'update'){
-            url =  "{{ route('admin.users.update') }}"
+        if(userId != null){
+            url =  "{{ route('admin.users.update') }}";
         }else {
-            url = "{{ route('admin.users.store') }}"
+            url = "{{ route('admin.users.store') }}";
         }
+        var formData = getFormData(userId);
+        if(!formData) return false;
 
         var runFunction = function() {
             $.ajax({
@@ -99,39 +117,79 @@
         confirm(messageConfirm + "?", runFunction);
     }
 
-    function checkFormUser()
+    function checkFormUser(userId)
     {
 
-        if(!checkEmpty($('#first_name').val(), 'please press fill field your first name')){
+        if(!getValueInput("#first_name",userId)){
+            alert('fill your field first name');
             return false;
         }
 
-        if(!checkEmpty($('#middle_name').val(), 'please press fill field your middle name')){
+        if(!getValueInput("#middle_name",userId)){
+            alert('fill your field middle name')
             return false;
         }
 
-        if(!checkEmpty($('#last_name').val(), 'please press fill field your last name')){
+        if(!getValueInput("#last_name",userId)){
+            alert('fill your field last name')
             return false;
         }
 
-        if(!checkEmpty($('#password').val(), 'please press fill field your password')){
+        if(!getValueInput("#password",userId)){
+            alert('fill your field password')
             return false;
         }
 
-        if($('#repeat_password').val() != $('#password').val()){
-            alert("some thing wrong in your password. let press again!!");
+        if(!getValueInput("#repeat_password",userId)){
+            alert('fill your field repeat password')
             return false;
         }
 
-        if(!checkEmpty($('#email').val(), 'please press fill field your email')){
+        if(getValueInput("#repeat_password",userId) != getValueInput("#password",userId))
+        {
+            alert('check your password and repeat password')
             return false;
         }
 
-        if(!checkEmpty($('#user_name').val(), 'please press fill field your user name')){
+        if(!getValueInput("#email",userId)){
+            alert('fill your field email')
+            return false;
+        }
+
+        if(!getValueInput("#user_name",userId)){
+            alert('fill your user name')
             return false;
         }
 
         return true;
+    }
+
+    function checkEmpty($value,$msgerror="empty")
+    {
+        if($value != '')
+        {
+            return true;
+        } 
+        alert("please press fill field your "+$msgerror);
+        return false;
+    }
+
+    function loadUserEdit(paramURL = null, user_id = null){
+        BASE_CRUD.__userid;
+        let url = paramURL;
+        $.ajax({
+            url,
+            type: "POST",
+            data:{
+                'user_id' : user_id
+            },
+            success: function(res) {
+                $('#modal-edit-user-content').html(res.data.user_form)
+            },
+            error: function(){
+                alert('some thing went wrong. please try again!!!')
+            },
+        });
     }
 
     BASE_CRUD = {
@@ -140,26 +198,24 @@
         _urlModalCreate: null,
         _userid: null,
         
-        
         init(urlLoadDataItems, urlModalCreate, showModalDetail) {
             this._urlLoadDataItems = urlLoadDataItems;  
             this._showModalDetail = showModalDetail;
             this._urlModalCreate = urlModalCreate;
         },
 
-        loadDataItems(paramURL = null, userid = null){
+        loadDataItems(paramURL = null, user_id = null){
             let url = paramURL;
             if(url === null) url = this._urlLoadDataItems;
-            this._userid = userid;
+            this._userid = user_id;
             $.ajax({
                 url,
                 type: "POST",
                 data:{
-                    'userid' : userid
+                    'user_id' : this._userid
                 },
                 success: function(res) {
-                    $('#modal-body').html(res.data.user_form)
-                    console.log(res.data.user_form.user)
+                    $('#modal-edit-user-content').html(res.data.user_form)
                 },
                 error: function(){
                     alert('some thing went wrong. please try again!!!')
@@ -171,7 +227,6 @@
             let url = (paramURL==null) ? this._urlModalCreate : paramURL;
             console.log(url);
             let urlModal = (paramURLModal === null ) ? this._urlModalCreate : paramURLModal
-            console.log(urlModal)
             $.ajax({
                 url,
                 type: "POST",
@@ -179,7 +234,6 @@
                     'urlmodal' : urlModal
                 },
                 success: function(res) {
-                    console.log(res);
                     $('#modal-body').html(res);
                 },
                 error: function(){
@@ -187,14 +241,7 @@
                 },
             })
         }
-
-
     }
 
-    
-
+    BASE_CRUD.init('{{route('admin.users.find')}}', 'admin.user.formcreateuser');
 </script>
-
-
-
-  

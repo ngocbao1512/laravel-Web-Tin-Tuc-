@@ -25,8 +25,11 @@ class UserController extends AdminController
     public function store(Request $request)
     {
         try {
-            $newUser = $this->userRepository->create($request);
-            return $this->responseSuccess('Add User Success', $newUser);
+            if( $this->userRepository->create($request))
+            {
+                return $this->responseSuccess('Add User Succes');
+            }
+            return false;
         } catch (\Exception $e) {
             \Log::error($e);
             return $this->responseError($e);
@@ -43,11 +46,22 @@ class UserController extends AdminController
     public function find(Request $request)
     {
         try {
+
+            $data = $request->all();
+            if(!isset($data['user_id'])){
+                return $this->responseError(500,'Invalid data');
+            }
+
+            $user = $this->userRepository->find($data['user_id']);
+
+            if(is_null($user)){
+                return $this->responseError(404,'User not found');
+            }
+
             return $this->responseSuccess('find success',[
-                'user_form' => view('admin.user.formedituser',[
-                    'user' => $this->userRepository->find($request->all()),
-                ])->render(),
-                
+                'user_form' => view('admin.user.user-form',[
+                    'user' => $user,
+                ])->render(),  
             ]);
             
         } catch (\Exception $e) {
@@ -59,8 +73,11 @@ class UserController extends AdminController
     public function update(Request $request)
     {
         try {
-            $this->userRepository->update($request);
+            if( $this->userRepository->update($request))
+            {
             return $this->responseSuccess('update User Success');
+            }
+            return false;
         } catch (\Exception $e) {
             \Log::error($e);
             return $this->responseError($e);

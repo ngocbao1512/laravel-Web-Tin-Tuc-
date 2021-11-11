@@ -31,16 +31,16 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
 
 @section('sidebar')
     <li class="nav-item menu-open">
-        <a href="#" class="nav-link">
+        <a href="#" class="nav-link active">
             <p>
-                Post
+              Post
             </p>
         </a>
     </li>
     <li class="nav-item menu-open">
-      <a href="#" class="nav-link active">
+      <a href="{{route('admin.users')}}" class="nav-link">
           <p>
-              Blog
+              User
           </p>
       </a>
   </li>
@@ -76,16 +76,20 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
             <thead>
               <tr>
                 <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" 
-                aria-label="Rendering engine: activate to sort column descending">Name
+                aria-label="Rendering engine: activate to sort column descending">
+                  title
                 </th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
-                  Email
+                  Content
                 </th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">
-                  User Name
+                  Author
                 </th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
-                  Role
+                  Status
+                </th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
+                  Date Publish
                 </th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">
                   More Infomation <i class="fas fa-angle-double-right"></i>
@@ -93,57 +97,51 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">
                   <center><i class="fas fa-user-edit"></i></center>
                 </th>
-
               </tr>
             </thead>
             <tbody>
-              <tr class="odd">
-                <td class="dtr-control sorting_1" tabindex="0">Gecko</td>
-                <td>Firefox 1.0</td>
-                <td>Win 98+ / OSX.2+</td>
-                <td>1.7</td>
-                <td>A</td>
-                <td>
-                  <button><i class="fas fa-user-edit"></i></button>
-                  <button class="btn-danger"><i class="fas fa-user-slash"></i></button>
-                </td>
-                
-              </tr>
-              <tr class="even">
-                <td class="sorting_1 dtr-control">Gecko</td>
-                <td>Camino 1.5</td>
-                <td>OSX.3+</td>
-                <td>1.8</td>
-                <td>A</td>
-                <td>
-                  <button><i class="fas fa-user-edit"></i></button>
-                  <button class="btn-danger"><i class="fas fa-user-slash"></i></button>
-                </td>
-              </tr>
+              @isset($blogs)
+                  @foreach ($blogs as $blog)
+                  <tr class="odd">
+                    <td class="dtr-control sorting_1" tabindex="0">{{$blog->title}}</td>
+                    <td>{{$blog->content}}</td>
+                    <td>{{$blog->user->name}}</td>
+                    <td>
+                      @if ($blog->is_verifited==1)
+                        verifited
+                      @else
+                        wait verify....
+                      @endif
+                    </td>
+                    <td>{{$blog->publish_date}}</td>
+                    <td><a href="#"><i class="fas fa-caret-right"></i></a></td>
+                    <td>
+                      <button><i class="fas fa-user-edit"></i></button>
+                      <button class="btn-danger"><i class="fas fa-user-slash"></i></button>
+                    </td>
+                    
+                  </tr>
+                  @endforeach
+              @endisset
             </tbody>
-            
           </table>
         </div>
       </div>
-    </div>
-     
-    </div>
-              
+    </div>              
 @endsection
 
-@section('modalsalert')
-<div class="modal fade" id="modal-primary" style="display: none;" aria-hidden="true">
+@section('modalscreatealert')
+<div class="modal fade" id="modal-primary" style="display: none;" aria-hidden="true" >
   <div class="modal-dialog" style="min-width: 85vw;">
-    <div class="modal-content bg-primary" >
+    <div class="modal-content" style="background-color: rgb(206 236 234 / 93%);">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <div class="modal-body">
-        @include('partials.formblog')
+      <div class="modal-body" id="modal-body">
+
       </div>
-      
     </div>
     <!-- /.modal-content -->
   </div>
@@ -158,3 +156,6 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
   <strong>Copyright © 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
 @endsection
 
+@section('js')
+    
+@endsection

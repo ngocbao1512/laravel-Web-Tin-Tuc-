@@ -31,7 +31,7 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
 
 @section('sidebar')
     <li class="nav-item menu-open">
-        <a href="#" class="nav-link">
+        <a href="{{route('admin.blogs')}}" class="nav-link">
             <p>
                 Post
             </p>
@@ -49,7 +49,27 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
 
 
 @section('content')
-<x-alert-delete></x-alert-delete>
+{{-- SECTION CREATE USER --}}
+<div class="modal" id="modal-create-user" aria-modal="true" role="dialog" >
+  <div class="modal-dialog" style="min-width: 85vw;">
+    <div class="modal-content" style="background-color: rgb(206 236 234 / 93%);" id="modal-create-user-content">
+        @include('admin.user.user-form')
+    </div>
+  </div>
+</div>
+{{-- END SECTION --}}
+
+{{-- SECTION EDIT USER --}}
+<div class="modal" id="modal-edit-user" aria-modal="true" role="dialog" >
+  <div class="modal-dialog" style="min-width: 85vw;">
+    <div class="modal-content" style="background-color: rgb(206 236 234 / 93%);" id="modal-edit-user-content">
+     
+    </div>
+  </div>
+</div>
+{{-- END SECTION --}}
+
+
     <div class="card">
       <div class="card-header">
         <h3 class="card-title">DataTable Of All User</h3>
@@ -65,8 +85,7 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
                   <button type="button"
                   class="btn btn-primary" 
                   data-toggle="modal"
-                  data-target="#modal-primary"
-                  onclick="BASE_CRUD.modalCreate('{{route('admin.users.getmodal')}}', 'admin.user.formcreateuser' )"
+                  data-target="#modal-create-user"
                   >
                     <span> <i class="fas fa-user-plus"></i> add user</span>
                   </button>
@@ -81,6 +100,12 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
             
       <div class="col-sm-12">
         <div class="row">
+          <div class="container" id="loading" style="display:none">
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <p>Loading...</p>
+          </div>
           <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
             <thead>
               <tr>
@@ -118,9 +143,9 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
                     <td>
                       <button type="button" class="btn btn-primary"
                       data-toggle="modal" 
-                      data-target="#modal-primary"
+                      data-target="#modal-edit-user"
                       data-userid = "{{$user->id}}"
-                      onclick="BASE_CRUD.loadDataItems('{{route('admin.users.find')}}','{{$user->id}}')"
+                      onclick="loadUserEdit('{{route('admin.users.find')}}','{{$user->id}}')"
                       >
                         <span> <i class="fas fa-user-edit"></i></span>
                       </button>
@@ -147,26 +172,6 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
     </div>
               
 @endsection
-
-@section('modalscreatealert')
-<div class="modal fade" id="modal-primary" style="display: none;" aria-hidden="true" >
-  <div class="modal-dialog" style="min-width: 85vw;">
-    <div class="modal-content" style="background-color: rgb(206 236 234 / 93%);">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body" id="modal-body">
-
-      </div>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
-</div>
-@endsection
-
 
 
 @section('footer')

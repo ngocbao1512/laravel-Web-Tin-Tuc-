@@ -125,7 +125,5 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-<script>
-    
-</script>
+@include('partials.readFileImage')
 

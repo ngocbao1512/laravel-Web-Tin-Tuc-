@@ -5,7 +5,24 @@
       }
     });
 
-    BASE_CRUD.init('{{route('admin.users.find')}}', 'admin.user.formcreateuser')
+    function readURL(input, target) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            var image_target = $(target);
+            reader.onload = function (e) {
+                image_target.attr('src', e.target.result).show();
+            };
+            reader.readAsDataURL(input.files[0]);
+         }
+    }
+
+    function initReadImage(input){
+        var targetId = $(input).attr('target-id');
+        console.log(targetId, input);
+        readURL(input, targetId);
+    }
+
+
 
     function confirm(text, runFunction, dismissFunction)
     {
@@ -41,15 +58,7 @@
         });
     }
 
-    function checkEmpty($value,$msgerror="empty")
-    {
-        if($value != '')
-        {
-            return true;
-        } 
-        alert($msgerror);
-        return false;
-    }
+   
 
     function alertForm(text, type="info")
     {
