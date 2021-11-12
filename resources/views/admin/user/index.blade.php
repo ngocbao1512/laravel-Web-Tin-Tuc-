@@ -80,7 +80,16 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
         <div id="example1_filter" class="dataTables_filter">
           <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
             <div class="row">
-              <div class="col-sm-12 col-md-6">
+              <div class="col-sm-12 col-md-7">
+
+              </div>
+              <div class="col-sm-12 col-md-4">
+                <div class="row">
+                  <label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example1">
+                  </label>
+                </div>
+              </div>  
+              <div class="col-sm-12 col-md-1">
                 <div class="dt-buttons btn-group flex-wrap">
                   <button type="button"
                   class="btn btn-primary" 
@@ -91,8 +100,6 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
                   </button>
                 </div>
               </div>
-              <label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example1">
-              </label>
             </div>
           </div>
         </div>

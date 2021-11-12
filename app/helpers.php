@@ -9,10 +9,10 @@ if(!function_exists('encodeImage')) {
 }
 
 if(!function_exists('showImage')) {
-    function showImage($file_name, $folder_name)
+    function showImage($folder_name, $file_name)
     {
         if($file_name != null) {
-            return asset("storage/$folder_name/$file_name")
+            return asset("storage/$folder_name/$file_name");
         }
         return 'https://static.thenounproject.com/png/104062-200.png';
 

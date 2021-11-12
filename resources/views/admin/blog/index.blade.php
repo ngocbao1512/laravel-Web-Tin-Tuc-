@@ -5,7 +5,7 @@
 @endsection
 
 @section('css')
-    
+    @include('admin.blog.style')
 @endsection
 
 
@@ -49,6 +49,26 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
 
 
 @section('content')
+
+    <div class="modal" id="modal-create-blog" aria-modal="true" role="dialog" >
+      <div class="modal-dialog" style="min-width: 85vw;">
+        <div class="modal-content" style="background-color: rgb(206 236 234 / 93%);" id="modal-create-blog-content">
+            @include('admin.blog.blog-form')
+        </div>
+      </div>
+    </div>
+    {{-- END SECTION --}}
+
+    {{-- SECTION EDIT USER --}}
+    <div class="modal" id="modal-edit-blog" aria-modal="true" role="dialog" >
+      <div class="modal-dialog" style="min-width: 85vw;">
+        <div class="modal-content" style="background-color: rgb(206 236 234 / 93%);" id="modal-edit-blog-content">
+        
+        </div>
+      </div>
+    </div>
+    {{-- END SECTION --}}
+
     <div class="card">
       <div class="card-header">
         <h3 class="card-title">DataTable Of All Blog</h3>
@@ -56,19 +76,28 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
       <div class="card-body">
         
      
-      <div class="col-sm-12">
-        <div id="example1_filter" class="dataTables_filter">
-          <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4"><div class="row"><div class="col-sm-12 col-md-6"><div class="dt-buttons btn-group flex-wrap">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-primary">
-              <span> <i class="fas fa-user-plus"></i> add blog</span>
-            </button>
-            
+        <div class="col-sm-12">
+          <div id="example1_filter" class="dataTables_filter">
+            <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+              <div class="row">
+                <div class="col-sm-12 col-md-6">
+                  <div class="dt-buttons btn-group flex-wrap">
+                    <button type="button"
+                    class="btn btn-primary" 
+                    data-toggle="modal"
+                    data-target="#modal-create-blog"
+                    >
+                      <span> <i class="fas fa-user-plus"></i> add blog</span>
+                    </button>
+                  </div>
+                  <label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example1">
+                  </label>
+                </div>
+                
+              </div>
+            </div>
           </div>
-          <label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example1">
-          </label>
         </div>
-        
-      </div>
             
       <div class="col-sm-12">
         <div class="row">
@@ -116,7 +145,14 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
                     <td>{{$blog->publish_date}}</td>
                     <td><a href="#"><i class="fas fa-caret-right"></i></a></td>
                     <td>
-                      <button><i class="fas fa-user-edit"></i></button>
+                      <button type="button" class="btn btn-primary"
+                      data-toggle="modal" 
+                      data-target="#modal-edit-blog"
+                      data-userid = "{{$blog->id}}"
+                      onclick="loadUserEdit('{{route('admin.blogs.find')}}','{{$blog->id}}')"
+                      >
+                        <span> <i class="fas fa-user-edit"></i></span>
+                      </button>
                       <button class="btn-danger"><i class="fas fa-user-slash"></i></button>
                     </td>
                     
@@ -157,5 +193,6 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
 @endsection
 
 @section('js')
-    
+    @include('admin.blog.script')
 @endsection
+

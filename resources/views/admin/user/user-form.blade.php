@@ -7,6 +7,7 @@
     $email = !isset($user) ? '' : $user->email;
     $userName = !isset($user) ? '' : $user->username;
     $password = !isset($user) ? '' : $user->password;
+    $avatar = !isset($user) ? '' : $user->avatar;
 ?>
 <div class="modal-header">
     <h4>
@@ -106,7 +107,7 @@
                                 border-radius : 10px; display: flex; justify-content : center; text-align : center;"
                                 onclick="document.getElementById('input-avatar-{{$userId}}').click();">
                                 <img id="preview-avatar-{{$userId}}" 
-                                src="https://static.thenounproject.com/png/104062-200.png" 
+                                src="{{showImage('avatar',$avatar)}}" 
                                 alt="" style="max-width: 100%; max-height : 30vh;" />
                             </div>
                             
