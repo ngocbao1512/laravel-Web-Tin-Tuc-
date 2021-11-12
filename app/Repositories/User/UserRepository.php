@@ -18,7 +18,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return \App\Models\User::class;
     }
 
-    public function create($request)
+    public function create($data)
     {
         $data = $request->only([
             'email',
@@ -31,6 +31,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         ]);
 
         // TODO SOMETHING TO VALIDATE DATA
+        
 
         $dataCreate = array(
             'email'         => $data['email'],

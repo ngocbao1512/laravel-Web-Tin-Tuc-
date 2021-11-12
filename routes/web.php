@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,10 @@ App::bind('UserRepositoryInterface', 'DbUserRepository');
 
 Route::get('/', function () {
     return view('welcome');
+});
+Route::group(['middleware' => 'locale'], function() {
+    Route::post('change-language',[HomeController::class,'changeLanguage'])
+        ->name('user.change-language');
 });
 
 Route::get('/dashboard', function () {

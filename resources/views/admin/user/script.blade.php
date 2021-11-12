@@ -192,6 +192,22 @@
         });
     }
 
+    function changeLanguage(button, language){
+        $.ajax({
+            url: "{{route('user.change-language')}}",
+            type: 'POST', 
+            data: {
+                'laguage': language
+            },
+            sucess: function(){
+                console.log('change language success')
+            },
+            error: function(res){
+                console.log('some thing went wrong went change language' + res)
+            },
+        });
+    }
+
     BASE_CRUD = {
         _urlLoadDataItems: null,
         _showModalDetail: null,

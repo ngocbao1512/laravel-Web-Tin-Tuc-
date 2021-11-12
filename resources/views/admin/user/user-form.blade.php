@@ -100,7 +100,6 @@
                                 </div>
                             </div>
                         </div>
-                        <hr>
                         <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
     
                             <div class="tm-product-img-dummy mx-auto" style=" background-color : rgb(243, 243, 243); min-height : 20vh;
@@ -115,30 +114,26 @@
                                 <input id="input-avatar-{{$userId}}" type="file" style="display:none;" name="avatar" required target-id="#preview-avatar-{{$userId}}"
                                     onchange="initReadImage(this);"
                                 />
-                                
                             </div>
                             <hr>
-                            
-            
-                        </div>
-                        <hr>
-    
+                        </div>   
+                    </div>
+                    <div class="col-12">
                         @if ($action =='create')
-                        <button  type="button" class="btn btn-primary btn-block text-uppercase "
-                            style="color:white;background-color:rgb(24 89 230);"
-                            onclick="saveData(this,'do you want to create this user')"
-                        >
-                        Save User    
-                        </button>
+                            <button  type="button" class="btn btn-primary btn-block text-uppercase "
+                                style="color:white;background-color:rgb(24 89 230);"
+                                onclick="saveData(this,'do you want to create this user')"
+                            >
+                            Save User    
+                            </button>
                         @else
-                        <button  type="button" class="btn btn-primary btn-block text-uppercase "
-                            style="color:white;background-color:rgb(24 89 230);"
-                            onclick="saveData(this,'do you want to update this user',{{$userId}})"
-                        >
-                            Edit User
-                        </button>
+                            <button  type="button" class="btn btn-primary btn-block text-uppercase "
+                                style="color:white;background-color:rgb(24 89 230);"
+                                onclick="saveData(this,'do you want to update this user',{{$userId}})"
+                            >
+                                Edit User
+                            </button>
                         @endif
-                       
                     </div>
                 </form>
             </div>

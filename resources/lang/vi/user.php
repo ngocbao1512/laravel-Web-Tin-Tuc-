@@ -1,0 +1,41 @@
+<?php
+ return [
+     'AllUSER' => 'Tất Cả Người Dùng',
+     'AddUser' => 'Thêm Người Dùng',
+     'Name' => 'Tên',
+     'EmailAddress' => 'Địa Chỉ Email',
+     'Role' => 'Vai Trò',
+     'Search' => 'Tìm Kiếm',
+     'Home' => 'Màn Hình Chính',
+     'Contact' => 'Liên Hệ',
+     'User' => 'Người Dùng',
+     'Admin' => 'Quản Trị Viên',
+     'Verifiter' => 'Người Xác Minh',
+     'Author' => 'Tác Giả',
+     'Writer' => 'Người Viết Bài',
+     'Censor' => 'Kiểm Duyệt Viên',
+     'Post' => 'Bài Viết',
+     'Title' => 'Tiêu Đề',
+     'Content' => 'Nội Dung',
+     'Status' => 'Trạng Thái',
+     'DatePublish' => 'Ngày Xuất Bản',
+     'MoreInfo' => 'Thêm Thông Tin',
+     'Detail' => 'Chi Tiết',
+     'Copy' => 'Sao Chép',
+     'Version' => 'Phiên bản',
+     'wrong' => 'Có Thứ Gì Đấy Đang Sai',
+     'TryAgain' => 'làm Ơn Thử Lại Sau!!!',
+     'Success' => 'Thành Công',
+     'Fail' => 'Thất Bại',
+     'Edit' => 'Chỉnh Sửa',
+     'Sure' => 'Bạn Chắc Chứ',
+     'ConfirmUser' => 'Bạn Có Muốn :action Người Dùng Này Không ?',
+     'ConfirmBlog' => 'Bạn Có Muốn :action Bài Viết Này Không ?',
+     'ActionUser' => ':action Người Dùng',
+     'ActionPost' => ':action Bài Viết',
+     'Loading' => 'Đang Tải',
+     
+
+
+
+ ];

@@ -58,26 +58,13 @@
         });
     }
 
-   
-
-    function alertForm(text, type="info")
-    {
-        Swal.fire({
-            icon: type,
-            text: text,
-        });
-
-        console.log(text);
-        
-    }
 
 
-
-    
-
-    
+    // call ajax change language 
     
 
 
+    // toggle flag language
+    
 
 </script>

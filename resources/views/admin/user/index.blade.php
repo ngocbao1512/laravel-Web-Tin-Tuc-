@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    All User
+    {{ trans('user.ALLUSER') }}
 @endsection
 
 @section('css')
@@ -15,36 +15,51 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
 
 
 @section('header')
-<ul class="navbar-nav">
-  <li class="nav-item">
-    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-  </li>
-  <li class="nav-item d-none d-sm-inline-block">
-    <a href="index3.html" class="nav-link">Home</a>
-  </li>
-  <li class="nav-item d-none d-sm-inline-block">
-    <a href="#" class="nav-link">Contact</a>
-  </li>
-</ul>
+  <div class="col-12">
+    <div class="row">
+      <div class="col-10">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+          </li>
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="index3.html" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="#" class="nav-link">Contact</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-2">
+        <div id="lang-switch">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1024px-Flag_of_Vietnam.svg.png" class="vn" style="height: 25px; width: 50px; margin: 0;" onclick="changeLanguage(this,'vn')">
+          <img src="https://cdn3.iconfinder.com/data/icons/finalflags/256/United-Kingdom-flag.png" class="en" style="height: 25px; width: 50px; margin: 0;" onclick="changeLanguage(this,'en')">
+        </div>
+      </div>
+    </div>
+  </div>
+  
 @endsection
 
 
 @section('sidebar')
-    <li class="nav-item menu-open">
-        <a href="{{route('admin.blogs')}}" class="nav-link">
-            <p>
-                Post
-            </p>
-        </a>
-    </li>
-    <li class="nav-item menu-open">
-      <a href="#" class="nav-link active">
-          <p>
-              USER
-          </p>
-      </a>
+<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+  <li class="nav-item menu-open">
+    <a href="{{route('admin.blogs')}}" class="nav-link">
+        <p>
+            Post
+        </p>
+    </a>
   </li>
-        
+  <li class="nav-item menu-open">
+    <a href="#" class="nav-link active">
+        <p>
+            USER
+        </p>
+    </a>
+  </li>
+</ul>
+    
 @endsection
 
 
@@ -129,9 +144,6 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
                   Role
                 </th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">
-                  More Infomation <i class="fas fa-angle-double-right"></i>
-                </th>
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">
                   <center><i class="fas fa-user-edit"></i></center>
                 </th>
 
@@ -140,33 +152,32 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
             <tbody>
               @if (isset($users))
                 @foreach ($users as $user)
-                <a href="#">
-                  <tr class="odd">
-                    <td class="dtr-control sorting_1" tabindex="0">{{$user->first_name." ".$user->middle_name." ".$user->last_name}}</td>
-                    <td>{{$user->email}}</td>
-                    <td>{{$user->username}}</td>
-                    <td>bien tap</td>
-                    <td><a href="{{route('admin.users.show',['user'=>$user->id])}}"><i class="fas fa-angle-double-right"></i></a></td>
-                    <td>
-                      <button type="button" class="btn btn-primary"
-                      data-toggle="modal" 
-                      data-target="#modal-edit-user"
-                      data-userid = "{{$user->id}}"
-                      onclick="loadUserEdit('{{route('admin.users.find')}}','{{$user->id}}')"
-                      >
-                        <span> <i class="fas fa-user-edit"></i></span>
-                      </button>
-                      <button class="btn btn-primary confirm-delete"  
-                        style="background-color: #50697f;"
+                  <a href="{{route('admin.users.show',['user'=>$user->id])}}" style="cursor: pointer">
+                    <tr class="odd">
+                      <td class="dtr-control sorting_1" tabindex="0">{{$user->first_name." ".$user->middle_name." ".$user->last_name}}</td>
+                      <td>{{$user->email}}</td>
+                      <td>{{$user->username}}</td>
+                      <td>bien tap</td>
+                      <td>
+                        <button type="button" class="btn btn-primary"
                         data-toggle="modal" 
-                        data-userid="{{$user->id}}"
-                        onclick="deleteUser(this);"
+                        data-target="#modal-edit-user"
+                        data-userid = "{{$user->id}}"
+                        onclick="loadUserEdit('{{route('admin.users.find')}}','{{$user->id}}')"
                         >
-                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                      </button>
-                    </td>
+                          <span> <i class="fas fa-user-edit"></i></span>
+                        </button>
+                        <button class="btn btn-primary confirm-delete"  
+                          style="background-color: #50697f;"
+                          data-toggle="modal" 
+                          data-userid="{{$user->id}}"
+                          onclick="deleteUser(this);"
+                          >
+                          <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                        </button>
+                      </td>
                     </tr>
-                </a>
+                  </a>
                 @endforeach
               @endif
             </tbody>
@@ -174,9 +185,7 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
           </table>
         </div>
       </div>
-    </div>
-     
-    </div>
+    </div>  
               
 @endsection
 
