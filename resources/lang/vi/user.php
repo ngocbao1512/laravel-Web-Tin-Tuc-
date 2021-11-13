@@ -1,6 +1,6 @@
 <?php
  return [
-     'AllUSER' => 'Tất Cả Người Dùng',
+     'AllUser' => 'Tất Cả Người Dùng',
      'AddUser' => 'Thêm Người Dùng',
      'Name' => 'Tên',
      'EmailAddress' => 'Địa Chỉ Email',
@@ -33,7 +33,7 @@
      'ConfirmBlog' => 'Bạn Có Muốn :action Bài Viết Này Không ?',
      'ActionUser' => ':action Người Dùng',
      'ActionPost' => ':action Bài Viết',
-     'Loading' => 'Đang Tải',
+     'Loading' => 'Loading......',
      'AllDataUser' => 'Tất Cả Dữ Liệu Của Người Dùng ',
      'UserName' => 'Tên Người Dùng',
      'CreateUser' => 'Tạo Người Dùng ',

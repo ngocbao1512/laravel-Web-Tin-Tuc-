@@ -1,6 +1,6 @@
 <?php
  return [
-    'AllUSER' => 'All User',
+    'AllUser' => 'All User',
     'Name' => 'Name',
     'EmailAddress' => 'Email Address',
     'Role' => 'Role',
@@ -32,7 +32,7 @@
     'ConfirmBlog' => 'Do You Want To :action This Blog ?',
     'ActionUser' => ':action User',
     'ActionPost' => ':action Post',
-    'Loading' => 'Loading....',
+    'Loading' => 'Đang Tải.......',
     'AllDataUser' => 'Data Of All User',
     'UserName' => 'User Name',
     'CreateUser' => 'Create User',

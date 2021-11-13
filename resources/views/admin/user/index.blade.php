@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    All User
+    {{ trans('user.AllUser') }}
 @endsection
 
 @section('css')
