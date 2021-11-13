@@ -1,6 +1,7 @@
 <?php
  return [
     'AllUser' => 'All User',
+    'AddUser' => 'Add User',
     'Name' => 'Name',
     'EmailAddress' => 'Email Address',
     'Role' => 'Role',

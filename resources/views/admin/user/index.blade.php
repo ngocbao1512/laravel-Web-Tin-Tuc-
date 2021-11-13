@@ -98,16 +98,7 @@ $language = session('website_language', config('app.locale'));
         <div id="example1_filter" class="dataTables_filter">
           <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
             <div class="row">
-              <div class="col-sm-12 col-md-7">
-
-              </div>
-              <div class="col-sm-12 col-md-4">
-                <div class="row">
-                  <label>{{trans('user.Search')}}<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example1">
-                  </label>
-                </div>
-              </div>  
-              <div class="col-sm-12 col-md-1">
+              <div class="col-sm-12 col-md-2 float-right">
                 <div class="dt-buttons btn-group flex-wrap">
                   <button type="button"
                   class="btn btn-primary" 
@@ -119,6 +110,7 @@ $language = session('website_language', config('app.locale'));
                 </div>
               </div>
             </div>
+            <br>
           </div>
         </div>
       </div>
@@ -131,11 +123,14 @@ $language = session('website_language', config('app.locale'));
             <div class="ring"></div>
             <p>{{trans('user.Loading')}}...</p>
           </div>
-          <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
+          <table id="dataTable" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info" >
             <thead>
               <tr>
                 <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" 
-                aria-label="Rendering engine: activate to sort column descending">{{trans('user.Name')}}
+                aria-label="Rendering engine: activate to sort column descending">{{trans('general.Index')}}
+                </th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                  {{trans('user.Name')}}
                 </th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
                   {{trans('user.EmailAddress')}}
@@ -153,11 +148,12 @@ $language = session('website_language', config('app.locale'));
               </tr>
             </thead>
             <tbody>
-              @if (isset($users))
+              @isset($users)
                 @foreach ($users as $user)
                   <a href="{{route('admin.users.show',['user'=>$user->id])}}" style="cursor: pointer">
                     <tr class="odd">
-                      <td class="dtr-control sorting_1" tabindex="0">{{$user->first_name." ".$user->middle_name." ".$user->last_name}}</td>
+                      <td class="dtr-control sorting_1" tabindex="0"></td>
+                      <td>{{$user->first_name." ".$user->middle_name." ".$user->last_name}}</td>
                       <td>{{$user->email}}</td>
                       <td>{{$user->username}}</td>
                       <td>bien tap</td>
@@ -181,10 +177,9 @@ $language = session('website_language', config('app.locale'));
                       </td>
                     </tr>
                   </a>
-                @endforeach
-              @endif
+                @endforeach               
+              @endisset
             </tbody>
-            
           </table>
         </div>
       </div>
@@ -204,7 +199,7 @@ $language = session('website_language', config('app.locale'));
   @include('admin.user.script')
 <script>
   $(document).ready(function() {
-   
+   initDataTable($('#dataTable'));
   });
 </script>
 

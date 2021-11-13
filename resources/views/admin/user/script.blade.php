@@ -261,4 +261,45 @@
     }
 
     BASE_CRUD.init('{{route('admin.users.find')}}', 'admin.user.formcreateuser');
+
+    function initDataTable(table)
+    {
+        var this_table =  table.DataTable({
+            reponsive: false,
+            language: {
+                "sLengthMenu": "",
+                "sSearch": "{{trans('general.Search')}}",
+                "oPaginate": {
+                    "sFirst": "{{trans('general.First')}}",
+                    "sPrevious": "{{trans('general.Previous')}}",
+                    "sNext": "{{trans('general.Next')}}",
+                    "sLast": "{{trans('general.Last')}}"
+                }
+            },
+            iDisplayLength: 10,
+            "columnDefs": [{
+                "searchable": false,
+                "targets": 0
+            }],   
+        });
+
+        this_table.columns().every(function () {
+            var that = this;
+            $('input[type=text]', this.header()).on('keyup change', function () {
+                if (that.search() !== this.value) {
+                    that
+                    .search(this.value)
+                    .draw();
+                }
+            });
+        });
+
+        this_table.on('search.dt', function () {
+            this_table.column(0, {search: 'applied'}).nodes().each(function (cell, i) {
+                cell.innerHTML = i + 1;
+            });
+        }).draw();
+
+        return this_table;
+    }
 </script>

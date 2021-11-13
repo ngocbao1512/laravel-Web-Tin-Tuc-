@@ -1,0 +1,20 @@
+<?php
+return [
+    'Index' => 'STT',
+    'First' => 'Đầu Tiên',
+    'Previous' => 'Trước Đó',
+    'Next' => 'Tiếp Theo',
+    'Last' => 'Trước',
+    'Search' => 'Tìm Kiếm',
+    'Add' => 'Thêm',
+    'Delete' => 'Xóa',
+    'Show' => 'Hiển Thị',
+    'Showing' => 'Đang Hiển Thị',
+    'Edit' => 'Sửa',
+    'Entries' => 'Mục',
+    'All' => 'Tất Cả',
+    'Home' => 'Màn Hình Chính',
+    'Contact' => 'Liên Hệ',
+    'To' => 'Đến',
+    'Of' => 'Của',
+];
