@@ -20,10 +20,6 @@ App::bind('UserRepositoryInterface', 'DbUserRepository');
 Route::get('/', function () {
     return view('welcome');
 });
-Route::group(['middleware' => 'locale'], function() {
-    Route::post('change-language',[HomeController::class,'changeLanguage'])
-        ->name('user.change-language');
-});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -49,7 +45,7 @@ Route::name('client.')->prefix('client')->group(function () {
 
 });
 
-Route::name('admin.')->prefix('admin')->group(function () {
+Route::name('admin.')->prefix('admin')->middleware('locale')->group(function () {
 
    //Route::resource('blogs', AdminBlogController::class);
    Route::get('blogs',[AdminBlogController::class,'index'])->name('blogs');
@@ -64,4 +60,8 @@ Route::name('admin.')->prefix('admin')->group(function () {
    Route::post('users/find',[AdminUserController::class,'find'])->name('users.find');
    Route::post('users/getmodal',[AdminUserController::class,'getModal'])->name('users.getmodal');
 
+   //change language
+   Route::post('change-language',[HomeController::class,'changeLanguage'])->name('user.change-language');
+
 });
+

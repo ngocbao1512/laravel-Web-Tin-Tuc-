@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    {{ trans('user.ALLUSER') }}
+    All User
 @endsection
 
 @section('css')
@@ -15,6 +15,9 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
 
 
 @section('header')
+<?php
+$language = session('website_language', config('app.locale'));
+?>
   <div class="col-12">
     <div class="row">
       <div class="col-10">
@@ -23,17 +26,17 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
           </li>
           <li class="nav-item d-none d-sm-inline-block">
-            <a href="index3.html" class="nav-link">Home</a>
+            <a href="index3.html" class="nav-link">{{ trans('user.Home') }}</a>
           </li>
           <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link">Contact</a>
+            <a href="#" class="nav-link">{{ trans('user.Contact') }}</a>
           </li>
         </ul>
       </div>
       <div class="col-2">
         <div id="lang-switch">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1024px-Flag_of_Vietnam.svg.png" class="vn" style="height: 25px; width: 50px; margin: 0;" onclick="changeLanguage(this,'vn')">
-          <img src="https://cdn3.iconfinder.com/data/icons/finalflags/256/United-Kingdom-flag.png" class="en" style="height: 25px; width: 50px; margin: 0;" onclick="changeLanguage(this,'en')">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1024px-Flag_of_Vietnam.svg.png" class="vn  @if ($language == 'vi') active-flag @endif" style="height: 25px; width: 50px; margin: 0;" onclick="changeLanguage(this,'vi')">
+          <img src="https://cdn3.iconfinder.com/data/icons/finalflags/256/United-Kingdom-flag.png" class="en @if ($language == 'en') active-flag @endif" style="height: 25px; width: 50px; margin: 0;" onclick="changeLanguage(this,'en')">
         </div>
       </div>
     </div>
@@ -47,14 +50,14 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
   <li class="nav-item menu-open">
     <a href="{{route('admin.blogs')}}" class="nav-link">
         <p>
-            Post
+            {{trans('user.Post')}}
         </p>
     </a>
   </li>
   <li class="nav-item menu-open">
     <a href="#" class="nav-link active">
         <p>
-            USER
+            {{trans('user.User')}}
         </p>
     </a>
   </li>
@@ -87,7 +90,7 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
 
     <div class="card">
       <div class="card-header">
-        <h3 class="card-title">DataTable Of All User</h3>
+        <h3 class="card-title">{{trans('user.AllDataUser')}}</h3>
       </div>
       <div class="card-body">
      
@@ -100,7 +103,7 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
               </div>
               <div class="col-sm-12 col-md-4">
                 <div class="row">
-                  <label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example1">
+                  <label>{{trans('user.Search')}}<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example1">
                   </label>
                 </div>
               </div>  
@@ -111,7 +114,7 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
                   data-toggle="modal"
                   data-target="#modal-create-user"
                   >
-                    <span> <i class="fas fa-user-plus"></i> add user</span>
+                    <span> <i class="fas fa-user-plus"></i> {{trans('user.AddUser')}}</span>
                   </button>
                 </div>
               </div>
@@ -126,22 +129,22 @@ https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.j
             <div class="ring"></div>
             <div class="ring"></div>
             <div class="ring"></div>
-            <p>Loading...</p>
+            <p>{{trans('user.Loading')}}...</p>
           </div>
           <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
             <thead>
               <tr>
                 <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" 
-                aria-label="Rendering engine: activate to sort column descending">Name
+                aria-label="Rendering engine: activate to sort column descending">{{trans('user.Name')}}
                 </th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
-                  Email
+                  {{trans('user.EmailAddress')}}
                 </th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">
-                  User Name
+                  {{trans('user.UserName')}}
                 </th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
-                  Role
+                  {{trans('user.Role')}}
                 </th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">
                   <center><i class="fas fa-user-edit"></i></center>

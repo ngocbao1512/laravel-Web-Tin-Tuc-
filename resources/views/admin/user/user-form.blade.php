@@ -12,7 +12,7 @@
 <div class="modal-header">
     <h4>
         @if($action == 'create')
-            Create User
+            {{trans('user.CreateUser')}}
         @else
             Edit User
         @endif

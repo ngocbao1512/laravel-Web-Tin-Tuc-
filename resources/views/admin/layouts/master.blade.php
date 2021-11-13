@@ -149,46 +149,7 @@
         $(document).ajaxStop(function() {
             $("#loading").hide();
         });
-
-        // change languages
-        
-        // By default
-        $('.en_lang').addClass("active-lang");
-        $('#lang-switch .en').addClass("active-flag");
-        
-        // Function switch
-        $(function() {
-            // vietnam button
-            $("#lang-switch .vn").click(function() {
-            // Enable vietnam
-                $('.vn_lang').addClass("active-lang"); 
-                
-                // Disable English
-                $('.en_lang').removeClass("active-lang") 
-                
-                // Active or remove the opacity on the flags.
-                $('#lang-switch .vn').addClass("active-flag");
-                $('#lang-switch .en').removeClass("active-flag");
-            });
-            
-            // English button
-            $("#lang-switch .en").click(function() {
-                
-                // Enable English
-                $('.en_lang').addClass("active-lang");
-                
-                // Disable French
-                $('.vn_lang').removeClass("active-lang")
-                
-                // Active or remove the opacity on the flags.
-                $('#lang-switch .en').addClass("active-flag");
-                $('#lang-switch .vn').removeClass("active-flag");
-            });
-        });
     });
 </script>
 </body>
 </html>
-$(document).ready(function(){
-  
-});

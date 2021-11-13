@@ -194,13 +194,14 @@
 
     function changeLanguage(button, language){
         $.ajax({
-            url: "{{route('user.change-language')}}",
+            url: "{{route('admin.user.change-language')}}",
             type: 'POST', 
             data: {
-                'laguage': language
+                'language': language
             },
-            sucess: function(){
-                console.log('change language success')
+            success: function(){
+                alert('change language suceess');
+                window.location.reload();
             },
             error: function(res){
                 console.log('some thing went wrong went change language' + res)

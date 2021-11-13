@@ -33,4 +33,12 @@
     'ActionUser' => ':action User',
     'ActionPost' => ':action Post',
     'Loading' => 'Loading....',
+    'AllDataUser' => 'Data Of All User',
+    'UserName' => 'User Name',
+    'CreateUser' => 'Create User',
+    'DeleteUser' => 'Delete User',
+    'EditUser' => 'Edit User',
+    'UpdateUser' => 'Update User',
+    'StoreUser' => 'Store User',
+    
  ];

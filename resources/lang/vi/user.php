@@ -34,8 +34,7 @@
      'ActionUser' => ':action Người Dùng',
      'ActionPost' => ':action Bài Viết',
      'Loading' => 'Đang Tải',
-     
-
-
-
+     'AllDataUser' => 'Tất Cả Dữ Liệu Của Người Dùng ',
+     'UserName' => 'Tên Người Dùng',
+     'CreateUser' => 'Tạo Người Dùng ',
  ];

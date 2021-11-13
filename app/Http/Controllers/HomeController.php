@@ -8,8 +8,7 @@ class HomeController extends Controller
 {
     public function changeLanguage(Request $request)
     {
-        \Session::put('website_language', $request->all());
-
-        return 'ok';
+        \Session::put('website_language', $request->language);
+        return redirect()->back();
     }
 }
