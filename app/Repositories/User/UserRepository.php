@@ -19,28 +19,22 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     }
 
     public function create($data)
-    {
-        $data = $request->only([
-            'email',
-            'password',
-            'first_name',
-            'middle_name',
-            'last_name',
-            'username',
-            'avatar'
-        ]);
-
-        // TODO SOMETHING TO VALIDATE DATA
-        
-
+    {    
         $dataCreate = array(
-            'email'         => $data['email'],
+            'email'         => isset($data['email']) ? $data['email'] : '',
             'password'      => bcrypt($data['password']),
             'first_name'    => isset($data['first_name']) ? $data['first_name'] : '',
             'middle_name'    => isset($data['middle_name']) ? $data['middle_name'] : '',
             'last_name'    => isset($data['last_name']) ? $data['last_name'] : '',
-            'username'    => isset($data['username']) ? $data['username'] : '',
+            'user_name'    => isset($data['user_name']) ? $data['user_name'] : '',
         );
+
+        // TODO SOMETHING TO VALIDATE DATACREATE
+        if($this->IsNullElementInArray($dataCreate) != null)
+        {
+            return $this->IsNullElementInArray($dataCreate);
+        }
+
 
         if(isset($data['avatar'])){
             if(is_string($data['avatar'])){
@@ -54,53 +48,67 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         }else{
             $dataCreate['avatar'] = 'image-default';
         } 
+
         return $this->model->create($dataCreate);
     }
 
-    public function update($request)
+    public function update($data)
     {
-        $userId = isset($request->user_id) ? $request->user_id : 0;
-        $result = $this->model->find($userId);
-        $data = $request->only([
-            'email',
-            'password',
-            'first_name',
-            'middle_name',
-            'last_name',
-            'username',
-        ]);
+        $dataCreate = array(
+            'email'         => isset($data['email']) ? $data['email'] : '',
+            'password'      => bcrypt($data['password']),
+            'first_name'    => isset($data['first_name']) ? $data['first_name'] : '',
+            'middle_name'    => isset($data['middle_name']) ? $data['middle_name'] : '',
+            'last_name'    => isset($data['last_name']) ? $data['last_name'] : '',
+            'user_name'    => isset($data['user_name']) ? $data['user_name'] : '',
+            'user_id' => isset($data['user_id']) ? $data['user_id'] : '',
+        );
 
-        $file = $request->file;
-        if($file)
+        // TODO SOMETHING TO VALIDATE DATACREATE
+        if($this->IsNullElementInArray($dataCreate) != null)
         {
-            $image_name = encodeImage($file->hashName());
-            $file->move('storage/avatar',$image_name);
-            $data['avatar'] = $image_name;
+            return $this->IsNullElementInArray($dataCreate);
         }
 
-        if($result)
+        if(isset($data['avatar'])){
+            if(is_string($data['avatar'])){
+
+            }else{
+                $file = Request::file('avatar');
+                $image_name = encodeImage($file->hashName());
+                $file->move('storage/avatar',$image_name);
+                $dataCreate['avatar'] = $image_name;
+            }
+        }else{
+            $dataCreate['avatar'] = 'image-default';
+        } 
+
+        $user = $this->model->find($dataCreate['user_id']);
+
+        if($user)
         {
-            $result->update($data);
+            $user->update($dataCreate);
             return true;
         }
         return false;
     }
 
-    public function delete($request)
+    public function delete($data)
     {        
-        $userId = isset($request->user_id) ? $request->user_id : 0;
+        $userId = isset($data['user_id']) ? $data['user_id'] : '';
 
-        $result = $this->model->find($request->user_id);
-        if($result)
+        if(!$userId)
         {
-            $result->delete();
+        return 'some thing went wrong went you try delete this user';
+        }
+
+        $user = $this->model->find($userId);
+        if($user)
+        {
+            $user->delete();
             return true;
         }
-        return false;
+        return 'This user has been deleted before';
 
-    }
-
-
-
-    
+    }  
 }

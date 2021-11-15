@@ -63,4 +63,19 @@ abstract class BaseRepository implements RepositoryInterface
         }
         return false;
     }
+
+    /*
+    * input array database to create update model 
+    * if one of element is null 
+    * return of this element
+    */
+    public function IsNullElementInArray($arr = [])
+    {
+        foreach($arr as $key => $element)
+        {
+            if ($element == null){
+                return $key;
+            }
+        }
+    }
 }

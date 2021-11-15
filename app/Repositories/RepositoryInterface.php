@@ -13,4 +13,6 @@ interface RepositoryInterface
 
     public function delete($id);
 
+    public function IsNullElementInArray($arr = []);
+
 }

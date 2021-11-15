@@ -37,4 +37,6 @@
      'AllDataUser' => 'Tất Cả Dữ Liệu Của Người Dùng ',
      'UserName' => 'Tên Người Dùng',
      'CreateUser' => 'Tạo Người Dùng ',
+     'ConfirmDeleteUser' => 'Bạn Có Muốn Xóa Người Dùng Này',
+     'SomethingWrong' => 'Có Gì Đó Không Đúng ',
  ];

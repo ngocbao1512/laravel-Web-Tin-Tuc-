@@ -58,13 +58,4 @@
         });
     }
 
-
-
-    // call ajax change language 
-    
-
-
-    // toggle flag language
-    
-
 </script>

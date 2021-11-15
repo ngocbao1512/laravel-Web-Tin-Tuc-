@@ -24,13 +24,13 @@
 
                 },
                 error:function(data) {
-                    console.log('some thing went wrong');
+                    console.log('{{trans('user.SomethingWrong')}}');
 
                 }
             });
         };
 
-        confirm("Do you want to delete this user ?", runFunction);
+        confirm("{{trans('user.ConfirmDeleteUser')}} ?", runFunction);
     }
 
     function getValueInput(idGetValue,userId){
@@ -57,7 +57,7 @@
         var password =  getValueInput('#password',userId)
         var repassword =  getValueInput('#repeat_password',userId)
         var email =  getValueInput('#email',userId)
-        var username =  getValueInput('#user_name',userId)
+        var user_name =  getValueInput('#user_name',userId)
         var idInputFile = "#input-avatar-"+userId
         console.log("ok");
         console.log($(idInputFile)[0].files[0]);
@@ -72,7 +72,7 @@
         formData.append('last_name',last_name);
         formData.append('password',password);
         formData.append('email',email);
-        formData.append('username',username);
+        formData.append('user_name',user_name);
         
        
         return formData;
@@ -80,8 +80,6 @@
 
     function saveData(button, messageConfirm, userId = null)
     {
-        console.log("okok");
-        var url = ''
         if(userId != null){
             url =  "{{ route('admin.users.update') }}";
         }else {
@@ -95,14 +93,14 @@
                 url: url,
                 type: 'POST',
                 data: formData,
-                success:function(data) {
-                    if(data.status == 200 ){
-                        alert(data.message, "success");
+                success:function(res) {
+                    if(res.status == 200 ){
+                        alert(res.message, "success");
                     } else {
-                        alert(data.message, "error");
+                        alert(res.message, "error");
                     }
                 },
-                error:function(data) {
+                error:function() {
                     console.log('some thing went wrong')
                 },
                 async: true,

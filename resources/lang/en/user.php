@@ -29,8 +29,6 @@
     'Fail' => 'Fail',
     'Edit' => 'Edit',
     'Sure' => 'Are You Sure',
-    'ConfirmUser' => 'Do You Want To :action This User ?',
-    'ConfirmBlog' => 'Do You Want To :action This Blog ?',
     'ActionUser' => ':action User',
     'ActionPost' => ':action Post',
     'Loading' => 'Đang Tải.......',
@@ -41,5 +39,7 @@
     'EditUser' => 'Edit User',
     'UpdateUser' => 'Update User',
     'StoreUser' => 'Store User',
+    'ConfirmDeleteUser' => 'Do You Want To Delete This User',
+    'SomethingWrong' => 'Some Thing Went Wrong',
     
  ];

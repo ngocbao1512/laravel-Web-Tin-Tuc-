@@ -155,7 +155,7 @@ $language = session('website_language', config('app.locale'));
                       <td class="dtr-control sorting_1" tabindex="0"></td>
                       <td>{{$user->first_name." ".$user->middle_name." ".$user->last_name}}</td>
                       <td>{{$user->email}}</td>
-                      <td>{{$user->username}}</td>
+                      <td>{{$user->user_name}}</td>
                       <td>bien tap</td>
                       <td>
                         <button type="button" class="btn btn-primary"

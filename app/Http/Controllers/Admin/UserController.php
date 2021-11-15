@@ -24,15 +24,23 @@ class UserController extends AdminController
 
     public function store(Request $request)
     {
+        $data = $request->all();
+
+        // validate
+        if($this->validateRequestUser('create',$data) !== true)
+        {
+            return $this->validateRequestUser('create',$data);
+        }
+
         try {
-            if( $this->userRepository->create($request))
+            if( $this->userRepository->create($data))
             {
-                return $this->responseSuccess('Add User Succes');
+                return $this->responseSuccess('Add User Succes',$data);
             }
             return false;
         } catch (\Exception $e) {
             \Log::error($e);
-            return $this->responseError($e);
+            return $this->responseError(400,"Add User Fail");
         }
     }
 
@@ -49,11 +57,10 @@ class UserController extends AdminController
 
             $data = $request->all();
             if(!isset($data['user_id'])){
-                return $this->responseError(500,'Invalid data');
+                return $this->responseError(500,'Invalid data user!');
             }
 
             $user = $this->userRepository->find($data['user_id']);
-
             if(is_null($user)){
                 return $this->responseError(404,'User not found');
             }
@@ -72,10 +79,18 @@ class UserController extends AdminController
 
     public function update(Request $request)
     {
+        $data = $request->all();
+
+        // validate data 
+        if($this->validateRequestUser('update',$data) !== true)
+        {
+            return $this->validateRequestUser('update',$data);
+        }
+        
         try {
-            if( $this->userRepository->update($request))
+            if( $this->userRepository->update($data))
             {
-            return $this->responseSuccess('update User Success');
+            return $this->responseSuccess('update User Success',$data);
             }
             return false;
         } catch (\Exception $e) {
@@ -87,12 +102,16 @@ class UserController extends AdminController
 
     public function destroy(Request $request)
     {
+        $data = $request->all();
+        if(!$data['user_id'])
+        return $this->responError(404,'some thing went wrong went you try delete this user');
+
         try {
-            if($this->userRepository->delete($request))
+            if($this->userRepository->delete($request) !== true)
             {
-            return $this->responseSuccess('delete success');
+                return $this->responseError(404,$this->userRepository->delete($request));
             }
-            return false;
+                return $this->responseSuccess('delete success');
         } catch (\Exception $e) {
             \Log::error($e);
             return $this->responseError($e);
@@ -106,7 +125,5 @@ class UserController extends AdminController
         $urlmodal = isset($data['urlmodal']) ? $data['urlmodal'] : 'admin.user.formcreateuser';
         
         return view("$urlmodal")->render();
-    }
-
-    
+    } 
 }

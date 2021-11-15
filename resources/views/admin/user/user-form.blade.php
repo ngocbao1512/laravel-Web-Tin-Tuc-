@@ -5,7 +5,7 @@
     $middleName = !isset($user) ? '' : $user->middle_name;
     $lastName = !isset($user) ? '' : $user->last_name;
     $email = !isset($user) ? '' : $user->email;
-    $userName = !isset($user) ? '' : $user->username;
+    $userName = !isset($user) ? '' : $user->user_name;
     $password = !isset($user) ? '' : $user->password;
     $avatar = !isset($user) ? '' : $user->avatar;
 ?>
@@ -66,7 +66,7 @@
                                                 Email Đăng Nhập 
                                             </b>
                                         </label>
-                                        <input id="email-{{$userId}}" name="gmail" type="email" value="{{$lastName}}"  placeholder="Enter Gmail" class="form-control validate" required/>
+                                        <input id="email-{{$userId}}" name="gmail" type="email" value="{{$email}}"  placeholder="Enter Gmail" class="form-control validate" required/>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
                                         <label for="user_name">
@@ -74,7 +74,7 @@
                                                 User Name
                                             </b>
                                         </label>
-                                        <input id="user_name-{{$userId}}" name="username" type="text" value="{{$userName}}"  placeholder="User Name" class="form-control validate" required/>
+                                        <input id="user_name-{{$userId}}" name="user_name" type="text" value="{{$userName}}"  placeholder="User Name" class="form-control validate" required/>
                                     </div>
                                 </div>
                             </div>
