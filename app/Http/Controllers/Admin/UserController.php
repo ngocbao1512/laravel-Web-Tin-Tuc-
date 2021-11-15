@@ -33,14 +33,20 @@ class UserController extends AdminController
         }
 
         try {
-            if( $this->userRepository->create($data))
+            $new_user = $this->userRepository->create($data);
+            if($new_user)
             {
-                return $this->responseSuccess('Add User Succes',$data);
+                return $this->responseSuccess(trans('user.add_success'),[
+                    'new_collumn' => view('admin.user.user-collumn',[
+                        'user' => $new_user,
+                    ])->render(),  
+                ]);
+                
             }
             return false;
         } catch (\Exception $e) {
             \Log::error($e);
-            return $this->responseError(400,"Add User Fail");
+            return $this->responseError(400,trans('user.fail.add'));
         }
     }
 
@@ -57,15 +63,15 @@ class UserController extends AdminController
 
             $data = $request->all();
             if(!isset($data['user_id'])){
-                return $this->responseError(500,'Invalid data user!');
+                return $this->responseError(500,trans('user.invalid_data.user'));
             }
 
             $user = $this->userRepository->find($data['user_id']);
             if(is_null($user)){
-                return $this->responseError(404,'User not found');
+                return $this->responseError(404,trans('user.no_data_user'));
             }
 
-            return $this->responseSuccess('find success',[
+            return $this->responseSuccess(trans('user.find_success'),[
                 'user_form' => view('admin.user.user-form',[
                     'user' => $user,
                 ])->render(),  
@@ -88,9 +94,14 @@ class UserController extends AdminController
         }
         
         try {
-            if( $this->userRepository->update($data))
+            $new_user = $this->userRepository->update($data);
+            if($new_user)
             {
-            return $this->responseSuccess('update User Success',$data);
+            return $this->responseSuccess(trans('user.update_success'),[
+                'new_collumn' => view('admin.user.user-collumn',[
+                    'user' => $new_user,
+                ])->render(),  
+            ]);
             }
             return false;
         } catch (\Exception $e) {
@@ -104,14 +115,14 @@ class UserController extends AdminController
     {
         $data = $request->all();
         if(!$data['user_id'])
-        return $this->responError(404,'some thing went wrong went you try delete this user');
+        return $this->responError(404,trans('user.some_thing_wrong_when.delete'));
 
         try {
             if($this->userRepository->delete($request) !== true)
             {
                 return $this->responseError(404,$this->userRepository->delete($request));
             }
-                return $this->responseSuccess('delete success');
+                return $this->responseSuccess(trans('user.delete_success'));
         } catch (\Exception $e) {
             \Log::error($e);
             return $this->responseError($e);

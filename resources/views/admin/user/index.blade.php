@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    {{ trans('user.AllUser') }}
+    {{ trans('user.all_user') }}
 @endsection
 
 @section('css')
@@ -26,10 +26,10 @@ $language = session('website_language', config('app.locale'));
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
           </li>
           <li class="nav-item d-none d-sm-inline-block">
-            <a href="index3.html" class="nav-link">{{ trans('user.Home') }}</a>
+            <a href="index3.html" class="nav-link">{{ trans('user.home') }}</a>
           </li>
           <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link">{{ trans('user.Contact') }}</a>
+            <a href="#" class="nav-link">{{ trans('user.contact') }}</a>
           </li>
         </ul>
       </div>
@@ -50,14 +50,14 @@ $language = session('website_language', config('app.locale'));
   <li class="nav-item menu-open">
     <a href="{{route('admin.blogs')}}" class="nav-link">
         <p>
-            {{trans('user.Post')}}
+            {{trans('user.post')}}
         </p>
     </a>
   </li>
   <li class="nav-item menu-open">
     <a href="#" class="nav-link active">
         <p>
-            {{trans('user.User')}}
+            {{trans('user.user')}}
         </p>
     </a>
   </li>
@@ -90,7 +90,7 @@ $language = session('website_language', config('app.locale'));
 
     <div class="card">
       <div class="card-header">
-        <h3 class="card-title">{{trans('user.AllDataUser')}}</h3>
+        <h3 class="card-title">{{trans('user.all_data_user')}}</h3>
       </div>
       <div class="card-body">
      
@@ -105,7 +105,7 @@ $language = session('website_language', config('app.locale'));
                   data-toggle="modal"
                   data-target="#modal-create-user"
                   >
-                    <span> <i class="fas fa-user-plus"></i> {{trans('user.AddUser')}}</span>
+                    <span> <i class="fas fa-user-plus"></i> {{trans('user.add_user')}}</span>
                   </button>
                 </div>
               </div>
@@ -121,25 +121,25 @@ $language = session('website_language', config('app.locale'));
             <div class="ring"></div>
             <div class="ring"></div>
             <div class="ring"></div>
-            <p>{{trans('user.Loading')}}...</p>
+            <p>{{trans('user.loading')}}...</p>
           </div>
           <table id="dataTable" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info" >
             <thead>
               <tr>
                 <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" 
-                aria-label="Rendering engine: activate to sort column descending">{{trans('general.Index')}}
+                aria-label="Rendering engine: activate to sort column descending">{{trans('general.index')}}
                 </th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
-                  {{trans('user.Name')}}
+                  {{trans('user.name')}}
                 </th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
-                  {{trans('user.EmailAddress')}}
+                  {{trans('user.email_address')}}
                 </th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">
-                  {{trans('user.UserName')}}
+                  {{trans('user.user_name')}}
                 </th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
-                  {{trans('user.Role')}}
+                  {{trans('user.role')}}
                 </th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">
                   <center><i class="fas fa-user-edit"></i></center>
@@ -150,8 +150,7 @@ $language = session('website_language', config('app.locale'));
             <tbody>
               @isset($users)
                 @foreach ($users as $user)
-                  <a href="{{route('admin.users.show',['user'=>$user->id])}}" style="cursor: pointer">
-                    <tr class="odd">
+                    <tr class="odd" data-id = "{{$user->id}}">
                       <td class="dtr-control sorting_1" tabindex="0"></td>
                       <td>{{$user->first_name." ".$user->middle_name." ".$user->last_name}}</td>
                       <td>{{$user->email}}</td>
@@ -162,7 +161,7 @@ $language = session('website_language', config('app.locale'));
                         data-toggle="modal" 
                         data-target="#modal-edit-user"
                         data-userid = "{{$user->id}}"
-                        onclick="loadUserEdit('{{route('admin.users.find')}}','{{$user->id}}')"
+                        onclick="loadUserEdit(this)"
                         >
                           <span> <i class="fas fa-user-edit"></i></span>
                         </button>
@@ -176,7 +175,6 @@ $language = session('website_language', config('app.locale'));
                         </button>
                       </td>
                     </tr>
-                  </a>
                 @endforeach               
               @endisset
             </tbody>

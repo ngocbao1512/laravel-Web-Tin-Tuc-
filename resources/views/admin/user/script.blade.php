@@ -14,23 +14,21 @@
                 success:function(data) {
                     
                     if(data.status == 200){
-                        alert(data.message, "success");
-
-                        // TODOSOMETHING
+                        removeColumn(userId);
+                        alert(data.message,"success");
                     }else{
                         alert(data.message, "error");
-                        console.log('oopp');
                     }
 
                 },
                 error:function(data) {
-                    console.log('{{trans('user.SomethingWrong')}}');
+                    console.log("{{trans('user.something_wrong')}}");
 
                 }
             });
         };
 
-        confirm("{{trans('user.ConfirmDeleteUser')}} ?", runFunction);
+        confirm("{{trans('user.confirm_delete_user')}} ?", runFunction);
     }
 
     function getValueInput(idGetValue,userId){
@@ -59,7 +57,6 @@
         var email =  getValueInput('#email',userId)
         var user_name =  getValueInput('#user_name',userId)
         var idInputFile = "#input-avatar-"+userId
-        console.log("ok");
         console.log($(idInputFile)[0].files[0]);
         
         if(!checkFormUser(userId)){
@@ -95,13 +92,29 @@
                 data: formData,
                 success:function(res) {
                     if(res.status == 200 ){
-                        alert(res.message, "success");
+                        alert(res.message,"success");
+                        alert(userId)
+                        if(userId == null){
+                            // DO SOME THING TO ADD COLLUMN
+                            console.log('funtion create');
+                            console.log(res.data.new_collumn)
+                            $('tbody').append(res.data.new_collumn)
+                        } else
+                        {
+                            // DO SOME THING TO UPDATE COLLUMN 
+                            console.log('ok');
+                            console.log(userId)
+                            console.log($("[data-id = "+userId+"]"))
+                            $("[data-id ="+userId+"]").replaceWith(res.data.new_collumn);
+                            console.log(res.data.new_collumn)
+                        }
+                        
                     } else {
-                        alert(res.message, "error");
+                        alert(res.message,"error");
                     }
                 },
                 error:function() {
-                    console.log('some thing went wrong')
+                    console.log("{{trans('user.something_wrong')}}")
                 },
                 async: true,
                 data: formData,
@@ -119,43 +132,43 @@
     {
 
         if(!getValueInput("#first_name",userId)){
-            alert('fill your field first name');
+            alert("{{trans('general.fill_your_field.first_name')}}");
             return false;
         }
 
         if(!getValueInput("#middle_name",userId)){
-            alert('fill your field middle name')
+            alert("{{trans('general.fill_your_field.middle_name')}}")
             return false;
         }
 
         if(!getValueInput("#last_name",userId)){
-            alert('fill your field last name')
+            alert("{{trans('general.fill_your_field.last_name')}}")
             return false;
         }
 
         if(!getValueInput("#password",userId)){
-            alert('fill your field password')
+            alert("{{trans('general.fill_your_field.pass_word')}}")
             return false;
         }
 
         if(!getValueInput("#repeat_password",userId)){
-            alert('fill your field repeat password')
+            alert("{{trans('general.fill_your_field.re_pass_word')}}")
             return false;
         }
 
         if(getValueInput("#repeat_password",userId) != getValueInput("#password",userId))
         {
-            alert('check your password and repeat password')
+            alert("{{trans('general.re_pass_word_wrong')}}")
             return false;
         }
 
         if(!getValueInput("#email",userId)){
-            alert('fill your field email')
+            alert("{{trans('general.fill_your_field.email')}}")
             return false;
         }
 
         if(!getValueInput("#user_name",userId)){
-            alert('fill your user name')
+            alert("{{trans('general.fill_your_field.user_name')}}")
             return false;
         }
 
@@ -168,24 +181,31 @@
         {
             return true;
         } 
-        alert("please press fill field your "+$msgerror);
+        alert("{{trans('general.fill_your_field.param')}}"+$msgerror);
         return false;
     }
 
-    function loadUserEdit(paramURL = null, user_id = null){
-        BASE_CRUD.__userid;
-        let url = paramURL;
+    function loadUserEdit(button){
+        var button = $(button);
+        var user_id = button.data('userid');
+
         $.ajax({
-            url,
+            url: '{{route("admin.users.find")}}' ,
             type: "POST",
             data:{
                 'user_id' : user_id
             },
+            
             success: function(res) {
-                $('#modal-edit-user-content').html(res.data.user_form)
+                if(res.status == 404)
+                {
+                    alert(res.message);
+                } else {
+                    $('#modal-edit-user-content').html(res.data.user_form)
+                }
             },
             error: function(){
-                alert('some thing went wrong. please try again!!!')
+                alert("{{trans('user.wrong')}}")
             },
         });
     }
@@ -202,7 +222,7 @@
                 window.location.reload();
             },
             error: function(res){
-                console.log('some thing went wrong went change language' + res)
+                console.log("{{trans('user.wrong')}}" + res)
             },
         });
     }
@@ -230,10 +250,15 @@
                     'user_id' : this._userid
                 },
                 success: function(res) {
-                    $('#modal-edit-user-content').html(res.data.user_form)
+                    if(res.status == 404)
+                    {
+                        alert(res.message)
+                    } else {
+                        $('#modal-edit-user-content').html(res.data.user_form)
+                    }
                 },
                 error: function(){
-                    alert('some thing went wrong. please try again!!!')
+                    alert("{{trans('user.wrong')}}")
                 },
             })
         },
@@ -252,7 +277,7 @@
                     $('#modal-body').html(res);
                 },
                 error: function(){
-                    alert('some thing went wrong. please try again laster')
+                    alert("{{trans('user.wrong')}}")
                 },
             })
         }
@@ -266,12 +291,12 @@
             reponsive: false,
             language: {
                 "sLengthMenu": "",
-                "sSearch": "{{trans('general.Search')}}",
+                "sSearch": "{{trans('general.search')}}",
                 "oPaginate": {
-                    "sFirst": "{{trans('general.First')}}",
-                    "sPrevious": "{{trans('general.Previous')}}",
-                    "sNext": "{{trans('general.Next')}}",
-                    "sLast": "{{trans('general.Last')}}"
+                    "sFirst": "{{trans('general.first')}}",
+                    "sPrevious": "{{trans('general.previous')}}",
+                    "sNext": "{{trans('general.next')}}",
+                    "sLast": "{{trans('general.last')}}"
                 }
             },
             iDisplayLength: 10,

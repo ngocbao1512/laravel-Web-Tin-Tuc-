@@ -12,9 +12,9 @@
 <div class="modal-header">
     <h4>
         @if($action == 'create')
-            {{trans('user.CreateUser')}}
+            {{trans('user.create_user')}}
         @else
-            Edit User
+        {{trans('user.edit_user')}}
         @endif
     </h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -34,26 +34,26 @@
                                     <div class="col-xs-3 col-sm-4">
                                         <label for="firstname">
                                             <b>
-                                                first Name
+                                                {{trans('user.first_name')}}
                                             </b>
                                         </label>
-                                        <input id="first_name-{{$userId}}"  name="first_name" value="{{$firstName}}" type="text"  placeholder="first name" class="form-control validate" required/>
+                                        <input id="first_name-{{$userId}}"  name="first_name" value="{{$firstName}}" type="text"  placeholder="{{trans('user.first_name')}}" class="form-control validate" required/>
                                     </div>
                                     <div class="col-xs-3 col-sm-4">
                                         <label for="middlename">
                                             <b>
-                                                middle Name
+                                                {{trans('user.middle_name')}}
                                             </b>
                                         </label>
-                                        <input id="middle_name-{{$userId}}" name="middle_name" value="{{$middleName}}" type="text"  placeholder="middle name" class="form-control validate" required/>
+                                        <input id="middle_name-{{$userId}}" name="middle_name" value="{{$middleName}}" type="text"  placeholder="{{trans('user.middle_name')}}" class="form-control validate" required/>
                                     </div>
                                     <div class="col-xs-3 col-sm-4">
                                         <label for="lastname">
                                             <b>
-                                                last Name
+                                                {{trans('user.last_name')}}
                                             </b>
                                         </label>
-                                        <input id="last_name-{{$userId}}" name="last_name" type="text" value="{{$lastName}}" placeholder="last name" class="form-control validate" required/>
+                                        <input id="last_name-{{$userId}}" name="last_name" type="text" value="{{$lastName}}" placeholder="{{trans('user.last_name')}}" class="form-control validate" required/>
                                     </div>
                                 </div>
                             </div>
@@ -63,18 +63,18 @@
                                     <div class="col-xs-12 col-sm-6">
                                         <label for="gmail">
                                             <b>
-                                                Email Đăng Nhập 
+                                                {{trans('user.email')}}
                                             </b>
                                         </label>
-                                        <input id="email-{{$userId}}" name="gmail" type="email" value="{{$email}}"  placeholder="Enter Gmail" class="form-control validate" required/>
+                                        <input id="email-{{$userId}}" name="gmail" type="email" value="{{$email}}"  placeholder="{{trans('user.email')}}" class="form-control validate" required/>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
                                         <label for="user_name">
                                             <b>
-                                                User Name
+                                                {{trans('user.user_name')}}
                                             </b>
                                         </label>
-                                        <input id="user_name-{{$userId}}" name="user_name" type="text" value="{{$userName}}"  placeholder="User Name" class="form-control validate" required/>
+                                        <input id="user_name-{{$userId}}" name="user_name" type="text" value="{{$userName}}"  placeholder=" {{trans('user.user_name')}}" class="form-control validate" required/>
                                     </div>
                                 </div>
                             </div>
@@ -84,18 +84,18 @@
                                     <div class="col-xs-12 col-sm-6">
                                         <label for="psw">
                                             <b>
-                                                Pass Word
+                                                {{trans('user.pass_word')}}
                                             </b>
                                         </label>
-                                        <input id="password-{{$userId}}" name="password" value="{{$password}}" type="password"  placeholder="password" class="form-control validate" required/>
+                                        <input id="password-{{$userId}}" name="password" value="{{$password}}" type="password"  placeholder="{{trans('user.pass_word')}}" class="form-control validate" required/>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
                                         <label for="psw-repeat">
                                             <b>
-                                                Repeat Password
+                                                {{trans('user.re_pass_word')}}
                                             </b>
                                         </label>
-                                        <input id="repeat_password-{{$userId}}" name="password_repeat" value="{{$password}}" type="password"  placeholder="Repeat Password" class="form-control validate" required/>
+                                        <input id="repeat_password-{{$userId}}" name="password_repeat" value="{{$password}}" type="password"  placeholder="{{trans('user.re_pass_word')}}" class="form-control validate" required/>
                                     </div>
                                 </div>
                             </div>
@@ -122,16 +122,16 @@
                         @if ($action =='create')
                             <button  type="button" class="btn btn-primary btn-block text-uppercase "
                                 style="color:white;background-color:rgb(24 89 230);"
-                                onclick="saveData(this,'do you want to create this user')"
+                                onclick="saveData(this,'{{trans('user.do_you_want.create')}}')"
                             >
-                            Save User    
+                            {{trans('user.save_user')}}  
                             </button>
                         @else
                             <button  type="button" class="btn btn-primary btn-block text-uppercase "
                                 style="color:white;background-color:rgb(24 89 230);"
-                                onclick="saveData(this,'do you want to update this user',{{$userId}})"
+                                onclick="saveData(this,'{{trans('user.do_you_want.update')}}',{{$userId}})"
                             >
-                                Edit User
+                            {{trans('user.edit_user')}}
                             </button>
                         @endif
                     </div>

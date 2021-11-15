@@ -24,27 +24,27 @@ class AdminController extends Controller
     {
         $check = true;
         if(!isset($data['first_name'])){
-            return $this->responseError(500,'Invalid data first name!');
+            return $this->responseError(500,trans('user.invalid_data.first_name'));
         }
 
         if(!isset($data['middle_name'])){
-            return $this->responseError(500,'Invalid data middle name!');
+            return $this->responseError(500,trans('user.invalid_data.middle_name'));
         }
 
         if(!isset($data['last_name'])){
-            return $this->responseError(500,'Invalid data last name!');
+            return $this->responseError(500,trans('user.invalid_data.last_name'));
         }
 
         if(!isset($data['email'])){
-            return $this->responseError(500,'Invalid data email!');
+            return $this->responseError(500,trans('user.invalid_data.email'));
         }
 
         if((strlen($data['password']) < 3)){
-            return $this->responseError(500,'Password must be at least 3 characters!');
+            return $this->responseError(500,trans('user.pass_at_least_three_characters'));
         }
 
         if(!isset($data['user_name'])){
-            return $this->responseError(500,'Invalid data user name!');
+            return $this->responseError(500,trans('user.invalid_data.user_name'));
         }
 
         if($action == 'create') {
@@ -57,13 +57,13 @@ class AdminController extends Controller
         if($action == 'update') {
 
             if(!isset($data['user_id'])){
-                return $this->responseError(500,'Some Thing Went Wrong Went You Try Edit This User');
+                return $this->responseError(500,trans('user.some_thing_wrong_when.update'));
             }
 
             $data_old_user = DB::table('users')->find($data['user_id']);
 
             if($data_old_user == null){
-                return $this->responseError(500,"have not data of this user in Database");
+                return $this->responseError(500,trans('user.no_data_user'));
             } else 
             {
                 if($data['user_name'] !== $data_old_user->user_name)
@@ -87,7 +87,7 @@ class AdminController extends Controller
     public function checkFieldValueInDB($table_name,$field_check, $value_check)
     {
         if(DB::table($table_name)->where($field_check, $value_check)->first() != null)
-            return $this->responseError(500,$field_check.' be used!!');
+            return $this->responseError(500,$field_check.trans('user.used_for_another_acc'));
         return true;
     }
 }

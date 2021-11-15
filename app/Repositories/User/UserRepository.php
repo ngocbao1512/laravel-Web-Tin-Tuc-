@@ -32,7 +32,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         // TODO SOMETHING TO VALIDATE DATACREATE
         if($this->IsNullElementInArray($dataCreate) != null)
         {
-            return $this->IsNullElementInArray($dataCreate);
+            return $this->IsNullElementInArray($dataCreate)."null";
         }
 
 
@@ -49,7 +49,11 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             $dataCreate['avatar'] = 'image-default';
         } 
 
-        return $this->model->create($dataCreate);
+        $newUser = $this->model->create($dataCreate);
+
+        if($newUser)
+        return $newUser;
+        return false;
     }
 
     public function update($data)
@@ -87,8 +91,9 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
         if($user)
         {
-            $user->update($dataCreate);
-            return true;
+            $new_user = $user->update($dataCreate);
+            if($new_user) return $this->model->find($dataCreate['user_id']);
+            return false;
         }
         return false;
     }
@@ -99,7 +104,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
         if(!$userId)
         {
-        return 'some thing went wrong went you try delete this user';
+        return trans('user.some_thing_wrong_when.delete');
         }
 
         $user = $this->model->find($userId);
@@ -108,7 +113,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             $user->delete();
             return true;
         }
-        return 'This user has been deleted before';
+        return trans('user.user_deleted_before');
 
     }  
 }
