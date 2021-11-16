@@ -93,20 +93,14 @@
                 success:function(res) {
                     if(res.status == 200 ){
                         alert(res.message,"success");
-                        alert(userId)
                         if(userId == null){
                             // DO SOME THING TO ADD COLLUMN
-                            console.log('funtion create');
-                            console.log(res.data.new_collumn)
                             $('tbody').append(res.data.new_collumn)
+                            DataRow newRow = DATA_TABLE._table.NewRow();
                         } else
                         {
                             // DO SOME THING TO UPDATE COLLUMN 
-                            console.log('ok');
-                            console.log(userId)
-                            console.log($("[data-id = "+userId+"]"))
                             $("[data-id ="+userId+"]").replaceWith(res.data.new_collumn);
-                            console.log(res.data.new_collumn)
                         }
                         
                     } else {
@@ -265,7 +259,6 @@
 
         modalCreate(paramURL = null, paramURLModal = null){
             let url = (paramURL==null) ? this._urlModalCreate : paramURL;
-            console.log(url);
             let urlModal = (paramURLModal === null ) ? this._urlModalCreate : paramURLModal
             $.ajax({
                 url,
@@ -285,44 +278,63 @@
 
     BASE_CRUD.init('{{route('admin.users.find')}}', 'admin.user.formcreateuser');
 
-    function initDataTable(table)
-    {
-        var this_table =  table.DataTable({
-            reponsive: false,
-            language: {
-                "sLengthMenu": "",
-                "sSearch": "{{trans('general.search')}}",
-                "oPaginate": {
-                    "sFirst": "{{trans('general.first')}}",
-                    "sPrevious": "{{trans('general.previous')}}",
-                    "sNext": "{{trans('general.next')}}",
-                    "sLast": "{{trans('general.last')}}"
-                }
-            },
-            iDisplayLength: 10,
-            "columnDefs": [{
-                "searchable": false,
-                "targets": 0
-            }],   
-        });
 
-        this_table.columns().every(function () {
-            var that = this;
-            $('input[type=text]', this.header()).on('keyup change', function () {
-                if (that.search() !== this.value) {
-                    that
-                    .search(this.value)
-                    .draw();
-                }
+    DATA_TABLE = {
+        _table: null,
+
+        init(table)
+        {
+           this._table = table;
+        },
+
+        create_data_table()
+        {
+            console.log("create data table");
+            table = this._table.DataTable({
+                reponsive: false,
+                language: {
+                    "sLengthMenu": "",
+                    "sSearch": "{{trans('general.search')}}",
+                    "oPaginate": {
+                        "sFirst": "{{trans('general.first')}}",
+                        "sPrevious": "{{trans('general.previous')}}",
+                        "sNext": "{{trans('general.next')}}",
+                        "sLast": "{{trans('general.last')}}"
+                    }
+                },
+                iDisplayLength: 10,
+                "columnDefs": [{
+                    "searchable": false,
+                    "targets": 0
+                }],   
             });
-        });
 
-        this_table.on('search.dt', function () {
-            this_table.column(0, {search: 'applied'}).nodes().each(function (cell, i) {
-                cell.innerHTML = i + 1;
+            table.columns().every(function () {
+                var that = this;
+                $('input[type=text]', this.header()).on('keyup change', function () {
+                    if (that.search() !== this.value) {
+                        that.search(this.value).draw();
+                    }
+                });
             });
-        }).draw();
+            console.log('run over here');
+            table.on('search.dt', function () {
+                table.column(0, {search: 'applied'}).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            }).draw();
 
-        return this_table;
+        }
     }
+
+    DATA_TABLE.init($('#dataTable'));
+    DATA_TABLE.create_data_table();
+    alert(DATA_TABLE._table)
+
+    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+    ////////////////////////////////
+    // DATA TABLE 
+    //////////////////////////////////////////////
+
+    
 </script>

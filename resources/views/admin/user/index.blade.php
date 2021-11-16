@@ -197,7 +197,6 @@ $language = session('website_language', config('app.locale'));
   @include('admin.user.script')
 <script>
   $(document).ready(function() {
-   initDataTable($('#dataTable'));
   });
 </script>
 
