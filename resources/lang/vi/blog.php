@@ -2,6 +2,8 @@
 return [
     'all_blog' => 'Tất Cả Bài Viết',
     'add_blog' => 'Thêm Bài Viết',
+    'schedule' => 'Lên Lịch Bài Viết',
+    'public' => 'Công Khai',
     'title' => 'Tiêu Đề',
     'content' => 'Nội Dung',
     'author' => 'Tác Giả',
@@ -12,14 +14,42 @@ return [
     'wait_verify' => 'Chờ Xác Nhận',
     'be_rejected' => 'Bị Từ Chối',
     'no_data' => 'Không Có Dữ Liệu',
+    'create-' => [
+        'blog' => 'Tạo Bài Viết',
+        'success' => 'Tạo Bài Viết Thành Công',
+        'fail' => 'Tạo Bài Viết Thất Bại ',
+        'wrong' => 'Có Gì Đấy không đúng khi bạn cố tạo bài viết',
+    ],
+    'edit-' => [
+        'blog' => 'Sửa Bài Viết',
+        'success' => 'Sửa Bài Viết Thành Công',
+        'fail' => 'Sửa Bài Viết Thất Bại',
+        'wrong' => 'Có Gì đấy không đúng trong lúc bạn cố sửa bài viết ',
+    ],
+    'delete-' => [
+        'blog' => 'xóa bài viết ',
+        'success' => 'xóa bài viết thành công ',
+        'fail' => 'xóa bài viết thất bại',
+        'wrong' => 'có gì đấy không đúng trong lúc bạn cố xóa bài viết ',
+    ],
+    'title-' => [
+        'not_null' => 'không để tiêu đề trống ',
+        'at_least_3_charater' => 'tiêu đề ít nhất phải có 3 kí tự ',
+        'no_more_than_144_character' => 'tiêu đề không vượt quá 144 kí tự ',
+        'wrong' => 'có gì đấy không đúng ở tiêu đề của bạn, làm ơn kiểm tra lại!!!',
+    ],
+    'content-' => [
+        'not_null' => 'nội dung không được rỗng',
+        'wrong' => 'có gì đấy không đúng ở nội dung của bạn, làm ơn kiểm tra lại!!!',
+    ],
+    'image-' => [
+        'is_image' => 'file tải lên phải ở dạng ảnh',
+        'wrong' => 'Có gì đấy không đúng ở ảnh của bạn ',
+    ],
+    'publish_date-' => [
+        'not_null' => 'bài viết cần được lên lịch để đăng bài ',
+        'wrong' => 'có gì đấy không đúng ở ngày phát hành của bạn, xin hãy kiểm tra lại. ', 
+    ],
+    
+    
 ];
-
-
-/*----------------------------------------------------------------
- $table->string('title');
-            $table->string('slug')->index('slug_index');
-            $table->text('content')->nullable();
-            $table->biginteger('created_user_id')->nullable();
-            $table->string('cover')->nullable();
-            $table->date("publish_date");
-            $table->tinyInteger('is_verifited')->default(0);

@@ -197,7 +197,7 @@ $language = session('website_language', config('app.locale'));
 @endsection
 
 @section('js')
-  @include('admin.user.script')
+  @include('admin.blog.script')
 <script>
   $(document).ready(function() {
   });

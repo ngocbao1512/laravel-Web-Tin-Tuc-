@@ -16,8 +16,3 @@ mix.js('resources/js/app.js', 'public/js').postCss('resources/css/app.css', 'pub
     require('tailwindcss'),
     require('autoprefixer'),
 ]);
-
-mix.copyDirectory('resources/views/templatemo_553_xtra_blog', 'public/theme-client');
-
-
-mix.copyDirectory('resources/views/AdminLTE', 'public/AdminLTE');

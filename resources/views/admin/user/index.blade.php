@@ -55,7 +55,7 @@ $language = session('website_language', config('app.locale'));
     </a>
   </li>
   <li class="nav-item menu-open">
-    <a href="#" class="nav-link active">
+    <a href="{{route('admin.users')}}" class="nav-link active">
         <p>
             {{trans('user.user')}}
         </p>
