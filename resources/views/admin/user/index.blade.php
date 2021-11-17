@@ -195,10 +195,7 @@ $language = session('website_language', config('app.locale'));
 
 @section('js')
   @include('admin.user.script')
-<script>
-  $(document).ready(function() {
-  });
-</script>
+
 
 @endsection
 

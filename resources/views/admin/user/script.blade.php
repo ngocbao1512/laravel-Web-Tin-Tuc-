@@ -95,8 +95,14 @@
                         alert(res.message,"success");
                         if(userId == null){
                             // DO SOME THING TO ADD COLLUMN
-                            $('tbody').append(res.data.new_collumn)
-                            DataRow newRow = DATA_TABLE._table.NewRow();
+                          //  $('tbody').append(res.data.new_collumn)
+                            newRow = DATA_TABLE._table.row.add( {
+                                "index":       0,
+                                "Name":   "ngocbao",
+                                "Email Address":     "ngocbao2010@gmail",
+                                "User Name": "ngocbao20001",
+                                "Role":     "Bieen Tap",
+                            } ).draw();
                         } else
                         {
                             // DO SOME THING TO UPDATE COLLUMN 
@@ -324,17 +330,15 @@
                 });
             }).draw();
 
-        }
+            this._table = table
+
+        },
     }
 
     DATA_TABLE.init($('#dataTable'));
     DATA_TABLE.create_data_table();
-    alert(DATA_TABLE._table)
-
-    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-    ////////////////////////////////
-    // DATA TABLE 
-    //////////////////////////////////////////////
-
+    alert(DATA_TABLE._table);
+    console.log('here');
+    console.log(DATA_TABLE._table)
     
 </script>
