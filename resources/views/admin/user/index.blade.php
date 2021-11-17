@@ -123,7 +123,7 @@ $language = session('website_language', config('app.locale'));
             <div class="ring"></div>
             <p>{{trans('user.loading')}}...</p>
           </div>
-          <table id="dataTable" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info" >
+          <table id="dataTable" class="table table-bordered table-striped dtr-inline" data-datatable="table" aria-describedby="example1_info" >
             <thead>
               <tr>
                 <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" 
@@ -150,7 +150,7 @@ $language = session('website_language', config('app.locale'));
             <tbody>
               @isset($users)
                 @foreach ($users as $user)
-                    <tr class="odd" data-id = "{{$user->id}}">
+                    <tr class="odd" data-id = "{{$user->id}}" id="{{$user->id}}">
                       <td class="dtr-control sorting_1" tabindex="0"></td>
                       <td>{{$user->first_name." ".$user->middle_name." ".$user->last_name}}</td>
                       <td>{{$user->email}}</td>
