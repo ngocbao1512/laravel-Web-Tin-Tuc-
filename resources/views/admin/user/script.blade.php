@@ -14,7 +14,6 @@
                 success:function(data) {
                     
                     if(data.status == 200){
-                        removeColumn(userId);
                         alert(data.message,"success");
                     }else{
                         alert(data.message, "error");
@@ -70,8 +69,7 @@
         formData.append('password',password);
         formData.append('email',email);
         formData.append('user_name',user_name);
-        
-       
+          
         return formData;
     }
 
@@ -94,15 +92,12 @@
                     if(res.status == 200 ){
                         alert(res.message,"success");
                         if(userId == null){
-                            // DO SOME THING TO ADD COLLUMN
-                            $('tbody').append(res.data.new_collumn)
-                            DataRow newRow = DATA_TABLE._table.NewRow();
+                            
+
                         } else
                         {
-                            // DO SOME THING TO UPDATE COLLUMN 
-                            $("[data-id ="+userId+"]").replaceWith(res.data.new_collumn);
-                        }
                         
+                        }
                     } else {
                         alert(res.message,"error");
                     }
@@ -275,7 +270,6 @@
             })
         }
     }
-
     BASE_CRUD.init('{{route('admin.users.find')}}', 'admin.user.formcreateuser');
 
 
@@ -324,17 +318,16 @@
                 });
             }).draw();
 
+            this._table = table;
+
         }
     }
 
-    DATA_TABLE.init($('#dataTable'));
-    DATA_TABLE.create_data_table();
-    alert(DATA_TABLE._table)
+    //DATA_TABLE.init($('#dataTable'));
+    //DATA_TABLE.create_data_table();
 
-    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-    ////////////////////////////////
-    // DATA TABLE 
-    //////////////////////////////////////////////
+    
 
+   
     
 </script>

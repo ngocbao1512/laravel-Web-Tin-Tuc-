@@ -1,8 +1,4 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
-    "/theme-client/about.html": "/theme-client/about.html",
-    "/theme-client/contact.html": "/theme-client/contact.html",
-    "/theme-client/index.html": "/theme-client/index.html",
-    "/theme-client/post.html": "/theme-client/post.html"
+    "/css/app.css": "/css/app.css"
 }
