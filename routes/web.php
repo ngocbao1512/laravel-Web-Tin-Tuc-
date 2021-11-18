@@ -15,7 +15,6 @@ use App\Http\Controllers\HomeController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-App::bind('UserRepositoryInterface', 'DbUserRepository');
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,7 +22,10 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->name('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
+
 
 
 Route::name('client.')->prefix('client')->group(function () {
@@ -47,21 +49,23 @@ Route::name('client.')->prefix('client')->group(function () {
 
 Route::name('admin.')->prefix('admin')->middleware('locale')->group(function () {
 
-   //Route::resource('blogs', AdminBlogController::class);
-   Route::get('blogs',[AdminBlogController::class,'index'])->name('blogs');
+   
+    Route::get('blogs',[AdminBlogController::class,'index'])->name('blogs');
+    Route::post('blogs/show',[AdminBlogController::class,'show'])->name('blogs.show');
+    Route::post('blogs/destroy',[AdminBlogController::class,'destroy'])->name('blogs.destroy');
+    Route::post('blogs/edit',[AdminBlogController::class,'update'])->name('blogs.update');
+    Route::post('blogs/store',[AdminBlogController::class,'store'])->name('blogs.store');
 
+    //Route::resource('users', AdminUserController::class);
+    Route::get('users',[AdminUserController::class,'index'])->name('users');
+    Route::get('users/$userid',[AdminUserController::class,'show'])->name('users.show');
+    Route::post('users/destroy',[AdminUserController::class,'destroy'])->name('users.destroy');
+    Route::post('users/store',[AdminUserController::class,'store'])->name('users.store');
+    Route::post('users/user',[AdminUserController::class,'update'])->name('users.update');
+    Route::post('users/find',[AdminUserController::class,'find'])->name('users.find');
+    Route::post('users/getmodal',[AdminUserController::class,'getModal'])->name('users.getmodal');
 
-   //Route::resource('users', AdminUserController::class);
-   Route::get('users',[AdminUserController::class,'index'])->name('users');
-   Route::get('users/$userid',[AdminUserController::class,'show'])->name('users.show');
-   Route::post('users/destroy',[AdminUserController::class,'destroy'])->name('users.destroy');
-   Route::post('users/store',[AdminUserController::class,'store'])->name('users.store');
-   Route::post('users/user',[AdminUserController::class,'update'])->name('users.update');
-   Route::post('users/find',[AdminUserController::class,'find'])->name('users.find');
-   Route::post('users/getmodal',[AdminUserController::class,'getModal'])->name('users.getmodal');
-
-   //change language
-   Route::post('change-language',[HomeController::class,'changeLanguage'])->name('user.change-language');
+    //change language
+    Route::post('change-language',[HomeController::class,'changeLanguage'])->name('user.change-language');
 
 });
-

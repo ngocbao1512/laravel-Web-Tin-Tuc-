@@ -58,10 +58,11 @@
         });
     }
 
-    function removeColumn(id_collumn)
+    function removeColumn(table, row)
     {
-        var target = $('table').find('tr[data-id="'+id_collumn+'"]');
-        target.remove();
+        myTable.row( row ).delete();
     }
+
+
 
 </script>

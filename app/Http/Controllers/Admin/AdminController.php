@@ -20,6 +20,25 @@ class AdminController extends Controller
         }
     }
 
+    public function validateRequestBlog($action = null,$data) 
+    {
+        $check = true;
+        if(!isset($data['title'])){
+            return $this->responseError(500,trans('general.fill_your_field.title'));
+        }
+
+        if(!isset($data['content'])){
+            return $this->responseError(500,trans('general.fill_your_field.content'));
+        }
+
+        if(!isset($data['date_publish'])){
+            return $this->responseError(500,trans('general.fill_your_field.date_publish'));
+        }
+
+        return true;  
+    }
+
+    // function for user
     public function validateRequestUser($action = null,$data)
     {
         $check = true;
@@ -79,8 +98,6 @@ class AdminController extends Controller
                 }
             }
         }
-        
-
         return true;
     }
 
@@ -90,4 +107,8 @@ class AdminController extends Controller
             return $this->responseError(500,$field_check.trans('user.used_for_another_acc'));
         return true;
     }
+
+    // function for blog 
+   
+
 }

@@ -31,6 +31,10 @@ return [
         'pass_word' => 'please fill your field pass word',
         'user_name' => 'please fill your field user name',
         're_pass_word' => 'please press again your pass word',
+        'title' => 'please fill your field title',
+        'content' => 'please fill your field content',
+        'date_publish' => 'please schedule publish for post',
+        
     ],
     're_pass_word_wrong' => 'password incorect, try again',
 

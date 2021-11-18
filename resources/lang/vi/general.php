@@ -31,6 +31,9 @@ return [
         'pass_word' => 'Nhập mật khẩu của bạn',
         'user_name' => 'Nhập tên người dùng của bạn',
         're_pass_word' => 'nhập lại mật khẩu của bạn',
+        'title' => 'Nhập Tiêu Đề Cho Bài Viết Của Bạn ',
+        'content' => 'Nhập Tiêu Đề Cho Bài Viết Của Bạn ',
+        'date_publish' => 'Lên Lịch Đăng Bài Cho Bài Viết ',
     ],
     're_pass_word_wrong' => 'mật khẩu không khớp, thử lại',
 

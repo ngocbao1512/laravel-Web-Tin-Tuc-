@@ -37,7 +37,7 @@ class UserController extends AdminController
             if($new_user)
             {
                 return $this->responseSuccess(trans('user.add_success'),[
-                    'new_collumn' => view('admin.user.user-collumn',[
+                    'new_row' => view('admin.user.user-collumn',[
                         'user' => $new_user,
                     ])->render(),  
                 ]);
@@ -98,7 +98,7 @@ class UserController extends AdminController
             if($new_user)
             {
             return $this->responseSuccess(trans('user.update_success'),[
-                'new_collumn' => view('admin.user.user-collumn',[
+                'new_row' => view('admin.user.user-collumn',[
                     'user' => $new_user,
                 ])->render(),  
             ]);
