@@ -18,6 +18,7 @@ class Blog extends Model
         'title',
         'content',
         'slug',
+        'publish_date',
         'user_id',   
         'cover',
     ];

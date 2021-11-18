@@ -35,26 +35,22 @@ class BlogController extends AdminController
             return $check;  
         }
 
-
-        return  $this->blogRepository->create($data);
-
-// code true here 
-        try {
+        //try {
             $new_blog = $this->blogRepository->create($data);
             if($new_blog)
             {
                 return $this->responseSuccess(trans('user.add_success'),[
-                    'new_row' => view('admin.user.user-collumn',[
+                    'new_row' => view('admin.blog.blog-collumn',[
                         'blog' => $new_blog,
                     ])->render(),  
                 ]);
                 
             }
             return false;
-        } catch (\Exception $e) {
+        /*} catch (\Exception $e) {
             \Log::error($e);
             return $this->responseError(400,trans('user.fail.add'));
-        }
+        }*/
 
     }
 
