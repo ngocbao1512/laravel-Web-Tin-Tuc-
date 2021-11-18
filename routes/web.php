@@ -51,6 +51,10 @@ Route::name('admin.')->prefix('admin')->middleware('locale')->group(function () 
 
    
     Route::get('blogs',[AdminBlogController::class,'index'])->name('blogs');
+    Route::post('blogs/destroy',[AdminUserController::class,'destroy'])->name('blogs.destroy');
+    Route::post('blogs/store',[AdminUserController::class,'store'])->name('blogs.store');
+    Route::post('blogs/update',[AdminUserController::class,'update'])->name('blogs.update');
+    Route::post('blogs/show',[AdminUserController::class,'show'])->name('blogs.show');
 
     //Route::resource('users', AdminUserController::class);
     Route::get('users',[AdminUserController::class,'index'])->name('users');

@@ -10,67 +10,45 @@ class BlogController extends AdminController
 {
     protected $modelBlog;
     
-    public function __construct(
-       
+    public function __construct(   
         Blog $blog
-        )
+    )
     {
         $this->modelBlog = $blog;
     }
 
     public function index()
     {
-       // dd("ok");
-        //$blogs = $this->modelBlog->paginate(config('blog.paginate8'));
         return view('admin.blog.index');
     }
-
-    
-    public function create()
-    {
-        return view('admin.layouts.blog.create');
-    }
-
     
     public function store(Request $request)
     {
-        dd('ok');
-        $data_blog  = $request->only([
-            'title',
-            'content',
-        ]);
+        $data = $request->all();
+        // validate
+        $check = $this->validateRequestBlog('create',$data);
+        if( $check !== true)
+        {
+            return $check;  
+        }
 
-        $data_blog['user_id'] = auth()->id();
-
-        // save image 
-        $file = $request->file('image');
-        if ($file) {
-            // $file->hashName = encodeImage($file);
-             $image_name = encodeImage($file);
-             $file->move('storage/images',$image_name);
-             $data_image['name'] = $image_name;
-             $new_image = $this->modelImage->create($data_image);
-         }
-
+// code true here 
         try {
-            // save blog
-            $data_blog['image_id'] = $new_image->id;
-
-            $this->modelBlog->create($data_blog);
-
-            return redirect()
-                ->route('admin.blogs.index')
-                ->with('msg','create success!');
-
+            $new_blog = $this->BlogRepository->create($data);
+            if($new_blog)
+            {
+                return $this->responseSuccess(trans('user.add_success'),[
+                    'new_row' => view('admin.user.user-collumn',[
+                        'blog' => $new_blog,
+                    ])->render(),  
+                ]);
+                
+            }
+            return false;
         } catch (\Exception $e) {
-            
             \Log::error($e);
-
-            return redirect()
-                ->route('admin.blogs.index')
-                ->with('error','create failed. Please try again later!');
-        } 
-
+            return $this->responseError(400,trans('user.fail.add'));
+        }
 
     }
 
@@ -122,3 +100,5 @@ class BlogController extends AdminController
         }
     }
 }
+
+
