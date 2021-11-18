@@ -69,7 +69,7 @@ $language = session('website_language', config('app.locale'));
 {{-- SECTION CREATE USER --}}
 <div class="modal" id="modal-create-blog" aria-modal="true" role="dialog" >
  <div class="modal-dialog" style="min-width: 85vw;">
-   <div class="modal-content" style="background-color: rgb(206 236 234 / 93%);" id="modal-create-blog-content">
+   <div class="modal-content" style="background-color: rgb(255 255 255 / 93%);" id="modal-create-blog-content">
        @include('admin.blog.blog-form')
    </div>
  </div>
@@ -79,7 +79,7 @@ $language = session('website_language', config('app.locale'));
 {{-- SECTION EDIT USER --}}
 <div class="modal" id="modal-edit-blog" aria-modal="true" role="dialog" >
  <div class="modal-dialog" style="min-width: 85vw;">
-   <div class="modal-content" style="background-color: rgb(206 236 234 / 93%);" id="modal-edit-user-content">
+   <div class="modal-content" style="background-color: rgb(255 255 255 / 93%);" id="modal-edit-user-content">
    
    </div>
  </div>

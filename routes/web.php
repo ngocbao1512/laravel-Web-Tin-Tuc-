@@ -51,10 +51,10 @@ Route::name('admin.')->prefix('admin')->middleware('locale')->group(function () 
 
    
     Route::get('blogs',[AdminBlogController::class,'index'])->name('blogs');
-    Route::post('blogs/destroy',[AdminUserController::class,'destroy'])->name('blogs.destroy');
-    Route::post('blogs/store',[AdminUserController::class,'store'])->name('blogs.store');
-    Route::post('blogs/update',[AdminUserController::class,'update'])->name('blogs.update');
-    Route::post('blogs/show',[AdminUserController::class,'show'])->name('blogs.show');
+    Route::post('blogs/destroy',[AdminBlogController::class,'destroy'])->name('blogs.destroy');
+    Route::post('blogs/store',[AdminBlogController::class,'store'])->name('blogs.store');
+    Route::post('blogs/update',[AdminBlogController::class,'update'])->name('blogs.update');
+    Route::post('blogs/show',[AdminBlogController::class,'show'])->name('blogs.show');
 
     //Route::resource('users', AdminUserController::class);
     Route::get('users',[AdminUserController::class,'index'])->name('users');
@@ -69,3 +69,9 @@ Route::name('admin.')->prefix('admin')->middleware('locale')->group(function () 
     Route::post('change-language',[HomeController::class,'changeLanguage'])->name('user.change-language');
 
 });
+
+Route::any('/ckfinder/connector', '\CKSource\CKFinderBridge\Controller\CKFinderController@requestAction')
+    ->name('ckfinder_connector');
+
+Route::any('/ckfinder/browser', '\CKSource\CKFinderBridge\Controller\CKFinderController@browserAction')
+    ->name('ckfinder_browser');

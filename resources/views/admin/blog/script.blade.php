@@ -44,38 +44,42 @@
     function getFormData(blogId)
     {
         var formData = new FormData();
-        if(blogId != null){
+        if(blogId != 0){
             formData.append('blog_id', blogId);
         } else {
             blogId = 0;
         }
         var title = getValueInput('#title',blogId)
-        var content =  getValueInput('#content',blogId)
-        var date_publish =  getValueInput('#date_publish',blogId)
+        var content = CKEDITOR.instances["content-" + blogId].getData();
+        console.log(typeof content)
+        var publish_date =  getValueInput('#publish_date',blogId)
         var idInputFile = "#input-avatar-"+blogId
        
-        if(!checkFormBlog(blogId)){
-            return false;
-        }
+       
+        if(!checkFormBlog(blogId)) return false;
        
         formData.append('cover', $(idInputFile)[0].files[0]);
         formData.append('title', title);
         formData.append('content',content);
-        formData.append('date_publish',date_publish);
+        formData.append('publish_date',publish_date);
          
         return formData;
     }
   
-    function saveData(button, messageConfirm, blogId = null)
+    function saveData(button, messageConfirm, blogId = 0)
     {
-        console.log('ok');
-        if(blogId != null){
+       /* var data = CKEDITOR.instances["content-" + blogId].getData();
+        console.log(data);
+        console.log('ok');*/
+        if(blogId != 0){
             url =  "{{ route('admin.blogs.update') }}";
         }else {
             url =  "{{ route('admin.blogs.store') }}";
         }
         var formData = getFormData(blogId);
-        if(!formData) return false;
+        if(!formData) {
+            return false;
+        }
   
         var runFunction = function() {
             $.ajax({
@@ -85,7 +89,7 @@
                 success:function(res) {
                     if(res.status == 200 ){
                         alert(res.message,"success");
-                        if(blogId == null){
+                        if(blogId == 0){
                             // DO SOMETHING TO ADD NEW COLLUMN TO DATATABLE
                            insert_row_datatable($('#dataTable').DataTable(), res.data.new_row)
   
@@ -122,13 +126,13 @@
             return false;
         }
   
-        if(!getValueInput("#content",blogId)){
+        if(CKEDITOR.instances["content-" + blogId].getData() == ''){
             alert("{{trans('general.fill_your_field.content')}}")
             return false;
         }
   
-        if(!getValueInput("#date_publish",blogId)){
-            alert("{{trans('general.fill_your_field.date_publish')}}")
+        if(!getValueInput("#publish_date",blogId)){
+            alert("{{trans('general.fill_your_field.publish_date')}}")
             return false;
         }
   

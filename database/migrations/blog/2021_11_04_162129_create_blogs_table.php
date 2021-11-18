@@ -20,7 +20,7 @@ class CreateBlogsTable extends Migration
             $table->text('content')->nullable();
             $table->biginteger('created_user_id')->nullable();
             $table->string('cover')->nullable();
-            $table->date("publish_date");
+            $table->string("publish_date");
             $table->tinyInteger('is_verifited')->default(0);
             $table->softDeletes();
             $table->timestamps();

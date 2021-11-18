@@ -1,121 +1,113 @@
 <?php
-   $action = !isset($blog) ? 'create' : 'edit';
-   $blogId = !isset($blog) ? 0 : $blog->id;
-   $title = !isset($blog) ? '' : $blog->title;
-   $content = !isset($blog) ? '' : $blog->content;
-   $author = !isset($blog) ? '' : $blog->user->name;
-   $status = !isset($blog) ? 0 : $blog->is_verifited;
-   $datePulish = !isset($blog) ? '' : $blog->publish_date;
-   $password = !isset($blog) ? '' : $blog->password;
-   $cover = !isset($blog) ? '' : $blog->cover;
-?>
-<div class="modal-header">
-   <h4>
-       @if($action == 'create')
-           {{trans('blog.create-.blog')}}
-       @else
-       {{trans('blog.edit-.blog')}}
-       @endif
-   </h4>
-   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-   <span aria-hidden="true">×</span>
-   </button>
-</div>
-<div class="modal-body">
-   <div class="row" >
-       <div class="col-12" style="min-height: 70vh">
-           <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
-               <form class="tm-edit-product-form" enctype="multipart/form-data">
-                   <div class="row tm-edit-product-row">
-                       <div class="col-xl-6 col-lg-6 col-md-12">
-                           <div class="form-group">
-                               <div class="row">
-                                   <div class="col-xs-12 col-sm-6">
-                                       <label for="title">
-                                           <b>
-                                               {{trans('blog.title')}}
-                                           </b>
-                                       </label>
-                                       <input id="title-{{$blogId}}" name="title" type="text"  placeholder="{{trans('blog.title')}}" class="form-control validate" required/>
-                                   </div>
-                               </div>
-                           </div>
-                           <hr>
-                           <div class="form-group">
-                               <label for="content">{{trans('blog.content')}}</label>
-                               <textarea class="form-control validate" style="resize: none" class="form-control" cols="30" rows="20" placeholder="{{trans('blog.content')}}" name="content" id="content-{{$blogId}}"></textarea>
-                           </div>
-                       </div>
-                       <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
+ 
+namespace App\Http\Controllers\Admin;
+ 
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+ 
+class AdminController extends Controller
+{
+   protected $data;
   
-                           <div class="tm-product-img-dummy mx-auto" style=" background-color : rgb(243, 243, 243); min-height : 20vh;
-                           border-radius : 10px; display: flex; justify-content : center; text-align : center;"
-                           onclick="document.getElementById('input-avatar-{{$blogId}}').click();">
-                               <img id="preview-avatar-{{$blogId}}"
-                               src="{{showImage('cover',$cover)}}"
-                               alt="" style="max-width: 100%; max-height : 30vh;"
-                               />
+  
+   public function __construct(Request $request = null)
+   {
+       if(is_null($request)){
+           $this->data = [];
+       }else{
+           $this->data = array_merge($request->all(), $request->json()->all());
+       }
+   }
  
-                               <div>
-                                   <input id="input-avatar-{{$blogId}}" type="file" style="display:none;" name="avatar" required target-id="#preview-avatar-{{$blogId}}"
-                                       onchange="initReadImage(this);"
-                                   />
-                               </div>
-                           </div>
-                           <hr>
-                           <div class="form-group">
-                               <label>Date Publish:</label>
-                                 <div class="input-group date" id="reservationdatetime" data-target-input="nearest">
-                                     <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime" id="date_publish-{{$blogId}}">
-                                     <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
-                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                     </div>
-                                 </div>
-                             </div>
-                           @if($action == 'update')
-                               <div class="form-group">
-                                   <div class="row">
-                                       <div class="col-xs-12 col-sm-6">
-                                           <label for="public">
-                                               {{trans('blog.public')}}
-                                           </label>
-                                       </div>
-                                   </div>
-                                   <div class="row">
-                                       <div class="col-xs-12 col-sm-6">
-                                           <label class="switch">
-                                               <input type="checkbox" name="is_verifited" @if ($status == 1)
-                                                   checked
-                                               @endif>
-                                               <span class="slider round"></span>
-                                           </label>  
-                                       </div>
-                                   </div>
-                               </div>
-                           @endif
-                          
-                       </div>
-                       <div class="col-12">
-                           @if ($action =='create')
-                               <button  type="button" class="btn btn-primary btn-block text-uppercase "
-                                   style="color:white;background-color:rgb(24 89 230);"
-                                   onclick="saveData(this,'{{trans('blog.do_you_want.create')}}')"
-                               >
-                               {{trans('blog.create-.blog')}} 
-                               </button>
-                           @else
-                               <button  type="button" class="btn btn-primary btn-block text-uppercase "
-                                   style="color:white;background-color:rgb(24 89 230);"
-                                   onclick="saveData(this,'{{trans('blog.do_you_want.update')}}',{{$blogId}})"
-                               >
-                               {{trans('blog.edit-.blog')}}
-                               </button>
-                           @endif
-                       </div>
-                   </div>
-               </form>
-           </div>
-       </div>        
-   </div>
-</div>
+   public function validateRequestBlog($action = null,$data)
+   {
+       if(!isset($data['title'])){
+           return $this->responseError(500,trans('general.fill_your_field.title'));
+       }
  
+       if(!isset($data['content'])){
+           return $this->responseError(500,trans('general.fill_your_field.content'));
+       }
+ 
+       if(!isset($data['publish_date'])){
+           return $this->responseError(500,trans('general.fill_your_field.publish_date'));
+       }
+ 
+       return true; 
+   }
+ 
+   // function for user
+   public function validateRequestUser($action = null,$data)
+   {
+       $check = true;
+       if(!isset($data['first_name'])){
+           return $this->responseError(500,trans('user.invalid_data.first_name'));
+       }
+ 
+       if(!isset($data['middle_name'])){
+           return $this->responseError(500,trans('user.invalid_data.middle_name'));
+       }
+ 
+       if(!isset($data['last_name'])){
+           return $this->responseError(500,trans('user.invalid_data.last_name'));
+       }
+ 
+       if(!isset($data['email'])){
+           return $this->responseError(500,trans('user.invalid_data.email'));
+       }
+ 
+       if((strlen($data['password']) < 3)){
+           return $this->responseError(500,trans('user.pass_at_least_three_characters'));
+       }
+ 
+       if(!isset($data['user_name'])){
+           return $this->responseError(500,trans('user.invalid_data.user_name'));
+       }
+ 
+       if($action == 'create') {
+           $check = $this->checkFieldValueInDB('users','user_name',$data['user_name']);
+           if($check) return $check;
+           $check = $this->checkFieldValueInDB('users','email',$data['email']);
+           if($check) return $check;
+       }
+      
+       if($action == 'update') {
+ 
+           if(!isset($data['user_id'])){
+               return $this->responseError(500,trans('user.some_thing_wrong_when.update'));
+           }
+ 
+           $data_old_user = DB::table('users')->find($data['user_id']);
+ 
+           if($data_old_user == null){
+               return $this->responseError(500,trans('user.no_data_user'));
+           } else
+           {
+               if($data['user_name'] !== $data_old_user->user_name)
+               {
+                   $check = $this->checkFieldValueInDB('users','user_name',$data['user_name']);
+                   if($check) return $check;
+               }
+ 
+               if($data['email'] !== $data_old_user->email)
+               {
+                   $check = $this->checkFieldValueInDB('users','email',$data['email']);
+                   if($check) return $check;
+               }
+           }
+       }
+       return true;
+   }
+ 
+   public function checkFieldValueInDB($table_name,$field_check, $value_check)
+   {
+       if(DB::table($table_name)->where($field_check, $value_check)->first() != null)
+           return $this->responseError(500,$field_check.trans('user.used_for_another_acc'));
+       return true;
+   }
+ 
+   // function for blog
+ 
+ 
+}
