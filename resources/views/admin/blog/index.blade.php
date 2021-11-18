@@ -150,28 +150,29 @@ $language = session('website_language', config('app.locale'));
              </tr>
            </thead>
            <tbody>
-             @isset($users)
-               @foreach ($users as $user)
-                   <tr class="odd" data-id = "{{$user->id}}" id="{{$user->id}}">
+             @isset($blogs)
+               @foreach ($blogs as $blog)
+                   <tr class="odd" data-id = "{{$blog->id}}" id="{{$blog->id}}">
                      <td class="dtr-control sorting_1" tabindex="0"></td>
-                     <td>{{$user->first_name." ".$user->middle_name." ".$user->last_name}}</td>
-                     <td>{{$user->email}}</td>
-                     <td>{{$user->user_name}}</td>
-                     <td>bien tap</td>
+                     <td>{{$blog->title}}</td>
+                     <td>{{$blog->content}}</td>
+                     <td>{{$blog->author}}</td>
+                     <td>{{$blog->publish_date}}</td>
+                     <td>{{$blog->is_verifited}}</td>
                      <td>
                        <button type="button" class="btn btn-primary"
                        data-toggle="modal"
-                       data-target="#modal-edit-user"
-                       data-userid = "{{$user->id}}"
-                       onclick="loadUserEdit(this)"
+                       data-target="#modal-edit-blog"
+                       data-blogid = "{{$blog->id}}"
+                       onclick="loadblogEdit(this)"
                        >
-                         <span> <i class="fas fa-user-edit"></i></span>
+                         <span> <i class="fas fa-blog-edit"></i></span>
                        </button>
                        <button class="btn btn-primary confirm-delete" 
                          style="background-color: #50697f;"
                          data-toggle="modal"
-                         data-userid="{{$user->id}}"
-                         onclick="deleteUser(this);"
+                         data-blogid="{{$blog->id}}"
+                         onclick="deleteblog(this);"
                          >
                          <i class="far fa-trash-alt tm-product-delete-icon"></i>
                        </button>
