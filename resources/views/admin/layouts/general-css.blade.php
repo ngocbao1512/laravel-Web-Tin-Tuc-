@@ -5,6 +5,10 @@
     box-sizing: border-box;
 }
 
+.modal-content {
+    color : #39c9bf;
+}
+
 
 
 .container {

@@ -3,18 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Repositories\Blog\BlogRepository;
 use Illuminate\Http\Request;
 use App\Models\Blog;
 
 class BlogController extends AdminController
 {
     protected $modelBlog;
+    protected $blogRepository;
     
     public function __construct(   
         Blog $blog
     )
     {
         $this->modelBlog = $blog;
+        $this->blogRepository = new BlogRepository;
     }
 
     public function index()
@@ -32,9 +35,12 @@ class BlogController extends AdminController
             return $check;  
         }
 
+
+        return  $this->blogRepository->create($data);
+
 // code true here 
         try {
-            $new_blog = $this->BlogRepository->create($data);
+            $new_blog = $this->blogRepository->create($data);
             if($new_blog)
             {
                 return $this->responseSuccess(trans('user.add_success'),[
@@ -100,3 +106,5 @@ class BlogController extends AdminController
         }
     }
 }
+
+

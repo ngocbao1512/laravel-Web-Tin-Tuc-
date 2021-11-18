@@ -70,7 +70,7 @@ $language = session('website_language', config('app.locale'));
 {{-- SECTION CREATE USER --}}
 <div class="modal" id="modal-create-user" aria-modal="true" role="dialog" >
   <div class="modal-dialog" style="min-width: 85vw;">
-    <div class="modal-content" style="background-color: rgb(206 236 234 / 93%);" id="modal-create-user-content">
+    <div class="modal-content" style="background-color: rgb(255 255 255 / 93%);" id="modal-create-user-content">
         @include('admin.user.user-form')
     </div>
   </div>
@@ -80,7 +80,7 @@ $language = session('website_language', config('app.locale'));
 {{-- SECTION EDIT USER --}}
 <div class="modal" id="modal-edit-user" aria-modal="true" role="dialog" >
   <div class="modal-dialog" style="min-width: 85vw;">
-    <div class="modal-content" style="background-color: rgb(206 236 234 / 93%);" id="modal-edit-user-content">
+    <div class="modal-content" style="background-color: rgb(255 255 255 / 93%);" id="modal-edit-user-content">
      
     </div>
   </div>
