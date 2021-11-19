@@ -3,9 +3,9 @@
    $blogId = !isset($blog) ? 0 : $blog->id;
    $title = !isset($blog) ? '' : $blog->title;
    $content = !isset($blog) ? '' : $blog->content;
-   $author = !isset($blog) ? '' : $blog->user->name;
+  // $author = !isset($blog) ? '' : $blog->user->user_name;
    $status = !isset($blog) ? 0 : $blog->is_verifited;
-   $datePulish = !isset($blog) ? '' : $blog->publish_date;
+   $publish_date = !isset($blog) ? '' : $blog->publish_date;
    $password = !isset($blog) ? '' : $blog->password;
    $cover = !isset($blog) ? '' : $blog->cover;
 ?>
@@ -36,14 +36,14 @@
                                                {{trans('blog.title')}}
                                            </b>
                                        </label>
-                                       <input id="title-{{$blogId}}" name="title" type="text"  placeholder="{{trans('blog.title')}}" class="form-control validate" required/>
+                                       <input id="title-{{$blogId}}" name="title" type="text" value="{{$title}}"  placeholder="{{trans('blog.title')}}" class="form-control validate" required/>
                                    </div>
                                </div>
                            </div>
                            <hr>
                            <div class="form-group">
                                <label for="content">{{trans('blog.content')}}</label>
-                               <textarea class="form-control validate" style="resize: none" class="form-control" cols="30" rows="20" placeholder="{{trans('blog.content')}}" name="content" id="content-{{$blogId}}"></textarea>
+                               <textarea class="form-control validate" style="resize: none" class="form-control" cols="30" rows="20" placeholder="{{trans('blog.content')}}" name="content" id="content-{{$blogId}}">{{$content}}</textarea>
                                <script src={{ url('ckeditor/ckeditor.js') }}></script>
                                <script>
                                 CKEDITOR.replace( "content-{{$blogId}}", {
@@ -79,7 +79,7 @@
                            <div class="form-group">
                                <label>Date Publish:</label>
                                  <div class="input-group date" id="reservationdatetime" data-target-input="nearest">
-                                     <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime" id="publish_date-{{$blogId}}">
+                                     <input type="text" class="form-control datetimepicker-input" value="{{$publish_date}}" data-target="#reservationdatetime" id="publish_date-{{$blogId}}">
                                      <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
                                          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                      </div>
@@ -131,4 +131,8 @@
        </div>        
    </div>
 </div>
+
+<script>
+    console.log({{$cover}})
+</script>
  

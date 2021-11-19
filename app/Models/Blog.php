@@ -17,15 +17,16 @@ class Blog extends Model
         'name',
         'title',
         'content',
+        'is_verifited',
         'slug',
         'publish_date',
-        'user_id',   
+        'created_user_id',   
         'cover',
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'created_user_id');
     }
 
     public function sluggable(): array

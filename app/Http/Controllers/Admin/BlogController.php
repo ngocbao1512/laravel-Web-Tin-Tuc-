@@ -22,12 +22,17 @@ class BlogController extends AdminController
 
     public function index()
     {
-        return view('admin.blog.index');
+        $all_blog = $this->modelBlog->with('user:user_name')->get();
+
+        return view('admin.blog.index',[
+            'blogs' => $all_blog,
+        ]);
     }
     
     public function store(Request $request)
     {
         $data = $request->all();
+        $data['created_user_id'] = 1;
         // validate
         $check = $this->validateRequestBlog('create',$data);
         if( $check !== true)
@@ -35,7 +40,7 @@ class BlogController extends AdminController
             return $check;  
         }
 
-        //try {
+        try {
             $new_blog = $this->blogRepository->create($data);
             if($new_blog)
             {
@@ -47,21 +52,37 @@ class BlogController extends AdminController
                 
             }
             return false;
-        /*} catch (\Exception $e) {
+        } catch (\Exception $e) {
             \Log::error($e);
             return $this->responseError(400,trans('user.fail.add'));
-        }*/
+        }
 
     }
 
-    
-    public function show($id)
+    public function show(Request $request)
     {
-        $blog = $this->modelBlog->findOrFail($id);
+        $data = $request->all();
+        if(!isset($data['blog_id'])){
+            return $this->responseError(500,trans('blog.invalid_data.blog'));
+        }
 
-        return view('admin.blog.show',[
-            'blog' => $blog,
-        ]);
+        try {       
+            $blog = $this->blogRepository->find($data['blog_id']);
+            if(is_null($blog)){
+                return $this->responseError(404,trans('blog.no_data_blog'));
+            }
+
+            return $this->responseSuccess(trans('blog.find_success'),[
+                'blog_form' => view('admin.blog.blog-form',[
+                    'blog' => $blog,
+                ])->render(),  
+            ]);
+            
+        } catch (\Exception $e) {
+            \Log::error($e);
+            return $this->responseError($e);
+        }
+        
     }
 
     
@@ -75,30 +96,78 @@ class BlogController extends AdminController
     }
 
     
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $data = $request->all();
+
+
+        // validate data 
+        if($this->validateRequestBlog('update',$data) !== true)
+        {
+            return $this->validateRequestBlog('update',$data);
+        }
+        
+        try {
+            $new_blog = $this->blogRepository->update($data);
+            if($new_blog)
+            {
+            return $this->responseSuccess(trans('blog.update_success'),[
+                'new_row' => view('admin.blog.blog-collumn',[
+                    'blog' => $new_blog,
+                ])->render(),  
+            ]);
+            }
+            return false;
+        } catch (\Exception $e) {
+            \Log::error($e);
+            return $this->responseError($e);
+        }
+        
     }
 
     
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $blog = $this->modelBlog->findOrFail($id);
-        
+        $data = $request->all();
+        if(!$data['blog_id'])
+        return $this->responError(404,trans('blog.some_thing_wrong_when.delete'));
+
         try {
-            $blog->delete();
-
-            return redirect()
-                ->route('admin.blog.index')
-                ->with('msg','Delete success!');
-
+            $check = $this->blogRepository->delete($data);
+            if( $check !== true)
+            {
+                return $this->responseError(404,$check);
+            }
+                return $this->responseSuccess(trans('blog.delete_success'));
         } catch (\Exception $e) {
-            
             \Log::error($e);
+            return $this->responseError($e);
+        }
+    }
 
-            return redirect()
-                ->route('admin.blog.index')
-                ->with('error','Delete failed. Please try again later!');
+    public function verify(Request $request)
+    {
+        $data = $request->all();
+
+
+        // validate data 
+        if(!isset($data['blog_id']) || !isset($data['is_verifited']))
+        {
+           return $this->responseError(404,trans('blog.something_wrong'));
+        }
+
+
+        try {
+            $check = $this->blogRepository->verify($data);
+            if($check == true)
+            {
+                return $this->responseSuccess(trans('blog.verify.success'));
+            }
+            return false;
+            
+        } catch (\Exception $e) {
+            \Log::error($e);
+            return $this->responseError(400,$e);
         }
     }
 }

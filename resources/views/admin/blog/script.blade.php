@@ -1,34 +1,34 @@
 <script>
  
-    function deleteUser(button){
+    function deleteBlog(button){
         var button = $(button);
-        var userId = button.data('userid');
+        var blogId = button.data('blog_id');
   
         var runFunction = function(){
             $.ajax({
-                url: '{{route("admin.users.destroy")}}',
+                url: '{{route("admin.blogs.destroy")}}',
                 type: 'POST',
                 data: {
-                    'user_id': userId
+                    'blog_id': blogId
                 },
                 success:function(data) {
                    
                     if(data.status == 200){
-                        alert(data.message,"success");
-                        delete_row_datatable($('#dataTable').DataTable(), $("tr[data-id='" + userId +"']"))
+                        alert(data.message,"success")
+                        delete_row_datatable($('#dataTable').DataTable(), $("tr[data-id='" + blogId +"']"))
                     }else{
                         alert(data.message, "error");
                     }
   
                 },
                 error:function(data) {
-                    console.log("{{trans('user.something_wrong')}}");
+                    console.log("{{trans('blog.something_wrong')}}");
   
                 }
             });
         };
   
-        confirm("{{trans('user.confirm_delete_user')}} ?", runFunction);
+        confirm("{{trans('blog.confirm_delete_blog')}} ?", runFunction);
     }
   
     function getValueInput(idGetValue,blogId){
@@ -46,8 +46,6 @@
         var formData = new FormData();
         if(blogId != 0){
             formData.append('blog_id', blogId);
-        } else {
-            blogId = 0;
         }
         var title = getValueInput('#title',blogId)
         var content = CKEDITOR.instances["content-" + blogId].getData();
@@ -149,16 +147,24 @@
         alert("{{trans('general.fill_your_field.param')}}"+$msgerror);
         return false;
     }
+
+    function parseHTML(id_paste_html, html)
+    {
+        $(id_paste_html).html(html)
+        console.log(id_paste_html);
+        console.log('code come here')
+        console.log(html)
+    }
   
-    function loadUserEdit(button){
+    function loadBlogEdit(button){
         var button = $(button);
-        var user_id = button.data('userid');
+        var blog_id = button.data('blog_id');
   
         $.ajax({
-            url: '{{route("admin.users.find")}}' ,
+            url: '{{route("admin.blogs.show")}}' ,
             type: "POST",
             data:{
-                'user_id' : user_id
+                'blog_id' : blog_id
             },
            
             success: function(res) {
@@ -166,11 +172,11 @@
                 {
                     alert(res.message);
                 } else {
-                    $('#modal-edit-user-content').html(res.data.user_form)
+                    $('#modal-edit-blog-content').html(res.data.blog_form)
                 }
             },
             error: function(){
-                alert("{{trans('user.wrong')}}")
+                alert("{{trans('blog.wrong')}}")
             },
         });
     }
@@ -416,6 +422,46 @@
         var row_id = row_element.attr('id');
   
         table.row('#' + row_id).remove().draw();
+    }
+
+
+    
+
+    function verify_blog(button){
+        var button = $(button);
+        var blogId = button.data('blog_id');
+        var status = (button.attr('class') == 'active') ? 0 : 1 ;
+        console.log(status);
+  
+        var runFunction = function(){
+            $.ajax({
+                url: '{{route("admin.blogs.verify")}}',
+                type: 'POST',
+                data: {
+                    'blog_id': blogId,
+                    'is_verifited': status,
+                },
+                success:function(data) {
+                   
+                    if(data.status == 200){
+                        alert(data.message,"success")
+                        // add class active 
+                        button.toggleClass('active')
+                       
+                    }else{
+                        alert(data.message, "error");
+                    }
+  
+                },
+                error:function(data) {
+                    console.log("{{trans('blog.something_wrong')}}");
+  
+                }
+            });
+        };
+  
+        confirm("{{trans('blog.confirm_verify_blog')}} ?", runFunction);
+
     }
   
  </script>

@@ -1,25 +1,35 @@
-<tr class="odd" data-id = "{{$user->id}}" id="{{$user->id}}">
-    <td class="dtr-control sorting_1" tabindex="0"></td>
-    <td>{{$user->first_name." ".$user->middle_name." ".$user->last_name}}</td>
-    <td>{{$user->email}}</td>
-    <td>{{$user->user_name}}</td>
-    <td>bien tap</td>
-    <td>
-      <button type="button" class="btn btn-primary"
+<?php
+   $blogId = !isset($blog) ? 0 : $blog->id;
+   $title = !isset($blog) ? '' : $blog->title;
+   $content = !isset($blog) ? '' : $blog->content;
+   $author = !isset($blog) ? '' : $blog->created_user_id;
+   $status = ($blog->is_verifited == 0) ? 'wait verify' : 'verifited';
+   $publishDate = !isset($blog) ? '' : $blog->publish_date;
+   $cover = !isset($blog) ? '' : $blog->cover;
+?>
+<tr class="odd" data-id = "{{$blogId}}" id="{{$blogId}}">
+  <td class="dtr-control sorting_1" tabindex="0"></td>
+  <td>{{$title}}</td>
+  <td>{{$blog->content}}</td>
+  <td>{{$author}}</td>
+  <td>{{$publishDate}}</td>
+  <td>{{$status}}</td>
+  <td>
+    <button type="button" class="btn btn-primary"
+    data-toggle="modal"
+    data-target="#modal-edit-blog"
+    data-blog_id = "{{$blogId}}"
+    onclick="loadBlogEdit(this)"
+    >
+      <span> <i class="fas fa-blog-edit"></i></span>
+    </button>
+    <button class="btn btn-primary confirm-delete" 
+      style="background-color: #50697f;"
       data-toggle="modal"
-      data-target="#modal-edit-user"
-      data-userid = "{{$user->id}}"
-      onclick="loadUserEdit(this)"
+      data-blog_id="{{$blogId}}"
+      onclick="deleteBlog(this);"
       >
-        <span> <i class="fas fa-user-edit"></i></span>
-      </button>
-      <button class="btn btn-primary confirm-delete" 
-        style="background-color: #50697f;"
-        data-toggle="modal"
-        data-userid="{{$user->id}}"
-        onclick="deleteUser(this);"
-        >
-        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-      </button>
-    </td>
-  </tr>
+      <i class="far fa-trash-alt tm-product-delete-icon"></i>
+    </button>
+  </td>
+</tr>

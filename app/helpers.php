@@ -11,10 +11,9 @@ if(!function_exists('encodeImage')) {
 if(!function_exists('showImage')) {
     function showImage($folder_name, $file_name)
     {
-        if($file_name != '') {
-            return asset("storage/$folder_name/$file_name");
+        if($file_name == '' || $file_name == 'image-default') {
+            return 'https://static.thenounproject.com/png/104062-200.png';
         }
-        return 'https://static.thenounproject.com/png/104062-200.png';
-
+        return asset("storage/$folder_name/$file_name");
     }
 }
