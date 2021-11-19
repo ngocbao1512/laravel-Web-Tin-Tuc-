@@ -121,7 +121,6 @@ $language = session('website_language', config('app.locale'));
             <div class="ring"></div>
             <div class="ring"></div>
             <div class="ring"></div>
-            <p>{{trans('user.loading')}}...</p>
           </div>
           <table id="dataTable" class="table table-bordered table-striped dtr-inline" data-datatable="table" aria-describedby="example1_info" >
             <thead>

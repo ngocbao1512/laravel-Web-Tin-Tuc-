@@ -65,7 +65,7 @@ class UserController extends AdminController
             if(!isset($data['user_id'])){
                 return $this->responseError(500,trans('user.invalid_data.user'));
             }
-
+            
             $user = $this->userRepository->find($data['user_id']);
             if(is_null($user)){
                 return $this->responseError(404,trans('user.no_data_user'));

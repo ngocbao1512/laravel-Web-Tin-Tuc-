@@ -36,26 +36,19 @@
   transition: .4s;
 }
 
-input:checked + .slider {
+.active + .slider{
   background-color: #2196F3;
 }
 
-input:focus + .slider {
+.active + .slider {
   box-shadow: 0 0 1px #2196F3;
 }
 
-input:checked + .slider:before {
+.active + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
 
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
 
-.slider.round:before {
-  border-radius: 50%;
-}
 </style>

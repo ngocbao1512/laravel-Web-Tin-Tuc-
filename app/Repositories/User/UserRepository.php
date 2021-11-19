@@ -36,7 +36,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         }
 
 
-        if(isset($data['avatar'])){
+        if($data['avatar'] != 'undefined'){
             if(is_string($data['avatar'])){
 
             }else{

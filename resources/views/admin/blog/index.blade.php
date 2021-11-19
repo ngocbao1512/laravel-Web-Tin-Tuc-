@@ -4,10 +4,6 @@
    {{ trans('blog.all_blog') }}
 @endsection
  
-@section('css')
-  
-@endsection
- 
  
 @section('avata')
 https://img.thuthuatphanmem.vn/uploads/2018/11/06/anh-songoku-be-dep_044039827.jpg
@@ -79,7 +75,7 @@ $language = session('website_language', config('app.locale'));
 {{-- SECTION EDIT USER --}}
 <div class="modal" id="modal-edit-blog" aria-modal="true" role="dialog" >
  <div class="modal-dialog" style="min-width: 85vw;">
-   <div class="modal-content" style="background-color: rgb(255 255 255 / 93%);" id="modal-edit-user-content">
+   <div class="modal-content" style="background-color: rgb(255 255 255 / 93%);" id="modal-edit-blog-content">
    
    </div>
  </div>
@@ -120,7 +116,6 @@ $language = session('website_language', config('app.locale'));
            <div class="ring"></div>
            <div class="ring"></div>
            <div class="ring"></div>
-           <p>{{trans('user.loading')}}...</p>
          </div>
          <table id="dataTable" class="table table-bordered table-striped dtr-inline" data-datatable="table" aria-describedby="example1_info" >
            <thead>
@@ -130,9 +125,6 @@ $language = session('website_language', config('app.locale'));
                </th>
                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
                  {{trans('blog.title')}}
-               </th>
-               <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
-                 {{trans('blog.content')}}
                </th>
                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">
                  {{trans('blog.author')}}
@@ -155,29 +147,41 @@ $language = session('website_language', config('app.locale'));
                    <tr class="odd" data-id = "{{$blog->id}}" id="{{$blog->id}}">
                      <td class="dtr-control sorting_1" tabindex="0"></td>
                      <td>{{$blog->title}}</td>
-                     <td>{{$blog->content}}</td>
-                     <td>{{$blog->author}}</td>
+                     <td>@if ($blog->user == null) {{trans('general.author_be_deleted')}}  @endif {{$blog->user}}</td>
                      <td>{{$blog->publish_date}}</td>
-                     <td>{{$blog->is_verifited}}</td>
+                     <!-- button verify publish !-->
                      <td>
-                       <button type="button" class="btn btn-primary"
+                      <label class="switch">
+                        <button type="button" 
+                        @if ($blog->is_verifited == 1)  checked @endif 
+                        data-blog_id = "{{$blog->id}}" 
+                        onclick="verify_blog(this)"
+                        class="@if ($blog->is_verifited == 1) active  @endif"
+                        >
+                        </button>
+                        <span class="slider"></span>
+                      </label>
+                     </td>
+                     <td>
+                       <button type="button" class="btn btn-default"
                        data-toggle="modal"
                        data-target="#modal-edit-blog"
-                       data-blogid = "{{$blog->id}}"
-                       onclick="loadblogEdit(this)"
+                       data-blog_id = "{{$blog->id}}"
+                       onclick="loadBlogEdit(this)"
                        >
-                         <span> <i class="fas fa-blog-edit"></i></span>
+                         <span><i class="fas fa-edit"></i></span>
                        </button>
                        <button class="btn btn-primary confirm-delete" 
                          style="background-color: #50697f;"
                          data-toggle="modal"
-                         data-blogid="{{$blog->id}}"
-                         onclick="deleteblog(this);"
+                         data-blog_id="{{$blog->id}}"
+                         onclick="deleteBlog(this);"
                          >
                          <i class="far fa-trash-alt tm-product-delete-icon"></i>
                        </button>
                      </td>
                    </tr>
+                  
                @endforeach              
              @endisset
            </tbody>
@@ -203,5 +207,10 @@ $language = session('website_language', config('app.locale'));
  });
 </script>
  
+@endsection
+
+
+@section('css')
+    @include('admin.blog.style')
 @endsection
  
