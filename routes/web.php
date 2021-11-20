@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\HomeController;
 
 /*
@@ -24,7 +25,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+
+Route::get('login', [CustomAuthController::class, 'index'])->name('login');
+Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name('login.custom'); 
+Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout');
 
 
 

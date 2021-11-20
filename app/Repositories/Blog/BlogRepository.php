@@ -25,9 +25,8 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
             'title'         => isset($data['title']) ? $data['title'] : '',     
             'content'      => isset($data['content']) ? $data['content'] : '',
             'cover'    => isset($data['cover']) ? $data['cover'] : '',
-            'created_user_id' => isset($data['author']) ? $data['author'] : 1, 
+            'created_user_id' => isset($data['author_id']) ? $data['author_id'] : 1, 
             'publish_date'    => isset($data['publish_date']) ? $data['publish_date'] : '',
-            'created_user_id' => isset($data['created_user_id']) ? $data['created_user_id'] : '',
         );
 
         // TODO SOMETHING TO VALIDATE DATACREATE

@@ -13,11 +13,11 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])
-                ->middleware('guest')
-                ->name('login');
+                ->middleware('guest');
 
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])
-                ->middleware('guest');
+                ->middleware('guest')
+                ->name('login');
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->middleware('auth')

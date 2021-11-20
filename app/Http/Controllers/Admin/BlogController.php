@@ -6,33 +6,39 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Repositories\Blog\BlogRepository;
 use Illuminate\Http\Request;
 use App\Models\Blog;
+use App\Models\User;
 
 class BlogController extends AdminController
 {
     protected $modelBlog;
+    protected $modelUser;
     protected $blogRepository;
     
     public function __construct(   
-        Blog $blog
+        Blog $blog,
+        User $user
     )
     {
         $this->modelBlog = $blog;
+        $this->modelUser = $user;
         $this->blogRepository = new BlogRepository;
     }
 
     public function index()
     {
-        $all_blog = $this->modelBlog->with('user:user_name')->get();
+        $all_blog = $this->modelBlog->get();
+        $user = $this->modelUser->find(auth()->id());
 
         return view('admin.blog.index',[
             'blogs' => $all_blog,
+            'user' => $user,
         ]);
     }
     
     public function store(Request $request)
     {
         $data = $request->all();
-        $data['created_user_id'] = 1;
+        $data['author_id'] = auth()->id();
         // validate
         $check = $this->validateRequestBlog('create',$data);
         if( $check !== true)
@@ -44,17 +50,16 @@ class BlogController extends AdminController
             $new_blog = $this->blogRepository->create($data);
             if($new_blog)
             {
-                return $this->responseSuccess(trans('user.add_success'),[
+                return $this->responseSuccess(trans('blog.add_success'),[
                     'new_row' => view('admin.blog.blog-collumn',[
                         'blog' => $new_blog,
                     ])->render(),  
                 ]);
-                
             }
             return false;
         } catch (\Exception $e) {
             \Log::error($e);
-            return $this->responseError(400,trans('user.fail.add'));
+            return $this->responseError(400,trans('blog.fail.add'));
         }
 
     }
