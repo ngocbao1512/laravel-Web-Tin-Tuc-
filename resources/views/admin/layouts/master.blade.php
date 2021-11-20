@@ -53,7 +53,7 @@
 
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link">
+            <a href="" class="brand-link">
                 <img src="/AdminLTE/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">
                     Admin
@@ -64,10 +64,24 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="@yield('avata')" class="img-circle elevation-2">
+                        <img src="{{showImage('avatar',$user->avatar)}}" class="img-circle elevation-2">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block"></a>
+                        <div class="row">
+                            <div class="col-8">
+                                <a href="#" class="d-block">{{$user->user_name}}</a>
+                            </div>
+                            <div class="col-3">
+                                <form method="get" action="{{route('signout')}}">
+                                    @csrf 
+                                    <a style="color: white; font-size: 18px;" href="{{route('signout')}}" onclick="event.preventDefault();
+                                    this.closest('form').submit();">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                    </a>
+                                </form>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
         

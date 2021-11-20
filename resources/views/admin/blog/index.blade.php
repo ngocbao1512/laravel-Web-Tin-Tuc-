@@ -22,10 +22,10 @@ $language = session('website_language', config('app.locale'));
            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
          </li>
          <li class="nav-item d-none d-sm-inline-block">
-           <a href="index3.html" class="nav-link">{{ trans('user.home') }}</a>
+           <a href="" class="nav-link">{{ trans('user.home') }}</a>
          </li>
          <li class="nav-item d-none d-sm-inline-block">
-           <a href="#" class="nav-link">{{ trans('user.contact') }}</a>
+           <a href="" class="nav-link">{{ trans('user.contact') }}</a>
          </li>
        </ul>
      </div>
@@ -147,7 +147,12 @@ $language = session('website_language', config('app.locale'));
                    <tr class="odd" data-id = "{{$blog->id}}" id="{{$blog->id}}">
                      <td class="dtr-control sorting_1" tabindex="0"></td>
                      <td>{{$blog->title}}</td>
-                     <td>@if ($blog->user == null) {{trans('general.author_be_deleted')}}  @endif {{$blog->user}}</td>
+                     <td>@if (!isset($blog->user->user_name))
+                          {{trans('general.author_be_deleted')}}  
+                          @else 
+                          {{$blog->user->user_name}}
+                          @endif
+                        </td>
                      <td>{{$blog->publish_date}}</td>
                      <!-- button verify publish !-->
                      <td>
