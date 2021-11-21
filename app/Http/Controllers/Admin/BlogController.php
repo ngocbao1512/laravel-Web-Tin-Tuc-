@@ -6,7 +6,6 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Repositories\Blog\BlogRepository;
 use Illuminate\Http\Request;
 use App\Models\Blog;
-use App\Models\User;
 
 class BlogController extends AdminController
 {
@@ -15,23 +14,19 @@ class BlogController extends AdminController
     protected $blogRepository;
     
     public function __construct(   
-        Blog $blog,
-        User $user
+        Blog $blog
     )
     {
         $this->modelBlog = $blog;
-        $this->modelUser = $user;
         $this->blogRepository = new BlogRepository;
     }
 
     public function index()
     {
         $all_blog = $this->modelBlog->get();
-        $user = $this->modelUser->find(auth()->id());
 
         return view('admin.blog.index',[
             'blogs' => $all_blog,
-            'user' => $user,
         ]);
     }
     

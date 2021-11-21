@@ -19,7 +19,6 @@ class UserController extends AdminController
     {
         return view('admin.user.index',[
             'users' => $this->userRepository->getAll(),
-            'user' => $this->userRepository->find(auth()->id()),
         ]);   
     }
 

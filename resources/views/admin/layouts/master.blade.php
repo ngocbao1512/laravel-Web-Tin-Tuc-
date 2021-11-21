@@ -64,12 +64,12 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="{{showImage('avatar',$user->avatar)}}" class="img-circle elevation-2">
+                        <img src="@if (isset(Auth::user()->avatar)) {{showImage('avatar',Auth::user()->avatar)}} @endif" class="img-circle elevation-2">
                     </div>
                     <div class="info">
                         <div class="row">
                             <div class="col-8">
-                                <a href="#" class="d-block">{{$user->user_name}}</a>
+                                <a href="#" class="d-block"> @if (isset(Auth::user()->user_name)) {{Auth::user()->user_name}}  @endif</a>
                             </div>
                             <div class="col-3">
                                 <form method="get" action="{{route('signout')}}">

@@ -14,7 +14,7 @@
         @if($action == 'create')
             {{trans('user.create_user')}}
         @else
-        {{trans('user.edit_user')}}
+            {{trans('user.edit_user')}}
         @endif
     </h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
