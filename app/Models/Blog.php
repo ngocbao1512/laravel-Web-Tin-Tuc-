@@ -24,11 +24,6 @@ class Blog extends Model
         'cover',
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class,'created_user_id');
-    }
-
     public function sluggable(): array
     {
         return [
@@ -36,5 +31,10 @@ class Blog extends Model
                 'source' => 'title'
             ]
         ];
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class,'created_user_id');
     }
 }
