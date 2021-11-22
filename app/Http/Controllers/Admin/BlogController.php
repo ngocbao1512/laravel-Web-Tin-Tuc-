@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\AdminController;
 use App\Repositories\Blog\BlogRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use App\Models\Blog;
 
 class BlogController extends AdminController
@@ -100,24 +101,26 @@ class BlogController extends AdminController
     {
         $data = $request->all();
 
-
         // validate data 
         if($this->validateRequestBlog('update',$data) !== true)
         {
             return $this->validateRequestBlog('update',$data);
         }
+
+        return $this->blogRepository->update($data);
         
         try {
             $new_blog = $this->blogRepository->update($data);
-            if($new_blog)
+            //return $new_blog;
+            if($new_blog == false)
             {
+                return false;
+            }
             return $this->responseSuccess(trans('blog.update_success'),[
                 'new_row' => view('admin.blog.blog-collumn',[
                     'blog' => $new_blog,
                 ])->render(),  
             ]);
-            }
-            return false;
         } catch (\Exception $e) {
             \Log::error($e);
             return $this->responseError($e);
@@ -128,6 +131,7 @@ class BlogController extends AdminController
     
     public function destroy(Request $request)
     {
+        
         $data = $request->all();
         if(!$data['blog_id'])
         return $this->responError(404,trans('blog.some_thing_wrong_when.delete'));

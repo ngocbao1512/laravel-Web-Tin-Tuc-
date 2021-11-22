@@ -17,6 +17,7 @@ class CreateRoleUsersTable extends Migration
             $table->id();
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('role_id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

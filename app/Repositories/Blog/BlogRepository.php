@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Request;
 use App\Models\Blog;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Support\Facades\Gate;
 
 class BlogRepository extends BaseRepository implements BlogRepositoryInterface
 {
@@ -66,6 +67,11 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
         }
 
         $blog = $this->model->find($blog_id);
+
+        if(Gate::denies('delete_blog', $blog)) {
+            return "you can't delete this blog";
+        } 
+
         if($blog)
         {
             $blog->delete();
@@ -106,6 +112,12 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
 
         $blog = $this->model->find($dataCreate['blog_id']);
 
+        //return Gate::allows('update-blog', $blog);
+
+        if(Gate::denies('update_blog', $blog)) {
+           return "you can't update this blog";
+        } 
+
         if($blog)
         {
             $new_blog = $blog->update($dataCreate);
@@ -116,6 +128,7 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
     }
 
     public function verify($data){
+
         $dataCreate = array(
             'blog_id' => isset($data['blog_id']) ? $data['blog_id'] : '',
             'is_verifited' => isset($data['is_verifited']) ? $data['is_verifited'] : '',
@@ -128,6 +141,10 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
         }
 
         $blog = $this->model->find($dataCreate['blog_id']);
+
+        if(Gate::denies('verify_blog', $blog)) {
+            return "you can't verify this blog";
+        } 
 
         if($blog)
         {
