@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Request;
 use App\Models\Blog;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Support\Facades\Gate;
 
 class BlogRepository extends BaseRepository implements BlogRepositoryInterface
 {
@@ -66,6 +67,7 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
         }
 
         $blog = $this->model->find($blog_id);
+
         if($blog)
         {
             $blog->delete();
@@ -116,6 +118,7 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
     }
 
     public function verify($data){
+
         $dataCreate = array(
             'blog_id' => isset($data['blog_id']) ? $data['blog_id'] : '',
             'is_verifited' => isset($data['is_verifited']) ? $data['is_verifited'] : '',
@@ -138,9 +141,4 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
         }
         return trans('blog.cant_find_blog');
     }
-
-
-
-
-
 }

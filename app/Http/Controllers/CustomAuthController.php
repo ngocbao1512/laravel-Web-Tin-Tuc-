@@ -30,7 +30,7 @@ class CustomAuthController extends Controller
                 ->withSuccess('Signed in');
         }
 
-  
+       
         return redirect("login")->withSuccess('Login details are not valid');
     }
 

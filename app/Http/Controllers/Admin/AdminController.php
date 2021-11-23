@@ -79,6 +79,7 @@ class AdminController extends Controller
            }
  
            $data_old_user = DB::table('users')->find($data['user_id']);
+           
  
            if($data_old_user == null){
                return $this->responseError(500,trans('user.no_data_user'));

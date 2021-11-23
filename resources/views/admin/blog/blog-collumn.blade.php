@@ -12,7 +12,17 @@
   <td>{{$title}}</td>
   <td>{{$author}}</td>
   <td>{{$publishDate}}</td>
-  <td>{{$status}}</td>
+  <td>
+    <label class="switch">
+      <button type="button" 
+      @if ($blog->is_verifited == 1)  checked @endif 
+      data-blog_id = "{{$blog->id}}" 
+      onclick="verify_blog(this)"
+      >
+      </button>
+      <span class="slider"></span>
+    </label>
+   </td>
   <td>
     <button type="button" class="btn btn-default"
     data-toggle="modal"

@@ -3,6 +3,7 @@ namespace App\Repositories\User;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
@@ -29,12 +30,14 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             'user_name'    => isset($data['user_name']) ? $data['user_name'] : '',
         );
 
+        //$dataRole = array();//$data['roles']
+        $Roles = isset($data['roles']) ? explode(",",$data['roles']) : 'writter';
+
         // TODO SOMETHING TO VALIDATE DATACREATE
         if($this->IsNullElementInArray($dataCreate) != null)
         {
             return $this->IsNullElementInArray($dataCreate)."null";
         }
-
 
         if($data['avatar'] != 'undefined'){
             if(is_string($data['avatar'])){
@@ -49,10 +52,30 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             $dataCreate['avatar'] = 'image-default';
         } 
 
+        // $newUser = new User($dataCreate)
         $newUser = $this->model->create($dataCreate);
+        
+        
 
         if($newUser)
-        return $newUser;
+        {
+            /*$dataRole['user_id'] = $newUser->id;
+
+            foreach ($Roles as $role) {
+                // chỉ cập nhật bảng role_user
+                //$newUser->roles->save($role);
+                $dataRole['role_id'] = DB::table('roles')->where('name',$role)->value('id');
+
+                DB::table('role_users')->updateOrInsert($dataRole);
+            
+            }*/
+            foreach ($Roles as $role) {
+                $newUser->roles->save($role);
+            }
+
+            return $newUser;
+        }
+        
         return false;
     }
 
@@ -67,6 +90,8 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             'user_name'    => isset($data['user_name']) ? $data['user_name'] : '',
             'user_id' => isset($data['user_id']) ? $data['user_id'] : '',
         );
+
+        $Roles = isset($data['roles']) ? explode(",",$data['roles']) : 'writter';
 
         // TODO SOMETHING TO VALIDATE DATACREATE
         if($this->IsNullElementInArray($dataCreate) != null)
@@ -92,7 +117,17 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         if($user)
         {
             $new_user = $user->update($dataCreate);
-            if($new_user) return $this->model->find($dataCreate['user_id']);
+            if($new_user) {
+                // delete tất cả các role có user_id = $new_user->id  xong rồi add lại giống ở function create 
+                DB::table('role_users')->where('user_id', $new_user->id)->delete();
+                
+                foreach ($Roles as $role) {
+                    $newUser->roles->save($role);
+                }
+
+                //return $this->model->find($dataCreate['user_id']);
+                return $new_user;
+            }
             return false;
         }
         return false;

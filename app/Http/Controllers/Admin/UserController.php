@@ -3,30 +3,41 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\AdminController;
 use App\Repositories\User\UserRepository;
+use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends AdminController
 {
     protected $userRepository;
+    protected $roleModel;
 
-    public function __construct()
+    public function __construct(Role $role)
     {
         parent::__construct();
         $this->userRepository = new UserRepository;
+        $this->modelRole = $role;
     }
 
     public function index()
     {
         return view('admin.user.index',[
             'users' => $this->userRepository->getAll(),
+            'roles' => $this->modelRole->all(),
         ]);   
     }
 
     public function store(Request $request)
     {
-        $data = $request->all();
 
-        // validate
+        if(Gate::denies('create_user')) {
+            return $this->responseError(403,"you do not have permission create blog");
+        } 
+
+        $data = $request->all();
+        // $request->roles; string 
+
+        // validate`
         if($this->validateRequestUser('create',$data) !== true)
         {
             return $this->validateRequestUser('create',$data);
@@ -59,6 +70,10 @@ class UserController extends AdminController
 
     public function find(Request $request)
     {
+        if(Gate::denies('update_user')) {
+            return $this->responseError(403,"you do not have permission update user");
+        } 
+
         try {
 
             $data = $request->all();
@@ -85,6 +100,10 @@ class UserController extends AdminController
 
     public function update(Request $request)
     {
+        if(Gate::denies('update_user')) {
+            return $this->responseError(403,"you do not have permission update user");
+        } 
+
         $data = $request->all();
 
         // validate data 
@@ -113,6 +132,11 @@ class UserController extends AdminController
 
     public function destroy(Request $request)
     {
+        if(Gate::denies('delete_user')) {
+            return $this->responseError(403,"you do not have permission delete user ");
+        } 
+
+
         $data = $request->all();
         if(!$data['user_id'])
         return $this->responError(404,trans('user.some_thing_wrong_when.delete'));
@@ -131,6 +155,10 @@ class UserController extends AdminController
 
     public function getModal(Request $request)
     {
+        if(Gate::denies('update_user')) {
+            return $this->responseError(403,"you do not have permission update user");
+        } 
+
         $data = $request->all();
 
         $urlmodal = isset($data['urlmodal']) ? $data['urlmodal'] : 'admin.user.formcreateuser';

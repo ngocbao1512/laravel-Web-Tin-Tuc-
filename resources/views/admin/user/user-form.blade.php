@@ -116,6 +116,26 @@
                                 />
                             </div>
                             <hr>
+                            <div class="form-group">
+                                <div class="col-xs-12 col-sm-6">
+                                    <label for="role">
+                                        <b>
+                                            roles
+                                        </b>
+                                    </label>
+                                </div>
+                                @foreach ($roles as $role)
+                                    <input type="checkbox" class="role_checkbox" name="roles" value="{{$role->name}}" 
+                                    @isset($user) 
+                                        @foreach ($user->roles as $role_user) 
+                                        @if ($role_user->name == $role->user) 
+                                            checked 
+                                        @endif 
+                                        @endforeach
+                                    @endisset> 
+                                     {{ "  ".$role->name}}<br>
+                                @endforeach
+                            </div>
                         </div>   
                     </div>
                     <div class="col-12">
