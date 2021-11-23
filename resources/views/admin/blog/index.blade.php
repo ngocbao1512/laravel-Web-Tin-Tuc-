@@ -93,6 +93,7 @@ $language = session('website_language', config('app.locale'));
        <div id="example1_filter" class="dataTables_filter">
          <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
            <div class="row">
+            @can('create_blog')
              <div class="col-sm-12 col-md-2 float-right">
                <div class="dt-buttons btn-group flex-wrap">
                  <button type="button"
@@ -104,6 +105,7 @@ $language = session('website_language', config('app.locale'));
                  </button>
                </div>
              </div>
+             @endcan
            </div>
            <br>
          </div>
@@ -154,36 +156,51 @@ $language = session('website_language', config('app.locale'));
                           @endif
                         </td>
                      <td>{{$blog->publish_date}}</td>
-                     <!-- button verify publish !-->
+                     <!-- button verify publish !-->  
                      <td>
-                      <label class="switch">
-                        <button type="button" 
-                        @if ($blog->is_verifited == 1)  checked @endif 
-                        data-blog_id = "{{$blog->id}}" 
-                        onclick="verify_blog(this)"
-                        class="@if ($blog->is_verifited == 1) active  @endif"
-                        >
-                        </button>
-                        <span class="slider"></span>
-                      </label>
+                        @can('verify_blog')
+                          <label class="switch">
+                              <button type="button" 
+                              @if ($blog->is_verifited == 1)  checked @endif 
+                              data-blog_id = "{{$blog->id}}" 
+                              onclick="verify_blog(this)"
+                              class="@if ($blog->is_verifited == 1) active  @endif"
+                              >
+                              </button>
+                              <span class="slider"></span>
+                          </label>
+                        @else
+                          @if ($blog->is_verifited == 1)
+                            verifited
+                          @else
+                            wait verify...  
+                          @endif
+                        @endcan
+                      
                      </td>
                      <td>
-                       <button type="button" class="btn btn-default"
-                       data-toggle="modal"
-                       data-target="#modal-edit-blog"
-                       data-blog_id = "{{$blog->id}}"
-                       onclick="loadBlogEdit(this)"
-                       >
-                         <span><i class="fas fa-edit"></i></span>
-                       </button>
-                       <button class="btn btn-primary confirm-delete" 
-                         style="background-color: #50697f;"
-                         data-toggle="modal"
-                         data-blog_id="{{$blog->id}}"
-                         onclick="deleteBlog(this);"
-                         >
-                         <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                       </button>
+                       @can('update_blog')
+                        <button type="button" class="btn btn-default"
+                        data-toggle="modal"
+                        data-target="#modal-edit-blog"
+                        data-blog_id = "{{$blog->id}}"
+                        onclick="loadBlogEdit(this)"
+                        >
+                          <span><i class="fas fa-edit"></i></span>
+                        </button>
+                       @endcan
+                       
+                       @can('delete_blog')
+                        <button class="btn btn-primary confirm-delete" 
+                          style="background-color: #50697f;"
+                          data-toggle="modal"
+                          data-blog_id="{{$blog->id}}"
+                          onclick="deleteBlog(this);"
+                          >
+                          <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                        </button>
+                       @endcan
+                       
                      </td>
                    </tr>
                   

@@ -68,10 +68,6 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
 
         $blog = $this->model->find($blog_id);
 
-        if(Gate::denies('delete_blog', $blog)) {
-            return "you can't delete this blog";
-        } 
-
         if($blog)
         {
             $blog->delete();
@@ -112,12 +108,6 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
 
         $blog = $this->model->find($dataCreate['blog_id']);
 
-        //return Gate::allows('update-blog', $blog);
-
-        if(Gate::denies('update_blog', $blog)) {
-           return "you can't update this blog";
-        } 
-
         if($blog)
         {
             $new_blog = $blog->update($dataCreate);
@@ -142,10 +132,6 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
 
         $blog = $this->model->find($dataCreate['blog_id']);
 
-        if(Gate::denies('verify_blog', $blog)) {
-            return "you can't verify this blog";
-        } 
-
         if($blog)
         {
             $new_blog = $blog->update($dataCreate);
@@ -155,9 +141,4 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
         }
         return trans('blog.cant_find_blog');
     }
-
-
-
-
-
 }

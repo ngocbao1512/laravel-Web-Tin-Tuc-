@@ -106,7 +106,6 @@
                                    </div>
                                </div>
                            @endif
-                          
                        </div>
                        <div class="col-12">
                            @if ($action =='create')

@@ -5,7 +5,7 @@
 @endsection
 
 @section('css')
-    
+    @include('admin.user.style')
 @endsection
 
 
@@ -98,17 +98,19 @@ $language = session('website_language', config('app.locale'));
         <div id="example1_filter" class="dataTables_filter">
           <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
             <div class="row">
-              <div class="col-sm-12 col-md-2 float-right">
-                <div class="dt-buttons btn-group flex-wrap">
-                  <button type="button"
-                  class="btn btn-primary" 
-                  data-toggle="modal"
-                  data-target="#modal-create-user"
-                  >
-                    <span> <i class="fas fa-user-plus"></i> {{trans('user.add_user')}}</span>
-                  </button>
+              @can('create_user')
+                <div class="col-sm-12 col-md-2 float-right">
+                  <div class="dt-buttons btn-group flex-wrap">
+                    <button type="button"
+                    class="btn btn-primary" 
+                    data-toggle="modal"
+                    data-target="#modal-create-user"
+                    >
+                      <span> <i class="fas fa-user-plus"></i> {{trans('user.add_user')}}</span>
+                    </button>
+                  </div>
                 </div>
-              </div>
+              @endcan
             </div>
             <br>
           </div>
@@ -154,24 +156,32 @@ $language = session('website_language', config('app.locale'));
                       <td>{{$user->first_name." ".$user->middle_name." ".$user->last_name}}</td>
                       <td>{{$user->email}}</td>
                       <td>{{$user->user_name}}</td>
-                      <td>bien tap</td>
                       <td>
-                        <button type="button" class="btn btn-primary"
-                        data-toggle="modal" 
-                        data-target="#modal-edit-user"
-                        data-userid = "{{$user->id}}"
-                        onclick="loadUserEdit(this)"
-                        >
-                          <span> <i class="fas fa-user-edit"></i></span>
-                        </button>
-                        <button class="btn btn-primary confirm-delete"  
+                        @foreach ($user->roles as $role)
+                           {{ $role->name }} 
+                        @endforeach
+                      </td>
+                      <td>
+                        @can('update_user')
+                          <button type="button" class="btn btn-primary"
+                          data-toggle="modal" 
+                          data-target="#modal-edit-user"
+                          data-userid = "{{$user->id}}"
+                          onclick="loadUserEdit(this)"
+                          >
+                            <span> <i class="fas fa-user-edit"></i></span>
+                          </button>
+                        @endcan
+                        @can('delete_user')
+                          <button class="btn btn-primary confirm-delete"  
                           style="background-color: #50697f;"
                           data-toggle="modal" 
                           data-userid="{{$user->id}}"
                           onclick="deleteUser(this);"
                           >
                           <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                        </button>
+                          </button>
+                        @endcan
                       </td>
                     </tr>
                 @endforeach               
@@ -194,7 +204,5 @@ $language = session('website_language', config('app.locale'));
 
 @section('js')
   @include('admin.user.script')
-
-
 @endsection
 
