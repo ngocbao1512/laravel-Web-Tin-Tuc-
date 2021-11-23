@@ -68,8 +68,3 @@ class AuthServiceProvider extends ServiceProvider
     
 }
 
-
-/*
-function (User $user, Blog $blog) {
-                return $this->hasPermission($user, $blog, $permission->name);
-            });

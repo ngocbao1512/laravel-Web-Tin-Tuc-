@@ -35,6 +35,7 @@ class UserController extends AdminController
         } 
 
         $data = $request->all();
+        // $request->roles; string 
 
         // validate`
         if($this->validateRequestUser('create',$data) !== true)

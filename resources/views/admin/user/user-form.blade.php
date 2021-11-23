@@ -125,7 +125,15 @@
                                     </label>
                                 </div>
                                 @foreach ($roles as $role)
-                                    <input type="checkbox" class="role_checkbox" name="roles" value="{{$role->name}}"  @isset($user) @foreach ($user->roles as $role_user) @if ($role_user->name == $role->user) checked @endif @endforeach @endisset> {{ "  ".$role->name}}<br>
+                                    <input type="checkbox" class="role_checkbox" name="roles" value="{{$role->name}}" 
+                                    @isset($user) 
+                                        @foreach ($user->roles as $role_user) 
+                                        @if ($role_user->name == $role->user) 
+                                            checked 
+                                        @endif 
+                                        @endforeach
+                                    @endisset> 
+                                     {{ "  ".$role->name}}<br>
                                 @endforeach
                             </div>
                         </div>   
