@@ -29,8 +29,6 @@ class CustomAuthController extends Controller
             return redirect()->intended('admin/blogs')
                 ->withSuccess('Signed in');
         }
-
-       
         return redirect("login")->withSuccess('Login details are not valid');
     }
 

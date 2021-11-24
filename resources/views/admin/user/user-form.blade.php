@@ -8,6 +8,7 @@
     $userName = !isset($user) ? '' : $user->user_name;
     $password = !isset($user) ? '' : $user->password;
     $avatar = !isset($user) ? '' : $user->avatar;
+    $user_roles = !isset($user) ? [] : $user->roles->pluck('name')->toArray();
 ?>
 <div class="modal-header">
     <h4>
@@ -116,6 +117,7 @@
                                 />
                             </div>
                             <hr>
+                            {{gettype($user_roles)}}
                             <div class="form-group">
                                 <div class="col-xs-12 col-sm-6">
                                     <label for="role">
@@ -124,17 +126,19 @@
                                         </b>
                                     </label>
                                 </div>
-                                @foreach ($roles as $role)
-                                    <input type="checkbox" class="role_checkbox" name="roles" value="{{$role->name}}" 
-                                    @isset($user) 
-                                        @foreach ($user->roles as $role_user) 
-                                        @if ($role_user->name == $role->user) 
-                                            checked 
-                                        @endif 
-                                        @endforeach
-                                    @endisset> 
-                                     {{ "  ".$role->name}}<br>
-                                @endforeach
+                                @isset($roles)
+                                    @foreach ($roles as $role)
+                                        <input type="checkbox" class="role_checkbox" name="roles" value="{{$role->name}}" 
+                                            @if (in_array($role->name, $user_roles ))
+                                                checked
+                                            @endif                                            
+                                               
+                                        > 
+                                        {{ "  ".$role->name}}
+                                        <br>
+                                    @endforeach
+                                @endisset
+                                
                             </div>
                         </div>   
                     </div>

@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+
+use App\Http\Controllers\Client\BlogController as ClientBlogController;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\HomeController;
 
@@ -41,9 +43,8 @@ Route::name('client.')->prefix('client')->group(function () {
         return view('client.my-directory.contact');
     })->name('contact');
 
-    Route::get('/index', function () {
-        return view('client.my-directory.index');
-    })->name('index');
+
+    Route::get('index',[ClientBlogController::class,'index'])->name('index');
 
     Route::get('/post', function () {
         return view('client.my-directory.post');

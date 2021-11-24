@@ -59,7 +59,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
         if($newUser)
         {
-            /*$dataRole['user_id'] = $newUser->id;
+            $dataRole['user_id'] = $newUser->id;
 
             foreach ($Roles as $role) {
                 // chỉ cập nhật bảng role_user
@@ -68,10 +68,10 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
                 DB::table('role_users')->updateOrInsert($dataRole);
             
-            }*/
-            foreach ($Roles as $role) {
-                $newUser->roles->save($role);
             }
+            /*foreach ($Roles as $role) {
+                $newUser->roles->save($role);
+            }*/
 
             return $newUser;
         }
@@ -119,14 +119,20 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             $new_user = $user->update($dataCreate);
             if($new_user) {
                 // delete tất cả các role có user_id = $new_user->id  xong rồi add lại giống ở function create 
-                DB::table('role_users')->where('user_id', $new_user->id)->delete();
+                DB::table('role_users')->where('user_id', $dataCreate['user_id'])->delete();
                 
+                $dataRole['user_id'] = $dataCreate['user_id'];
+
                 foreach ($Roles as $role) {
-                    $newUser->roles->save($role);
+                    // chỉ cập nhật bảng role_user
+                    //$newUser->roles->save($role);
+                    $dataRole['role_id'] = DB::table('roles')->where('name',$role)->value('id');
+
+                    DB::table('role_users')->updateOrInsert($dataRole);
+                
                 }
 
-                //return $this->model->find($dataCreate['user_id']);
-                return $new_user;
+                return $this->model->find($dataCreate['user_id']);
             }
             return false;
         }

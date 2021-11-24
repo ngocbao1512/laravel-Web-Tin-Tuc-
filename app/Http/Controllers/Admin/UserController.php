@@ -35,7 +35,6 @@ class UserController extends AdminController
         } 
 
         $data = $request->all();
-        // $request->roles; string 
 
         // validate`
         if($this->validateRequestUser('create',$data) !== true)
@@ -89,6 +88,7 @@ class UserController extends AdminController
             return $this->responseSuccess(trans('user.find_success'),[
                 'user_form' => view('admin.user.user-form',[
                     'user' => $user,
+                    'roles' => $this->modelRole->all(),
                 ])->render(),  
             ]);
             
@@ -111,6 +111,7 @@ class UserController extends AdminController
         {
             return $this->validateRequestUser('update',$data);
         }
+
         
         try {
             $new_user = $this->userRepository->update($data);
