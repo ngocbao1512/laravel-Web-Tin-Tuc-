@@ -44,11 +44,9 @@ Route::name('client.')->prefix('client')->group(function () {
     })->name('contact');
 
 
-    Route::get('index',[ClientBlogController::class,'index'])->name('index');
+    Route::get('posts',[ClientBlogController::class,'index'])->name('posts');
 
-    Route::get('/post', function () {
-        return view('client.my-directory.post');
-    })->name('post');
+    Route::get('/posts/{slug}',[ClientBlogController::class,'show'])->name('posts.show');
 
 });
 
@@ -70,6 +68,7 @@ Route::name('admin.')->prefix('admin')->middleware('locale')->middleware('auth')
     Route::post('users/user',[AdminUserController::class,'update'])->name('users.update');
     Route::post('users/find',[AdminUserController::class,'find'])->name('users.find');
     Route::post('users/getmodal',[AdminUserController::class,'getModal'])->name('users.getmodal');
+
 
     //change language
     Route::post('change-language',[HomeController::class,'changeLanguage'])->name('user.change-language');

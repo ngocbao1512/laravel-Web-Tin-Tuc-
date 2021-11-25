@@ -29,9 +29,8 @@ https://templatemo.com/tm-553-xtra-blog
     @yield('content')
     <script src="/theme-client/js/jquery.min.js"></script>
     <script src="/theme-client/js/templatemo-script.js"></script>
-    @include('admin.layouts.general-js')
+    @include('client.layouts.general-js')
     @yield('js')
-    @yield('active')
 
 </body>
 

@@ -13,10 +13,20 @@ class BlogRepository
 
     public function put_all()
     {
-        cache('blogs',  Blog::get()->toArray() , 600000);
+        if(!Cache::has('blog-ádfadfa')) {
+            $arr_blog = [];
+            $blogs = Blog::where('is_verifited','1')
+            ->with('user')
+            ->get();
+            foreach ($blogs as $key => $blog) {
+                if($blog->slug !== null) {
+                    $cacheKey = 'blog-'.$blog->slug;
+                    Cache::put($cacheKey, $blog->toArray(), 600000);
+                }
+                
+            }
 
-        return Cache::get('blogs');
-
+        }
 
     }
 
@@ -25,9 +35,10 @@ class BlogRepository
         cache($key, $value,  now()->addMinutes(10000));
     }
 
-    public function get_blog_single($key = 'blog-single')
+    public function get_blog_single($slug)
     {
-        return cache('blog-single');
+        $this->put_all();
+        return Cache::pull("blog-$slug");
     }
 
     public function remove_all()
@@ -37,6 +48,16 @@ class BlogRepository
 
     public function retrieve_all()
     {
-        return cache('blogs');
+        $blogs = Blog::where('is_verifited','1')
+        ->with('user')
+        ->get();
+        $arr_blog = [];
+        foreach ($blogs as $key => $blog) {
+            if($blog->slug !== null) {
+                $cacheKey = 'blog-'.$blog->slug;
+                $arr_blog[$key] = Cache::pull($cacheKey);
+            }
+        }
+        return $arr_blog;
     }
 }

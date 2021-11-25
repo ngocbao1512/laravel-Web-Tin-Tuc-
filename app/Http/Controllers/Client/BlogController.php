@@ -23,10 +23,9 @@ class BlogController extends Controller
      */
     public function index()
     {
-        dd($this->blogRepository->put_all());
-        dd($this->blogRepository->retrieve_all());
+        $this->blogRepository->put_all();
 
-        return view('client.my-directory.index',[
+        return view('client.home-client.home',[
             'blogs' => $this->blogRepository->retrieve_all(),
         ]);
     }
@@ -58,9 +57,12 @@ class BlogController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show($slug)
+    { 
+        // tìm blog có slug trong cache và show ra 
+        return view('client.single-post.post',[
+            'blog' => $this->blogRepository->get_blog_single($slug),
+        ]);
     }
 
     /**
