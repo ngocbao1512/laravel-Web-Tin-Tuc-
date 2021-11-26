@@ -12,6 +12,7 @@ class Blog extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use Sluggable;
 
     protected $fillable = [
         'name',
@@ -24,7 +25,7 @@ class Blog extends Model
         'cover',
     ];
 
-    public function sluggable(): array
+    public function sluggable()
     {
         return [
             'slug' => [
@@ -36,5 +37,10 @@ class Blog extends Model
     public function user()
     {
         return $this->belongsTo(User::class,'created_user_id');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

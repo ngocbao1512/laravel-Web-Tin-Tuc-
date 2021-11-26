@@ -16,11 +16,11 @@
         </div>
         <nav class="tm-nav" id="tm-nav">            
             <ul>
-                <li class="tm-nav-item"><a href="{{route('client.index')}}" class="tm-nav-link">
+                <li class="tm-nav-item"><a href="{{route('client.posts')}}" class="tm-nav-link">
                     <i class="fas fa-home"></i>
                     Blog Home
                 </a></li>
-                <li class="tm-nav-item"><a href="{{route('client.post')}}" class="tm-nav-link">
+                <li class="tm-nav-item  "><a href="" class="tm-nav-link">
                     <i class="fas fa-pen"></i>
                     Single Post
                 </a></li>
@@ -28,7 +28,7 @@
                     <i class="fas fa-users"></i>
                     About Xtra
                 </a></li>
-                <li class="tm-nav-item "><a href="{{route('client.contact')}}" class="tm-nav-link">
+                <li class="tm-nav-item"><a href="{{route('client.contact')}}" class="tm-nav-link">
                     <i class="far fa-comments"></i>
                     Contact Us
                 </a></li>

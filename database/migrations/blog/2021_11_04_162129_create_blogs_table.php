@@ -19,6 +19,7 @@ class CreateBlogsTable extends Migration
             $table->string('slug')->index('slug_index')->nullable();
             $table->text('content')->nullable();
             $table->biginteger('created_user_id')->nullable();
+            // $table->foreign('user_id)->references('id')->on('users');
             $table->string('cover')->nullable();
             $table->string("publish_date");
             $table->tinyInteger('is_verifited')->default(0);

@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+
+use App\Http\Controllers\Client\BlogController as ClientBlogController;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\HomeController;
 
@@ -41,13 +43,10 @@ Route::name('client.')->prefix('client')->group(function () {
         return view('client.my-directory.contact');
     })->name('contact');
 
-    Route::get('/index', function () {
-        return view('client.my-directory.index');
-    })->name('index');
 
-    Route::get('/post', function () {
-        return view('client.my-directory.post');
-    })->name('post');
+    Route::get('posts',[ClientBlogController::class,'index'])->name('posts');
+
+    Route::get('/posts/{slug}',[ClientBlogController::class,'show'])->name('posts.show');
 
 });
 
@@ -69,6 +68,7 @@ Route::name('admin.')->prefix('admin')->middleware('locale')->middleware('auth')
     Route::post('users/user',[AdminUserController::class,'update'])->name('users.update');
     Route::post('users/find',[AdminUserController::class,'find'])->name('users.find');
     Route::post('users/getmodal',[AdminUserController::class,'getModal'])->name('users.getmodal');
+
 
     //change language
     Route::post('change-language',[HomeController::class,'changeLanguage'])->name('user.change-language');

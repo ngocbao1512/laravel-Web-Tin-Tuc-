@@ -301,6 +301,42 @@
   
         }
     }
+
+    function verify_blog(button){
+        var button = $(button);
+        var blogId = button.data('blog_id');
+        var status = (button.attr('class') == 'active') ? 0 : 1 ;
+        console.log(status);
+  
+        var runFunction = function(){
+            $.ajax({
+                url: '{{route("admin.blogs.verify")}}',
+                type: 'POST',
+                data: {
+                    'blog_id': blogId,
+                    'is_verifited': status,
+                },
+                success:function(data) {
+                   
+                    if(data.status == 200){
+                        alert(data.message,"success")
+                        // add class active 
+                        button.toggleClass('active')
+                       
+                    }else{
+                        alert(data.message, "error");
+                    }
+  
+                },
+                error:function(data) {
+                    console.log("{{trans('blog.something_wrong')}}");
+  
+                }
+            });
+        };
+  
+        confirm("{{trans('blog.confirm_verify_blog')}} ?", runFunction);
+    }
   
     
   

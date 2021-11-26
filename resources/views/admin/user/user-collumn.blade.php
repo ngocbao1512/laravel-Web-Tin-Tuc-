@@ -3,7 +3,11 @@
     <td>{{$user->first_name." ".$user->middle_name." ".$user->last_name}}</td>
     <td>{{$user->email}}</td>
     <td>{{$user->user_name}}</td>
-    <td>bien tap</td>
+    <td>
+        @foreach ($user->roles as $role)
+            {{ $role->name }} 
+        @endforeach
+    </td>
     <td>
     <button type="button" class="btn btn-primary"
     data-toggle="modal" 
