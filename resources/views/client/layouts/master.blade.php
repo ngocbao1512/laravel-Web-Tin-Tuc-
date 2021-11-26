@@ -13,7 +13,7 @@
     <!-- https://fonts.google.com/ -->
     <link href="/theme-client/css/bootstrap.min.css" rel="stylesheet">
     <link href="/theme-client/css/templatemo-xtra-blog.css" rel="stylesheet">
-    @include('admin.layouts.general-css')
+    @include('client.layouts.general-css')
     @yield('css')
     <!--
     
@@ -25,8 +25,14 @@ https://templatemo.com/tm-553-xtra-blog
 </head>
 
 <body>
-    @yield('sidebar')
-    @yield('content')
+    <div class="container-fluid">
+        <main class="tm-main">
+           @yield('header')  
+            @yield('content')         
+            @yield('footer')
+        </main>
+    </div>
+
     <script src="/theme-client/js/jquery.min.js"></script>
     <script src="/theme-client/js/templatemo-script.js"></script>
     @include('client.layouts.general-js')
