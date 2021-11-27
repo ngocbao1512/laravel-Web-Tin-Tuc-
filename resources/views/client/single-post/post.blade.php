@@ -19,17 +19,14 @@
 @endsection
 
 @section('content')               
-        <div class="row">
-            <div class="col-12">
-                <hr class="tm-hr-primary tm-mb-55">
-                <img src="{{showImage('cover',$blog['cover'])}}" alt="" sizes="" srcset="">
-            </div>
+        <div class="row" style="display : flex; justify-content: center; text-align : center;">
+            <img src="{{showImage('cover',$blog['cover'])}}" alt="" sizes="" srcset="" style="max-height: 300px;">
         </div>
         <div class="row">
-            <div class="col-lg-8 tm-post-col">
-                <div class="tm-post-full">                    
-                    <div class="mb-4">
-                        <h2 class="pt-2 tm-color-primary tm-post-title">{{$blog['title']}}</h2>
+            <div class="col-lg-12 tm-post-col">
+                <div class="col-12">                    
+                    <div class="mb-12">
+                        <h2 class="pt-2 tm-color-primary">{{$blog['title']}}</h2>
                         <p class="tm-mb-40">{{substr($blog['created_at'],0,-17)}} posted by {{$blog['user']['user_name']}}</p>
                         <?php echo $blog['content'] ?>
                         <span class="d-block text-right tm-color-primary">Creative . Design . Business</span>
@@ -63,10 +60,10 @@
 
 @section('footer')
     <footer class="row">
-        <div class="col-md-6 col-12 tm-color-gray">
+        <div class="col-md-12 col-12 tm-color-gray">
             Design: <a rel="nofollow" target="_parent" href="https://templatemo.com" class="tm-external-link">TemplateMo</a>
         </div>
-        <div class="col-md-6 col-12 tm-color-gray tm-copyright">
+        <div class="col-md-12 col-12 tm-color-gray tm-copyright">
             Copyright 2020 Xtra Blog Company Co. Ltd.
         </div>
     </footer>

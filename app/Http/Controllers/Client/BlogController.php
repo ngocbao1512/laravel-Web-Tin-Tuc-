@@ -11,9 +11,11 @@ use App\Models\Blog;
 class BlogController extends Controller
 {
     protected $blogRepository;
+    protected $modelBlog;
 
-    public function __construct()
+    public function __construct(Blog $blog)
     {
+        $this->modelBlog = $blog;
         $this->blogRepository = new BlogRepository;
     }
     /**
@@ -101,6 +103,38 @@ class BlogController extends Controller
 
     public function find(Request $request)
     {
-        return $request;
+       $query = $request->data;
+       
+       $posts = $this->modelBlog
+       ->where('slug', 'LIKE', "%{$query}%")
+       ->get();
+
+       if(isset($posts[0])) {
+           return $this->responseSuccess(trans('blog.find_success'),[
+               'blogs' => view('client.home-client.posts',[
+                   'blogs' => $posts,
+               ])->render(),  
+           ]);
+       } 
+
+       try {
+            $posts = $this->modelBlog
+            ->where('slug', 'LIKE', "%{$query}%")
+            ->get();
+
+            if(isset($posts[0])) {
+                return $this->responseSuccess(trans('blog.find_success'),[
+                    'blogs' => view('client.home-client.posts',[
+                        'blogs' => $posts,
+                    ])->render(),  
+                ]);
+            } 
+            return $this->responseError(404,trans('blog.find_null'));
+ 
+       } catch (\Throwable $th) {
+           return $this->responseError(500, trans('blog.find_error'));
+       }
+       
+      
     }
 }
