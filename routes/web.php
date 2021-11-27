@@ -48,6 +48,8 @@ Route::name('client.')->prefix('client')->group(function () {
 
     Route::get('/posts/{slug}',[ClientBlogController::class,'show'])->name('posts.show');
 
+    Route::post('/post/search',[ClientBlogController::class,'find'])->name('posts.find');
+
 });
 
 Route::name('admin.')->prefix('admin')->middleware('locale')->middleware('auth')->group(function () {

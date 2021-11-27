@@ -98,4 +98,9 @@ class BlogController extends Controller
     {
         //
     }
+
+    public function find(Request $request)
+    {
+        return $request;
+    }
 }
