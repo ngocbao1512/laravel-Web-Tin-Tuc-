@@ -14,7 +14,7 @@
 @endsection
 
 @section('content')
-    <div class="row">
+<div class="row" id="content-main">
         @foreach ($blogs as $key => $blog)
             <article class="col-12 col-md-3">
                 <a href="{{route('client.posts.show',['slug'=>$blog['slug']])}}" class="effect-lily tm-post-link tm-pt-60">
@@ -82,6 +82,7 @@
 
 @section('js')
     @include('client.home-client.script')
+    
 @endsection
 
 
