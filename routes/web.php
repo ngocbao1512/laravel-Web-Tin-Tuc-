@@ -50,6 +50,10 @@ Route::name('client.')->prefix('client')->group(function () {
 
     Route::post('/post/search',[ClientBlogController::class,'find'])->name('posts.find');
 
+    Route::post('/post/comment',[ClientBlogController::class,'comment'])->name('posts.comment');
+
+    Route::post('/post/comments',[ClientBlogController::class,'loadcomment'])->name('posts.getcomment');   
+
 });
 
 Route::name('admin.')->prefix('admin')->middleware('locale')->middleware('auth')->group(function () {

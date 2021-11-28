@@ -7,16 +7,26 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 use App\Repositories\Client\BlogRepository;
 use App\Models\Blog;
+use App\Models\Customer;
+use App\Models\Comment;
 
-class BlogController extends Controller
+class BlogController extends ClientController
 {
     protected $blogRepository;
     protected $modelBlog;
+    protected $modelCustomer;
+    protected $modelComment;
 
-    public function __construct(Blog $blog)
+    public function __construct(
+        Blog $blog,
+        Customer $customer,
+        Comment $comment
+        )
     {
         $this->modelBlog = $blog;
         $this->blogRepository = new BlogRepository;
+        $this->modelCustomer = $customer;
+        $this->modelComment = $comment;
     }
     /**
      * Display a listing of the resource.
@@ -133,8 +143,54 @@ class BlogController extends Controller
  
        } catch (\Throwable $th) {
            return $this->responseError(500, trans('blog.find_error'));
-       }
-       
-      
+       } 
     }
+
+    public function comment (Request $request) 
+    {
+        $data = $request->all();
+        $this->validate_comment($data);
+        // check email constain trong session ? create customer -> luu vao session : continue 
+        if(session('email') == null)
+        {
+            // save email user_name vaof database 
+            $data_customer['email'] = $request->only(['email','user_name']);
+            $new_customer = $this->modelCustomer->create($data_customer);
+            session('email',$data_customer['email']);
+            session('user_name',$data_customer['user_name']);
+            session('customer_id',$new_customer->id); 
+        }
+
+        // xu ly comment 
+        // check blog_id 
+        if(is_null($this->modelBlog->find($data['blog_id']) ) )
+        {
+            return responseError(500,'some thing went wrong. please try again later!!!');
+        };
+
+        // tao comment 
+        $data['customer_id'] = session('customer_id');
+        $this->modelComment->save($data);
+
+        $comments = $this->modelComment->where('blog_id',$data['blog_id']);
+
+        return $this->responseSuccess(trans('blog.comment_success'),[
+            'comments' => view('client.single-post.comments',[
+                'comments' => $comments,
+            ])->render(),
+        ]);
+    }
+
+    public function loadcomment(Request $request)
+    {
+        $comments = $this->modelComment->where('blog_id',$request->all());
+
+        return $this->responseSuccess(trans('blog.comment_success'),[
+            'comments' => view('client.single-post.comments',[
+                'comments' => $comments,
+            ])->render(),
+        ]);
+
+    }
+
 }
