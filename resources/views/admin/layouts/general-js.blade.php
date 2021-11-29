@@ -58,6 +58,19 @@
         });
     }
 
+    function show_blog(url)
+    {
+        Swal.fire({
+            html: "<iframe src="+url+" height='600' width='800'></iframe>",
+            width: 1200,
+            customClass: 'swal-height',
+            imageHeight: 1000,
+            imageWidth: 800,
+            showConfirmButton: false,
+        });
+    }
+
+
     function removeColumn(table, row)
     {
         myTable.row( row ).delete();

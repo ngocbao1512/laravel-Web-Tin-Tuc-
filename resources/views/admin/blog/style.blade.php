@@ -24,6 +24,10 @@
   transition: .4s;
 }
 
+.d-none{
+  display:none;
+}
+
 .slider:before {
   position: absolute;
   content: "";

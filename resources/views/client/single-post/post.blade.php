@@ -5,7 +5,8 @@
     {{$blog['title']}}
 @endsection
 
-@section('content')               
+@section('content')   
+    <a href="{{route('client.posts')}}" id="button-home" style="height : 80px; width : 80px;">Home</a>           
         <div class="row" style="display : flex; justify-content: center; text-align : center;">
             <img src="{{showImage('cover',$blog['cover'])}}" alt="" sizes="" srcset="" style="max-height: 300px;">
         </div>
@@ -14,31 +15,17 @@
                 <div class="col-6">                    
                     <div class="mb-12">
                         <h2 class="pt-2 tm-color-primary d-flex justify-content-center">{{$blog['title']}}</h2>
-                        <p class="tm-mb-40 d-flex justify-content-center">{{substr($blog['created_at'],0,-17)}} posted by {{$blog['user']['user_name']}}</p>
+                        <p class="tm-mb-40 d-flex justify-content-center">{{changeTime(substr($blog['created_at'],0,-17))}} posted by {{$blog['user']['user_name']}}</p>
                         <?php echo $blog['content'] ?>
                         <span class="d-block text-right tm-color-primary">Creative . Design . Business</span>
                     </div>
                     
                     <!-- Comments -->
                     <!-- Comments -->
-                    <div>
-                        <h2 class="tm-color-primary tm-post-title">Comments</h2>
-                        <hr class="tm-hr-primary tm-mb-45">
-                        <div class="tm-comment-reply tm-mb-45">
-                            <hr>
-                            <div class="tm-comment">
-                                <figure class="tm-comment-figure">
-                                    <img src="img/comment-2.jpg" alt="Image" class="mb-2 rounded-circle img-thumbnail">
-                                    <figcaption class="tm-color-primary text-center">Jewel Soft</figcaption>    
-                                </figure>
-                                <p>
-                                    Nunc et eros quis enim feugiat tincidunt et vitae dui.
-                                    Nullam consectetur justo ac ex laoreet rhoncus. Nunc
-                                    id leo pretium, faucibus sapien vel, euismod turpis.
-                                </p>
-                            </div>                                
-                            <span class="d-block text-right tm-color-primary">June 21, 2020</span>
-                        </div>
+                    <h2 class="tm-color-primary tm-post-title">Comments</h2>
+                    <hr class="tm-hr-primary tm-mb-45">
+                    <div id="comment">
+
                     </div>
                     <div>
                         <hr class="tm-hr-primary tm-mb-45">                           

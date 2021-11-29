@@ -28,7 +28,7 @@
                 </a>                    
             
                 <div class="d-flex justify-content-between">
-                    <span class="tm-color-primary">{{substr($blog['created_at'],0,-17)}}</span>
+                    <span class="tm-color-primary">{{changeTime(substr($blog['created_at'],0,-17))}}</span>
                 </div>
                 <hr>
                 <div class="d-flex justify-content-between" >

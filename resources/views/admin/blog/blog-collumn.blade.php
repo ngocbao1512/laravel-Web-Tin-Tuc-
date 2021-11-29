@@ -10,6 +10,9 @@
 <tr class="odd" data-id = "{{$blogId}}" id="{{$blogId}}">
   <td class="dtr-control sorting_1" tabindex="0"></td>
   <td>{{$title}}</td>
+  <td>
+    <img src="{{showImage('cover',$cover)}}" alt="" sizes="" srcset="" style="max-height: 100px;">
+   </td>
   <td>{{$author}}</td>
   <td>{{$publishDate}}</td>
   <td>
@@ -24,7 +27,7 @@
     </label>
    </td>
   <td>
-    <button type="button" class="btn btn-default"
+    <button type="button" class="btn btn-warning"
     data-toggle="modal"
     data-target="#modal-edit-blog"
     data-blog_id = "{{$blog->id}}"
@@ -32,13 +35,20 @@
     >
       <span><i class="fas fa-edit"></i></span>
     </button>
-    <button class="btn btn-primary confirm-delete" 
-      style="background-color: #50697f;"
+    <button class="btn btn-danger confirm-delete" 
       data-toggle="modal"
       data-blog_id="{{$blog->id}}"
       onclick="deleteBlog(this);"
       >
       <i class="far fa-trash-alt tm-product-delete-icon"></i>
     </button>
+    <?php $link = route('client.posts.show',['slug'=>$blog->slug]);?>
+    <button class="btn btn-info d-none"
+      onclick="show_blog('{{$link}}');"
+     id="button-view-blog-{{$blog->id}}"
+     >
+      <i class="fas fa-eye"></i>
+    </button>
+
   </td>
 </tr>

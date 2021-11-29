@@ -121,7 +121,6 @@ class BlogController extends AdminController
             return $this->validateRequestBlog('update',$data);
         }
 
-
         try {
             $new_blog = $this->blogRepository->update($data);
             //return $new_blog;
@@ -179,13 +178,11 @@ class BlogController extends AdminController
         {
            return $this->responseError(404,trans('blog.something_wrong'));
         }
-
-
         try {
             $check = $this->blogRepository->verify($data);
             if($check == true)
             {
-                return $this->responseSuccess(trans('blog.verify.success'));
+                return $this->responseSuccess(trans('blog.verify.success'),$this->modelBlog->find($data['blog_id']));
             }
             return false;
             

@@ -13,6 +13,7 @@
                 success:function(res) {
                     if(res.status == 200 ){
                         $('#comment').html(res.data.comments) 
+                        console.log('okeeee')
                     } else if(res.status == 400) {
                         $('#comment').html('this blog have not any comment');
                     } else {

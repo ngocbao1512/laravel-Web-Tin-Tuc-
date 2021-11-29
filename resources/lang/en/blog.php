@@ -54,7 +54,8 @@ return [
         'update' => 'Do You Want To Update This Blog ?',
         'create' => 'Do You Want To Create This Blog ?',
         'delete' => 'Do You Want To Delete This Blog ?',
-    ]
+    ],
+    'cover' => 'Cover',
     
     
 ];

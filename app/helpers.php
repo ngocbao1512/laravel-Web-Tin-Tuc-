@@ -17,3 +17,14 @@ if(!function_exists('showImage')) {
         return asset("storage/$folder_name/$file_name");
     }
 }
+
+// input 2021-11-25 
+// output 25/11/2021
+if(!function_exists('changeTime')) {
+    function changeTime($time_string)
+    {
+        // dao chuoi -> change - to /  
+        $result = substr($time_string,0,-8)."/".substr($time_string,5,2)."/".substr($time_string,0,4);
+        return $result;
+    }
+}
