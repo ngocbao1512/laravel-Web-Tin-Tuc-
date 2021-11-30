@@ -56,6 +56,16 @@ return [
         'delete' => 'Bạn Có Muốn  Xóa Bài Viết Này Không ?',
     ],
     'cover' => 'Ảnh Mô Tả',
-    
-    
+    'add_success' => 'Thêm Bài Viết Thành Công',
+    'confirm_delete_blog' => 'Xác Nhận Xóa Bài Viết Này',
+    'delete_success' => 'Xóa Bài viết thành công',
+    'update_success' => 'Cập Nhật Bài Viết Thành Công',
+    'home-page' => 'Trang Chủ',
+    'home' => 'Trang Chủ',
+
+    'verify' => [
+        'success' => 'Duyệt Thành Công',
+    ],
+
+    'confirm_verify_blog' => 'Xác Nhận Duyệt Bài Viết Này',
 ];

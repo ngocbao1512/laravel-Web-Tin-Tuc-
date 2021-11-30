@@ -56,6 +56,16 @@ return [
         'delete' => 'Do You Want To Delete This Blog ?',
     ],
     'cover' => 'Cover',
-    
+    'add_success' => 'Add Success',
+    'confirm_delete_blog' => 'Confirm Delete This Blog',
+    'delete_success' => 'Delete Success',
+    'update_success' => 'Update Blog Success',
+    'home-page' => 'Home Page', 
+    'home' => 'Home',
+    'verify' => [
+        'success' => 'Verify Success',
+    ],
+
+    'confirm_verify_blog' => 'Confirm Verify Blog',
     
 ];

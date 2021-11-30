@@ -9,7 +9,7 @@
         @endforeach
     </td>
     <td>
-    <button type="button" class="btn btn-primary"
+    <button type="button" class="btn btn-warning"
     data-toggle="modal" 
     data-target="#modal-edit-user"
     data-userid = "{{$user->id}}"
@@ -17,8 +17,7 @@
     >
         <span> <i class="fas fa-user-edit"></i></span>
     </button>
-    <button class="btn btn-primary confirm-delete"  
-        style="background-color: #50697f;"
+    <button class="btn btn-danger confirm-delete"  
         data-toggle="modal" 
         data-userid="{{$user->id}}"
         onclick="deleteUser(this);"
