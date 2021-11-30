@@ -59,5 +59,5 @@ class BlogRepository
             }
         }
         return $arr_blog;
-    }
+    } // n(n+1) : page 1 : 0 - 8 , page 2 : 9 - 16 , page 3 : 17 - 25 
 }

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Request;
 use App\Models\Blog;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Cache;
 
 class BlogRepository extends BaseRepository implements BlogRepositoryInterface
 {
@@ -70,7 +71,12 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
 
         if($blog)
         {
+            $key = "blog-".$blog->pluck('slug');
+            if(Cache::has($key)) {
+                Cache::forget($key);
+            }
             $blog->delete();
+            
             return true;
         }
         return trans('blog.blog_deleted_before');
@@ -86,6 +92,11 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
             'publish_date'    => isset($data['publish_date']) ? $data['publish_date'] : '',
             'blog_id' => isset($data['blog_id']) ? $data['blog_id'] : '',
         );
+
+        // remove this blog from cache
+        $key = "blog-".$this->model->find($data['blog_id'])->pluck('slug');
+        Cache::forget($key);
+
 
         // TODO SOMETHING TO VALIDATE DATACREATE
         if($this->IsNullElementInArray($dataCreate) != null)
@@ -110,8 +121,13 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
 
         if($blog)
         {
-            $new_blog = $blog->update($dataCreate);
-            if($new_blog) return $this->model->find($dataCreate['blog_id']);
+            $check = $blog->update($dataCreate);
+            if($check) {
+                $new_blog = $this->model->find($dataCreate['blog_id']);  
+                // luu lai cache
+                Cache::put("blog-".$new_blog->slug, $new_blog->toArray(), 600000);
+                return $new_blog;
+            }
             return false;
         }
         return false;

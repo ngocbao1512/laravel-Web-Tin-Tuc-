@@ -162,4 +162,8 @@
   opacity: 1 !important;
 }
 
+.swal-height {
+  height: 90vh;
+}
+
 </style>

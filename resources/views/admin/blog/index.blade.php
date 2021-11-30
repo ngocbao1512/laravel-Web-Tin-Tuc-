@@ -81,7 +81,15 @@ $language = session('website_language', config('app.locale'));
  </div>
 </div>
 {{-- END SECTION --}}
- 
+
+{{-- SECTION SHOW IFRAME BLOG --}}
+  <div class="modal" id="modal-show-iframe" aria-modal="true" role="dialog" >
+    <div class="modal-dialog" style="min-width: 85vw;">
+      <div class="modal-content" style="background-color: rgb(255 255 255 / 93%);" id="modal-show-iframe-content">
+      </div>
+    </div>
+  </div>
+{{-- END SECTION --}}
  
    <div class="card">
      <div class="card-header">
@@ -97,7 +105,7 @@ $language = session('website_language', config('app.locale'));
              <div class="col-sm-12 col-md-2 float-right">
                <div class="dt-buttons btn-group flex-wrap">
                  <button type="button"
-                 class="btn btn-primary"
+                 class="btn btn-success"
                  data-toggle="modal"
                  data-target="#modal-create-blog"
                  >
@@ -128,6 +136,9 @@ $language = session('website_language', config('app.locale'));
                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
                  {{trans('blog.title')}}
                </th>
+               <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">
+                {{trans('blog.cover')}}
+              </th>
                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">
                  {{trans('blog.author')}}
                </th>
@@ -146,18 +157,21 @@ $language = session('website_language', config('app.locale'));
            <tbody>
              @isset($blogs)
                @foreach ($blogs as $blog)
-                   <tr class="odd" data-id = "{{$blog->id}}" id="{{$blog->id}}">
-                     <td class="dtr-control sorting_1" tabindex="0"></td>
-                     <td>{{$blog->title}}</td>
-                     <td>@if (!isset($blog->user->user_name))
+                    <tr class="odd" data-id = "{{$blog->id}}" id="{{$blog->id}}">
+                      <td class="dtr-control sorting_1" tabindex="0"></td>
+                      <td>{{$blog->title}}</td>
+                      <td>
+                       <img src="{{showImage('cover',$blog->cover)}}" alt="" sizes="" srcset="" style="max-height: 100px;">
+                      </td>
+                      <td>@if (!isset($blog->user->user_name))
                           {{trans('general.author_be_deleted')}}  
                           @else 
                           {{$blog->user->user_name}}
                           @endif
                         </td>
-                     <td>{{$blog->publish_date}}</td>
+                      <td>{{substr($blog->publish_date,0,10)}} </td>
                      <!-- button verify publish !-->  
-                     <td>
+                      <td>
                         @can('verify_blog')
                           <label class="switch">
                               <button type="button" 
@@ -178,9 +192,9 @@ $language = session('website_language', config('app.locale'));
                         @endcan
                       
                      </td>
-                     <td>
+                      <td>
                        @can('update_blog')
-                        <button type="button" class="btn btn-default"
+                        <button type="button" class="btn btn-warning"
                         data-toggle="modal"
                         data-target="#modal-edit-blog"
                         data-blog_id = "{{$blog->id}}"
@@ -191,8 +205,7 @@ $language = session('website_language', config('app.locale'));
                        @endcan
                        
                        @can('delete_blog')
-                        <button class="btn btn-primary confirm-delete" 
-                          style="background-color: #50697f;"
+                        <button class="btn btn-danger confirm-delete" 
                           data-toggle="modal"
                           data-blog_id="{{$blog->id}}"
                           onclick="deleteBlog(this);"
@@ -200,9 +213,15 @@ $language = session('website_language', config('app.locale'));
                           <i class="far fa-trash-alt tm-product-delete-icon"></i>
                         </button>
                        @endcan
-                       
-                     </td>
-                   </tr>
+                       <?php $link = route('client.posts.show',['slug'=>$blog->slug]);?>
+                       <button class="btn btn-info @if($blog->is_verifited == 0 ) d-none @endif"
+                       onclick="show_blog('{{$link}}');"
+                       id="button-view-blog-{{$blog->id}}"
+                       >
+                         <i class="fas fa-eye"></i>
+                       </button>
+                      </td>
+                    </tr>
                   
                @endforeach              
              @endisset

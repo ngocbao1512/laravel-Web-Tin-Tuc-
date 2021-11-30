@@ -87,6 +87,7 @@
                         alert(res.message,"success");
                         if(blogId == 0){
                             // DO SOMETHING TO ADD NEW COLLUMN TO DATATABLE
+                            
                            insert_row_datatable($('#dataTable').DataTable(), res.data.new_row)
   
                         } else
@@ -322,6 +323,10 @@
                         alert(data.message,"success")
                         // add class active 
                         button.toggleClass('active')
+                        // taoj button view blog 
+                        var id_button = '#button-view-blog-'+blogId
+                        $(id_button).toggleClass('d-none');
+                        console.log('iojsos');
                        
                     }else{
                         alert(data.message, "error");

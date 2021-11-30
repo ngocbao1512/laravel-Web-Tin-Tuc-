@@ -102,7 +102,7 @@ $language = session('website_language', config('app.locale'));
                 <div class="col-sm-12 col-md-2 float-right">
                   <div class="dt-buttons btn-group flex-wrap">
                     <button type="button"
-                    class="btn btn-primary" 
+                    class="btn btn-success" 
                     data-toggle="modal"
                     data-target="#modal-create-user"
                     >
@@ -163,7 +163,7 @@ $language = session('website_language', config('app.locale'));
                       </td>
                       <td>
                         @can('update_user')
-                          <button type="button" class="btn btn-primary"
+                          <button type="button" class="btn btn-warning"
                           data-toggle="modal" 
                           data-target="#modal-edit-user"
                           data-userid = "{{$user->id}}"
@@ -173,8 +173,7 @@ $language = session('website_language', config('app.locale'));
                           </button>
                         @endcan
                         @can('delete_user')
-                          <button class="btn btn-primary confirm-delete"  
-                          style="background-color: #50697f;"
+                          <button class="btn btn-danger confirm-delete"  
                           data-toggle="modal" 
                           data-userid="{{$user->id}}"
                           onclick="deleteUser(this);"

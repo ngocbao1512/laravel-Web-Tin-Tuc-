@@ -18,7 +18,7 @@ use App\Http\Controllers\HomeController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::group(['middleware' => 'locale'], function() {
 Route::get('/', function () {
     return view('welcome');
 });
@@ -56,7 +56,7 @@ Route::name('client.')->prefix('client')->group(function () {
 
 });
 
-Route::name('admin.')->prefix('admin')->middleware('locale')->middleware('auth')->group(function () {
+Route::name('admin.')->prefix('admin')->middleware('auth')->group(function () {
 
    
     Route::get('blogs',[AdminBlogController::class,'index'])->name('blogs');
@@ -86,3 +86,4 @@ Route::any('/ckfinder/connector', '\CKSource\CKFinderBridge\Controller\CKFinderC
 
 Route::any('/ckfinder/browser', '\CKSource\CKFinderBridge\Controller\CKFinderController@browserAction')
     ->name('ckfinder_browser');
+});

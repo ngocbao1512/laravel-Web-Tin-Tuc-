@@ -154,11 +154,12 @@ class BlogController extends ClientController
         if(session('email') == null)
         {
             // save email user_name vaof database 
-            $data_customer['email'] = $request->only(['email','user_name']);
+            $data_customer = $request->only(['email','user_name']);
             $new_customer = $this->modelCustomer->create($data_customer);
             session('email',$data_customer['email']);
             session('user_name',$data_customer['user_name']);
             session('customer_id',$new_customer->id); 
+            $data['customer_id'] = $new_customer->id;
         }
 
         // xu ly comment 
@@ -169,10 +170,9 @@ class BlogController extends ClientController
         };
 
         // tao comment 
-        $data['customer_id'] = session('customer_id');
-        $this->modelComment->save($data);
+        $new_comment =  $this->modelComment->create($data);
 
-        $comments = $this->modelComment->where('blog_id',$data['blog_id']);
+        $comments = $this->modelComment->where('blog_id',$data['blog_id'])->get();
 
         return $this->responseSuccess(trans('blog.comment_success'),[
             'comments' => view('client.single-post.comments',[
@@ -183,7 +183,7 @@ class BlogController extends ClientController
 
     public function loadcomment(Request $request)
     {
-        $comments = $this->modelComment->where('blog_id',$request->all());
+        $comments = $this->modelComment->where('blog_id',$request->all())->get();
 
         return $this->responseSuccess(trans('blog.comment_success'),[
             'comments' => view('client.single-post.comments',[

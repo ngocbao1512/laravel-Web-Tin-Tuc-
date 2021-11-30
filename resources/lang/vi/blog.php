@@ -55,6 +55,7 @@ return [
         'create' => 'Bạn Có Muốn Tạo Bài Viết Này Không ?',
         'delete' => 'Bạn Có Muốn  Xóa Bài Viết Này Không ?',
     ],
+    'cover' => 'Ảnh Mô Tả',
     
     
 ];
