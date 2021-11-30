@@ -85,6 +85,7 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
 
     public function update($data)
     {
+        $old_blog = $this->model->find($data['blog_id']);
         $dataCreate = array(
             'title'         => isset($data['title']) ? $data['title'] : '',     
             'content'      => isset($data['content']) ? $data['content'] : '',
@@ -96,6 +97,8 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
         // remove this blog from cache
         $key = "blog-".$this->model->find($data['blog_id'])->pluck('slug');
         Cache::forget($key);
+
+        $dataCreate = $this->removeElementNullFromArray($dataCreate);
 
 
         // TODO SOMETHING TO VALIDATE DATACREATE
@@ -156,5 +159,17 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
             return trans('blog.something_wrong');
         }
         return trans('blog.cant_find_blog');
+    }
+
+    public function removeElementNullFromArray($arr) 
+    {
+        $new_arr = $arr;
+        foreach($new_arr as $key => $element)
+        {
+            if($element == null || $element == 'undefined') {
+                unset($new_arr[$key]);
+            }
+        }
+        return $new_arr;
     }
 }

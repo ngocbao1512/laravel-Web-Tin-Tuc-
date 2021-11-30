@@ -51,8 +51,7 @@
         var content = CKEDITOR.instances["content-" + blogId].getData();
         console.log(typeof content)
         var publish_date =  getValueInput('#publish_date',blogId)
-        var idInputFile = "#input-avatar-"+blogId
-       
+        var idInputFile = "#input-avatar-"+blogId       
        
         if(!checkFormBlog(blogId)) return false;
        
@@ -84,6 +83,9 @@
                 data: formData,
                 success:function(res) {
                     if(res.status == 200 ){
+                        $("input").val("");
+                        $(".imgpreview").attr('src',"https://static.thenounproject.com/png/104062-200.png");
+                        CKEDITOR.instances['content-' + blogId].setData("")
                         alert(res.message,"success");
                         if(blogId == 0){
                             // DO SOMETHING TO ADD NEW COLLUMN TO DATATABLE

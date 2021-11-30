@@ -47,6 +47,7 @@
                                 <img id="preview-avatar-{{$blogId}}"
                                 src="{{showImage('cover',$cover)}}"
                                 alt="" style="max-width: 100%; max-height : 30vh;"
+                                class="imgpreview"
                                 />
 
                                 <div>

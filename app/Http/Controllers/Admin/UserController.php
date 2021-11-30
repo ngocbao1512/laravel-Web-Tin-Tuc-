@@ -113,7 +113,6 @@ class UserController extends AdminController
             return $this->validateRequestUser('update',$data);
         }
 
-        
         try {
             $new_user = $this->userRepository->update($data);
             if($new_user)

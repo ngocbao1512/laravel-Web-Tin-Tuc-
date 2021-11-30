@@ -41,6 +41,12 @@
         return false;
     }
 
+    function clearDataInput(idInput, userId) {
+        
+        var nameid = idGetValue + "-" + userId;
+        $(nameid).val("")
+    }
+
     function getFormData(userId)
     {
         var formData = new FormData();
@@ -98,7 +104,12 @@
                 type: 'POST',
                 data: formData,
                 success:function(res) {
+                    // close form 
                     if(res.status == 200 ){
+                        // clear form  
+                        $("input").val("");
+                        $("input[type='checkbox']").prop('checked', false); 
+                        $(".imgpreview").attr('src',"https://static.thenounproject.com/png/104062-200.png");
                         alert(res.message,"success");
                         if(userId == null){
                             // DO SOMETHING TO ADD NEW COLLUMN TO DATATABLE
@@ -149,13 +160,18 @@
         }
 
         if(!getValueInput("#password",userId)){
-            alert("{{trans('general.fill_your_field.pass_word')}}")
-            return false;
+            if(userId == 0) {
+                alert("{{trans('general.fill_your_field.pass_word')}}")
+                return false;
+            }
+            
         }
 
         if(!getValueInput("#repeat_password",userId)){
-            alert("{{trans('general.fill_your_field.re_pass_word')}}")
-            return false;
+            if(userId == 0) {
+                alert("{{trans('general.fill_your_field.re_pass_word')}}")
+                return false;
+            }
         }
 
         if(getValueInput("#repeat_password",userId) != getValueInput("#password",userId))

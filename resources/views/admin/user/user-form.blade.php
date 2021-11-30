@@ -8,7 +8,7 @@
     $userName = !isset($user) ? '' : $user->user_name;
     $password = !isset($user) ? '' : $user->password;
     $avatar = !isset($user) ? '' : $user->avatar;
-    $user_roles = !isset($user) ? [] : $user->roles->pluck('name')->toArray();
+    $user_roles = !isset($user) ? [] : $user->roles->pluck('id')->toArray();
 ?>
 <div class="modal-header">
     <h4>
@@ -19,7 +19,7 @@
         @endif
     </h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    <span aria-hidden="true">×</span>
+    <span aria-hidden="true" id="close-form">×</span>
     </button>
 </div>
 <div class="modal-body">
@@ -88,7 +88,7 @@
                                                 {{trans('user.pass_word')}}
                                             </b>
                                         </label>
-                                        <input id="password-{{$userId}}" name="password" value="{{$password}}" type="password"  placeholder="{{trans('user.pass_word')}}" class="form-control validate" required/>
+                                        <input id="password-{{$userId}}" name="password" value="" type="password"  placeholder="{{trans('user.pass_word')}}" class="form-control validate" required/>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
                                         <label for="psw-repeat">
@@ -96,7 +96,7 @@
                                                 {{trans('user.re_pass_word')}}
                                             </b>
                                         </label>
-                                        <input id="repeat_password-{{$userId}}" name="password_repeat" value="{{$password}}" type="password"  placeholder="{{trans('user.re_pass_word')}}" class="form-control validate" required/>
+                                        <input id="repeat_password-{{$userId}}" name="password_repeat" value="" type="password"  placeholder="{{trans('user.re_pass_word')}}" class="form-control validate" required/>
                                     </div>
                                 </div>
                             </div>
@@ -108,7 +108,9 @@
                                 onclick="document.getElementById('input-avatar-{{$userId}}').click();">
                                 <img id="preview-avatar-{{$userId}}" 
                                 src="{{showImage('avatar',$avatar)}}" 
-                                alt="" style="max-width: 100%; max-height : 30vh;" />
+                                alt="" style="max-width: 100%; max-height : 30vh;" 
+                                class="imgpreview"
+                                />
                             </div>
                             
                             <div class="custom-file mt-3 mb-3">
@@ -128,8 +130,8 @@
                                 </div>
                                 @isset($roles)
                                     @foreach ($roles as $role)
-                                        <input type="checkbox" class="role_checkbox" name="roles" value="{{$role->name}}" 
-                                            @if (in_array($role->name, $user_roles ))
+                                        <input type="checkbox" class="role_checkbox" name="roles" value="{{$role->id}}" 
+                                            @if (in_array($role->id, $user_roles ))
                                                 checked
                                             @endif                                            
                                                
