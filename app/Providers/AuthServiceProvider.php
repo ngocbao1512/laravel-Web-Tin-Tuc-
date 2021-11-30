@@ -6,6 +6,9 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use App\Models\Blog;
 use App\Models\User;
 use App\Models\Permission;
+use Illuminate\Support\Facades\Cache;
+use App\Models\Role;
+
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\DB;
 
@@ -25,6 +28,9 @@ class AuthServiceProvider extends ServiceProvider
 
     protected function hasPermission(User $user, $permission )
     {
+
+        
+
         $user_roles = $user->roles()->with('permissions')->get();
 
         $permissionIds = $user_roles->pluck('permissions')->flatten()->pluck('id')->toArray();
@@ -55,9 +61,26 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        $permissions = Permission::all();
+        // check neu ko co cache thi them cache 
+        if(!Cache::has('writter')) {
+            $arr_role = [];
+            $roles = Role::all();
+            foreach ($roles as $key => $role) {
+                Cache::put($role->name, $role->permissions->pluck('id','name')->toArray(), 600000); 
+            }
 
-        foreach ($permissions as $permission) {
+        }
+
+        //$permissions = Permission::all();
+        $roles = Role::pluck('name')->toArray();
+        $permissions = [];
+        foreach ($roles as $key => $role) {
+                $permissions[$key] = Cache::pull($role);
+        }
+
+        // 23h05 30/11 
+
+        foreach ($permissions as $key => $permission) {
             Gate::define($permission->name, function (User $user) use ($permission) {
                 return $this->hasPermission($user, $permission);
             });
