@@ -192,7 +192,7 @@ $language = session('website_language', config('app.locale'));
                         @endcan
                       
                      </td>
-                      <td>
+                      <td style="min-width:180px;">
                        @can('update_blog')
                         <button type="button" class="btn btn-warning"
                         data-toggle="modal"

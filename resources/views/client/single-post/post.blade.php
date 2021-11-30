@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')   
-    <a href="{{route('client.posts')}}" id="button-home" style="height : 80px; width : 80px;">Home</a>           
+    <a href="{{route('client.posts')}}" id="button-home" style="height : 80px; width : 80px;">{{trans('blog.home')}}</a>           
         <div class="row" style="display : flex; justify-content: center; text-align : center;">
             <img src="{{showImage('cover',$blog['cover'])}}" alt="" sizes="" srcset="" style="max-height: 300px;">
         </div>

@@ -43,12 +43,13 @@
       <i class="far fa-trash-alt tm-product-delete-icon"></i>
     </button>
     <?php $link = route('client.posts.show',['slug'=>$blog->slug]);?>
-    <button class="btn btn-info d-none"
+    <button class="btn btn-info inline-block d-none"
       onclick="show_blog('{{$link}}');"
      id="button-view-blog-{{$blog->id}}"
      >
       <i class="fas fa-eye"></i>
     </button>
 
+   
   </td>
 </tr>

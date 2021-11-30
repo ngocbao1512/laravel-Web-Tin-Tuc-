@@ -1,7 +1,7 @@
 @extends('client.layouts.master')
 
 @section('title')
-    home-page
+    {{trans('blog.home-page')}}
 @endsection
 
 @section('header')
