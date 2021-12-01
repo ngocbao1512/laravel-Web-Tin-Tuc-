@@ -32,7 +32,7 @@
                 </div>
                 <hr>
                 <div class="d-flex justify-content-between" >
-                    <span>by {{$blog['user']['user_name']}}</span>
+                    <span> @isset($blog['user']['user_name'])by {{$blog['user']['user_name']}} @endisset</span>
                 </div>
             </article>  
         @endforeach

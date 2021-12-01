@@ -36,5 +36,6 @@ return [
         'date_publish' => 'Lên Lịch Đăng Bài Cho Bài Viết ',
     ],
     're_pass_word_wrong' => 'mật khẩu không khớp, thử lại',
+    'author_be_deleted' => 'Tài Khoản Của Tác Giả Đã Bị Xóa',
 
 ];

@@ -12,7 +12,7 @@
                 },
                 success:function(res) {
                     if(res.status == 200 ){
-                        $('#comment').html(res.data.comments) 
+                       
                         console.log('okeeee')
                     } else if(res.status == 400) {
                         $('#comment').html('this blog have not any comment');
@@ -29,7 +29,10 @@
 
     };
 
-    loadComment();
+    setTimeout(function() {
+        loadComment();
+
+    },5000);
     
     console.log('ok');
     function Commentable(blog_id)
@@ -50,6 +53,9 @@
                     'blog_id' : blog_id,
                 },
                 success:function(res) {
+                    $("input").val("");
+                    $("#comment_message").val("");
+                    $('#comment').html(res.data.comments) 
                     if(res.status == 200 ){
                         $('#comment').html(res.data.comments) 
                     } else if(res.status == 400) {

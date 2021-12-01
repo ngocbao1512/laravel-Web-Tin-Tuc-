@@ -68,7 +68,7 @@ $language = session('website_language', config('app.locale'));
 
 @section('content')
 {{-- SECTION CREATE USER --}}
-<div class="modal" id="modal-create-user" aria-modal="true" role="dialog" >
+<div class="modal" id="modal-create-user" aria-modal="false" role="dialog"  aria-hidden="true">
   <div class="modal-dialog" style="min-width: 85vw;">
     <div class="modal-content" style="background-color: rgb(255 255 255 / 93%);" id="modal-create-user-content">
         @include('admin.user.user-form')
@@ -78,7 +78,7 @@ $language = session('website_language', config('app.locale'));
 {{-- END SECTION --}}
 
 {{-- SECTION EDIT USER --}}
-<div class="modal" id="modal-edit-user" aria-modal="true" role="dialog" >
+<div class="modal" id="modal-edit-user" aria-modal="false" role="dialog"  aria-hidden="true">
   <div class="modal-dialog" style="min-width: 85vw;">
     <div class="modal-content" style="background-color: rgb(255 255 255 / 93%);" id="modal-edit-user-content">
      
@@ -151,7 +151,7 @@ $language = session('website_language', config('app.locale'));
             <tbody>
               @isset($users)
                 @foreach ($users as $user)
-                    <tr class="odd" data-id = "{{$user->id}}" id="{{$user->id}}">
+                    <tr class="odd" data-id = "{{$user->id}}" id="{{$user->id}}" style="@if (auth()->id() == $user->id)  display: none ; @endif">
                       <td class="dtr-control sorting_1" tabindex="0"></td>
                       <td>{{$user->first_name." ".$user->middle_name." ".$user->last_name}}</td>
                       <td>{{$user->email}}</td>

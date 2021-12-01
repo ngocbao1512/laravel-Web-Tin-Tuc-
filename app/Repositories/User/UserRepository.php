@@ -19,6 +19,11 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return \App\Models\User::class;
     }
 
+    public function getAll()
+    {
+        return $this->model->with('roles')->get();
+    }
+
     public function create($data)
     {    
         $dataCreate = array(
@@ -31,7 +36,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         );
 
         //$dataRole = array();//$data['roles']
-        $Roles = isset($data['roles']) ? explode(",",$data['roles']) : 1;
+        $roles = isset($data['roles']) ? explode(",",$data['roles']) : 1;
 
         // TODO SOMETHING TO VALIDATE DATACREATE
         if($this->IsNullElementInArray($dataCreate) != null)
@@ -61,7 +66,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         {
             $dataRole['user_id'] = $newUser->id;
 
-            foreach ($Roles as $role) {
+            foreach ($roles as $role) {
                 // chỉ cập nhật bảng role_user
                 //$newUser->roles->save($role);
                 $dataRole['role_id'] = (int)$role;

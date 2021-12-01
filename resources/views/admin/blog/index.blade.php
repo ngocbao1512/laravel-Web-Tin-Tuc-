@@ -73,7 +73,7 @@ $language = session('website_language', config('app.locale'));
 {{-- END SECTION --}}
  
 {{-- SECTION EDIT USER --}}
-<div class="modal" id="modal-edit-blog" aria-modal="true" role="dialog" >
+<div class="modal modal-bootstrap" id="modal-edit-blog" role="dialog" tabindex="-1">
  <div class="modal-dialog" style="min-width: 85vw;">
    <div class="modal-content" style="background-color: rgb(255 255 255 / 93%);" id="modal-edit-blog-content">
    
@@ -145,6 +145,7 @@ $language = session('website_language', config('app.locale'));
                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
                  {{trans('blog.publish_date')}}
                </th>
+              
                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">
                  {{trans('blog.status')}}
                </th>
@@ -163,12 +164,7 @@ $language = session('website_language', config('app.locale'));
                       <td>
                        <img src="{{showImage('cover',$blog->cover)}}" alt="" sizes="" srcset="" style="max-height: 100px;">
                       </td>
-                      <td>@if (!isset($blog->user->user_name))
-                          {{trans('general.author_be_deleted')}}  
-                          @else 
-                          {{$blog->user->user_name}}
-                          @endif
-                        </td>
+                      <td>{{$blog->author_name}}</td>
                       <td>{{substr($blog->publish_date,0,10)}} </td>
                      <!-- button verify publish !-->  
                       <td>

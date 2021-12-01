@@ -24,8 +24,13 @@ class BlogController extends AdminController
 
     public function index()
     {
-        $all_blog = $this->modelBlog->get();
-
+        $all_blog = $this->modelBlog->with('user')
+            ->orderBy('created_at','DESC')
+            ->get()->map(function($blog){
+                $blog->author_name = !is_null($blog->user) ? $blog->user->getFullName() : '';
+                return $blog;
+            });
+        //dd($all_blog->first()->user->getFullName());
         return view('admin.blog.index',[
             'blogs' => $all_blog,
         ]);

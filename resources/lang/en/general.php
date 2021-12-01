@@ -37,5 +37,6 @@ return [
         
     ],
     're_pass_word_wrong' => 'password incorect, try again',
+    'author_be_deleted' => 'Author Has Been Delete',
 
 ];

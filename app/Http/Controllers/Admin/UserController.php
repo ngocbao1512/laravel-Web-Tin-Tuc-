@@ -6,11 +6,12 @@ use App\Repositories\User\UserRepository;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Cache;
 
 class UserController extends AdminController
 {
     protected $userRepository;
-    protected $roleModel;
+    protected $modelRole;
 
     public function __construct(Role $role)
     {
@@ -21,9 +22,12 @@ class UserController extends AdminController
 
     public function index()
     {
+        $users = $this->userRepository->getAll();
+        $roles = $this->modelRole->all();
+
         return view('admin.user.index',[
-            'users' => $this->userRepository->getAll(),
-            'roles' => $this->modelRole->all(),
+            'users' => $users,
+            'roles' => $roles,
         ]);   
     }
 

@@ -105,8 +105,14 @@
                 data: formData,
                 success:function(res) {
                     // close form 
+                   /* $('#modal-create-user').hide();
+                    $('#modal-edit-user').hide();
+                    $('.modal-backdrop').remove(); */
+                    $('#close-form').click();
                     if(res.status == 200 ){
                         // clear form  
+                        $('#modal-edit-user').find('.close').first().trigger('click');
+                        $('#modal-create-user').find('.close').first().trigger('click');
                         $("input").val("");
                         $("input[type='checkbox']").prop('checked', false); 
                         $(".imgpreview").attr('src',"https://static.thenounproject.com/png/104062-200.png");

@@ -141,12 +141,15 @@
             table = table.data('datatable');
 
         table.row.add($(row_html)).draw();
+        //table.Rows.InsertAt(row_html, 0);
 
 
         var currentPage = table.page();
 
         //refresh the page
         table.page(currentPage).draw(false);
+        table.order([0, 'asc']).draw();
+
     }
 
     function update_row_datatable(table, row_element, new_html) {

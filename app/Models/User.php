@@ -61,4 +61,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class,'role_users','user_id','role_id');
     }
+
+    public function getFullName()
+    {
+        return $this->first_name." ".$this->middle_name." ".$this->last_name;
+    }
 }

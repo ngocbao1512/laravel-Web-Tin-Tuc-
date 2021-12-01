@@ -2,7 +2,7 @@
    $blogId = !isset($blog) ? 0 : $blog->id;
    $title = !isset($blog) ? '' : $blog->title;
    $content = !isset($blog) ? '' : $blog->content;
-   $author = !isset($blog) ? 'auth has been delete' : $blog->user->user_name;
+   $author = !isset($blog) ? 'auth has been delete' : (!isset($blog->user->user_name) ? 'auth has been delete' : $blog->user->user_name);
    $status = ($blog->is_verifited == 0) ? 'wait verify' : 'verifited';
    $publishDate = !isset($blog) ? '' : $blog->publish_date;
    $cover = !isset($blog) ? '' : $blog->cover;

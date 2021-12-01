@@ -15,7 +15,9 @@
                 <div class="col-6">                    
                     <div class="mb-12">
                         <h2 class="pt-2 tm-color-primary d-flex justify-content-center">{{$blog['title']}}</h2>
-                        <p class="tm-mb-40 d-flex justify-content-center">{{changeTime(substr($blog['created_at'],0,-17))}} posted by {{$blog['user']['user_name']}}</p>
+                        <p class="tm-mb-40 d-flex justify-content-center">{{changeTime(substr($blog['created_at'],0,-17))}} posted by @isset($blog['user']['user_name'])
+                            {{$blog['user']['user_name']}}
+                        @endisset </p>
                         <?php echo $blog['content'] ?>
                         <span class="d-block text-right tm-color-primary">Creative . Design . Business</span>
                     </div>

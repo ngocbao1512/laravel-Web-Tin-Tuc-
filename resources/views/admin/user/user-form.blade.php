@@ -119,7 +119,6 @@
                                 />
                             </div>
                             <hr>
-                            {{gettype($user_roles)}}
                             <div class="form-group">
                                 <div class="col-xs-12 col-sm-6">
                                     <label for="role">
@@ -130,13 +129,13 @@
                                 </div>
                                 @isset($roles)
                                     @foreach ($roles as $role)
-                                        <input type="checkbox" class="role_checkbox" name="roles" value="{{$role->id}}" 
-                                            @if (in_array($role->id, $user_roles ))
+                                        <input type="checkbox" class="role_checkbox" name="roles" value="{{$role['id']}}" 
+                                            @if (in_array($role['id'], $user_roles ))
                                                 checked
                                             @endif                                            
                                                
                                         > 
-                                        {{ "  ".$role->name}}
+                                        {{ "  ".$role['name']}}
                                         <br>
                                     @endforeach
                                 @endisset

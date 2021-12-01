@@ -6,8 +6,11 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use App\Models\Blog;
 use App\Models\User;
 use App\Models\Permission;
+use App\Models\Role;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -23,13 +26,18 @@ class AuthServiceProvider extends ServiceProvider
     ];
 
 
-    protected function hasPermission(User $user, $permission )
+    protected function hasPermission($user, $permission )
     {
-        
-        $user_roles = $user->roles()->with('permissions')->get();
+        $cache_key = "user-permission-".$user->id;
+        if(Cache::get($cache_key) == null) {
+            $user_roles = $user->roles()->with('permissions')->get();
+            $permissionNames = $user_roles->pluck('permissions')->flatten()->pluck('name')->toArray();
+            Cache::put($cache_key, $permissionNames, 60000);
+        }
 
-        $permissionIds = $user_roles->pluck('permissions')->flatten()->pluck('id')->toArray();
-        return in_array($permission->id, $permissionIds);
+        $user_permissions = Cache::get($cache_key);
+        
+        return in_array($permission, $user_permissions);
     }
 
     /**
@@ -41,10 +49,15 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        $permissions = Permission::all();
+        if(Cache::get('permissions') == null) {
+            $permissions = Permission::pluck('name')->toArray();
+                Cache::put('permissions',$permissions,60000);
+        }
+
+        $permissions = Cache::get('permissions');
 
         foreach ($permissions as $permission) {
-            Gate::define($permission->name, function (User $user) use ($permission) {
+            Gate::define($permission, function (User $user) use ($permission)  {
                 return $this->hasPermission($user, $permission);
             });
         }

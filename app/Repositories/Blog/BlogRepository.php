@@ -51,10 +51,11 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
             $dataCreate['cover'] = 'image-default';
         } 
 
-        $newBlog = $this->model->create($dataCreate);
+        $new_blog = $this->model->create($dataCreate);
 
-        if($newBlog)
-            return $newBlog;
+        if($new_blog)
+            Cache::put("blog-".$new_blog->slug, $new_blog->toArray(), 600000);
+            return $new_blog;
         return false;
     }
 

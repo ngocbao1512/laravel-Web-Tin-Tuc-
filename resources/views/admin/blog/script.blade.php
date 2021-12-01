@@ -83,6 +83,8 @@
                 data: formData,
                 success:function(res) {
                     if(res.status == 200 ){
+                        $('#modal-edit-blog').find('.close').first().trigger('click');
+                        $('#modal-create-blog').find('.close').first().trigger('click');
                         $("input").val("");
                         $(".imgpreview").attr('src',"https://static.thenounproject.com/png/104062-200.png");
                         CKEDITOR.instances['content-' + blogId].setData("")
