@@ -7,14 +7,14 @@ use App\Repositories\Blog\BlogRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Models\Blog;
-
+use App\Events\Blog\BlogCreate;
 class BlogController extends AdminController
 {
     protected $modelBlog;
     protected $modelUser;
     protected $blogRepository;
-    
-    public function __construct(   
+
+    public function __construct(
         Blog $blog
     )
     {
@@ -30,41 +30,41 @@ class BlogController extends AdminController
                 $blog->author_name = !is_null($blog->user) ? $blog->user->getFullName() : '';
                 return $blog;
             });
-        //dd($all_blog->first()->user->getFullName());
         return view('admin.blog.index',[
             'blogs' => $all_blog,
         ]);
     }
-    
+
     public function store(Request $request)
     {
         if(Gate::denies('create_blog')) {
             return $this->responseError(403,"you do not have permission to create blog");
-        } 
+        }
         $data = $request->all();
         $data['author_id'] = auth()->id();
         // validate
         $check = $this->validateRequestBlog('create',$data);
         if( $check !== true)
         {
-            return $check;  
+            return $check;
         }
 
-        try {
+        //try {
             $new_blog = $this->blogRepository->create($data);
             if($new_blog)
             {
+                event(new BlogCreate($new_blog));
                 return $this->responseSuccess(trans('blog.add_success'),[
                     'new_row' => view('admin.blog.blog-collumn',[
                         'blog' => $new_blog,
-                    ])->render(),  
+                    ])->render(),
                 ]);
             }
-            return false;
+        /*    return false;
         } catch (\Exception $e) {
             \Log::error($e);
             return $this->responseError(400,trans('blog.fail.add'));
-        }
+        }*/
 
     }
 
@@ -72,14 +72,14 @@ class BlogController extends AdminController
     {
         if(Gate::denies('update_blog')) {
             return $this->responseError(403,"you do not have permission update this blog");
-        } 
-        
+        }
+
         $data = $request->all();
         if(!isset($data['blog_id'])){
             return $this->responseError(500,trans('blog.invalid_data.blog'));
         }
 
-        try {       
+        try {
             $blog = $this->blogRepository->find($data['blog_id']);
             if(is_null($blog)){
                 return $this->responseError(404,trans('blog.no_data_blog'));
@@ -88,17 +88,17 @@ class BlogController extends AdminController
             return $this->responseSuccess(trans('blog.find_success'),[
                 'blog_form' => view('admin.blog.blog-form',[
                     'blog' => $blog,
-                ])->render(),  
+                ])->render(),
             ]);
-            
+
         } catch (\Exception $e) {
             \Log::error($e);
             return $this->responseError($e);
         }
-        
+
     }
 
-    
+
     public function edit($id)
     {
         if(Gate::denies('update_blog')) {
@@ -112,15 +112,15 @@ class BlogController extends AdminController
         ]);
     }
 
-    
+
     public function update(Request $request)
     {
         if(Gate::denies('update_blog')) {
             return $this->responseError(403,"you do not have permission update this blog");
-        } 
+        }
         $data = $request->all();
 
-        // validate data 
+        // validate data
         if($this->validateRequestBlog('update',$data) !== true)
         {
             return $this->validateRequestBlog('update',$data);
@@ -136,22 +136,22 @@ class BlogController extends AdminController
             return $this->responseSuccess(trans('blog.update_success'),[
                 'new_row' => view('admin.blog.blog-collumn',[
                     'blog' => $new_blog,
-                ])->render(),  
+                ])->render(),
             ]);
         } catch (\Exception $e) {
             \Log::error($e);
             return $this->responseError($e);
         }
-        
+
     }
 
-    
+
     public function destroy(Request $request)
     {
         if(Gate::denies('delete_blog')) {
             return $this->responseError(403,"you do not have permission delete this blog");
-        } 
-        
+        }
+
         $data = $request->all();
         if(!$data['blog_id'])
         return $this->responError(404,trans('blog.some_thing_wrong_when.delete'));
@@ -173,12 +173,12 @@ class BlogController extends AdminController
     {
         if(Gate::denies('verify_blog')) {
             return $this->responseError(403,"you do not have permission verify this blog");
-        } 
+        }
 
         $data = $request->all();
 
 
-        // validate data 
+        // validate data
         if(!isset($data['blog_id']) || !isset($data['is_verifited']))
         {
            return $this->responseError(404,trans('blog.something_wrong'));
@@ -190,7 +190,7 @@ class BlogController extends AdminController
                 return $this->responseSuccess(trans('blog.verify.success'),$this->modelBlog->find($data['blog_id']));
             }
             return false;
-            
+
         } catch (\Exception $e) {
             \Log::error($e);
             return $this->responseError(400,$e);
