@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Events\Blog\RecordBlog;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
@@ -43,16 +44,6 @@ class BlogController extends ClientController
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -70,10 +61,13 @@ class BlogController extends ClientController
      * @return \Illuminate\Http\Response
      */
     public function show($slug)
-    { 
-        // tìm blog có slug trong cache và show ra 
+    {
+        // tìm blog có slug trong cache và show ra
+        $blog = $this->blogRepository->get_blog_single($slug);
+        event(new RecordBlog($blog));
+
         return view('client.single-post.post',[
-            'blog' => $this->blogRepository->get_blog_single($slug),
+            'blog' => $blog,
         ]);
     }
 
@@ -114,7 +108,7 @@ class BlogController extends ClientController
     public function find(Request $request)
     {
        $query = $request->data;
-       
+
        $posts = $this->modelBlog
        ->where('slug', 'LIKE', "%{$query}%")
        ->get();
@@ -123,9 +117,9 @@ class BlogController extends ClientController
            return $this->responseSuccess(trans('blog.find_success'),[
                'blogs' => view('client.home-client.posts',[
                    'blogs' => $posts,
-               ])->render(),  
+               ])->render(),
            ]);
-       } 
+       }
 
        try {
             $posts = $this->modelBlog
@@ -136,40 +130,40 @@ class BlogController extends ClientController
                 return $this->responseSuccess(trans('blog.find_success'),[
                     'blogs' => view('client.home-client.posts',[
                         'blogs' => $posts,
-                    ])->render(),  
+                    ])->render(),
                 ]);
-            } 
+            }
             return $this->responseError(404,trans('blog.find_null'));
- 
+
        } catch (\Throwable $th) {
            return $this->responseError(500, trans('blog.find_error'));
-       } 
+       }
     }
 
-    public function comment (Request $request) 
+    public function comment (Request $request)
     {
         $data = $request->all();
         $this->validate_comment($data);
-        // check email constain trong session ? create customer -> luu vao session : continue 
+        // check email constain trong session ? create customer -> luu vao session : continue
         if(session('email') == null)
         {
-            // save email user_name vaof database 
+            // save email user_name vaof database
             $data_customer = $request->only(['email','user_name']);
             $new_customer = $this->modelCustomer->create($data_customer);
             session('email',$data_customer['email']);
             session('user_name',$data_customer['user_name']);
-            session('customer_id',$new_customer->id); 
+            session('customer_id',$new_customer->id);
             $data['customer_id'] = $new_customer->id;
         }
 
-        // xu ly comment 
-        // check blog_id 
+        // xu ly comment
+        // check blog_id
         if(is_null($this->modelBlog->find($data['blog_id']) ) )
         {
             return responseError(500,'some thing went wrong. please try again later!!!');
         };
 
-        // tao comment 
+        // tao comment
         $new_comment =  $this->modelComment->create($data);
 
         $comments = $this->modelComment->where('blog_id',$data['blog_id'])->get();

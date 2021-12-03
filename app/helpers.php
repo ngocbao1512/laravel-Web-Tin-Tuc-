@@ -18,13 +18,47 @@ if(!function_exists('showImage')) {
     }
 }
 
-// input 2021-11-25 
+// input 2021-11-25
 // output 25/11/2021
 if(!function_exists('changeTime')) {
     function changeTime($time_string)
     {
-        // dao chuoi -> change - to /  
+        // dao chuoi -> change - to /
         $result = substr($time_string,0,-8)."/".substr($time_string,5,2)."/".substr($time_string,0,4);
         return $result;
+    }
+}
+
+if(!function_exists('get_client_ip')) {
+    function get_client_ip()
+    {
+        $ipaddress = '';
+        if (getenv('HTTP_CLIENT_IP')) {
+            $ipaddress = getenv('HTTP_CLIENT_IP');
+        } else {
+            if (getenv('HTTP_X_FORWARDED_FOR')) {
+                $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+            } else {
+                if (getenv('HTTP_X_FORWARDED')) {
+                    $ipaddress = getenv('HTTP_X_FORWARDED');
+                } else {
+                    if (getenv('HTTP_FORWARDED_FOR')) {
+                        $ipaddress = getenv('HTTP_FORWARDED_FOR');
+                    } else {
+                        if (getenv('HTTP_FORWARDED')) {
+                            $ipaddress = getenv('HTTP_FORWARDED');
+                        } else {
+                            if (getenv('REMOTE_ADDR')) {
+                                $ipaddress = getenv('REMOTE_ADDR');
+                            } else {
+                                $ipaddress = 'UNKNOWN';
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return $ipaddress;
     }
 }
