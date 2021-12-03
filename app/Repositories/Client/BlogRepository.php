@@ -2,13 +2,16 @@
 
 namespace App\Repositories\Client;
 
+use App\Events\Blog\RecordBlog;
 use App\Models\Blog;
 use Illuminate\Support\Facades\Cache;
+use App\Events\Story\StoryCreate;
+use Illuminate\Support\Facades\Auth;
 class BlogRepository
 {
     public function __construct()
     {
-        
+
     }
 
     public function put_all()
@@ -23,7 +26,7 @@ class BlogRepository
                     $cacheKey = 'blog-'.$blog->slug;
                     Cache::put($cacheKey, $blog->toArray(), 600000);
                 }
-                
+
             }
 
         }
@@ -38,7 +41,8 @@ class BlogRepository
     public function get_blog_single($slug)
     {
         $this->put_all();
-        return Cache::pull("blog-$slug");
+        $blog = Cache::get("blog-$slug");
+        return $blog;
     }
 
     public function remove_all()
@@ -59,5 +63,7 @@ class BlogRepository
             }
         }
         return $arr_blog;
-    } // n(n+1) : page 1 : 0 - 8 , page 2 : 9 - 16 , page 3 : 17 - 25 
+    }
+
+
 }
