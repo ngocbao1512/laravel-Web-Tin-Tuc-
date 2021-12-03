@@ -1,16 +1,11 @@
 <?php
 
 namespace App\Listeners\Blog;
-
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use App\Events\Blog\RecordBlog;
+use Illuminate\Support\Facades\Log;
 
-class BlogCountView implements ShouldQueue
+class BlogCountView
 {
-
-    use InteractsWithQueue;
-
 
     /**
      * Create the event listener.
@@ -22,15 +17,10 @@ class BlogCountView implements ShouldQueue
     }
 
     /**
-     * Handle the event.
-     *
-     * @param  object  $event
-     * @return void
+     * @param RecordBlog $event
      */
-    public function handle($event)
+    public function handle(RecordBlog $event)
     {
         $blog = $event->blog;
-
-        logger($blog);
     }
 }

@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Client;
 
 use App\Events\Blog\RecordBlog;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 use App\Repositories\Client\BlogRepository;
 use App\Models\Blog;
 use App\Models\Customer;
 use App\Models\Comment;
+use Illuminate\Support\Facades\Log;
 
 class BlogController extends ClientController
 {
@@ -29,6 +28,7 @@ class BlogController extends ClientController
         $this->modelCustomer = $customer;
         $this->modelComment = $comment;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -44,17 +44,6 @@ class BlogController extends ClientController
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -62,7 +51,7 @@ class BlogController extends ClientController
      */
     public function show($slug)
     {
-        // tìm blog có slug trong cache và show ra
+        // tìm blog có key = slug trong cache và show ra
         $blog = $this->blogRepository->get_blog_single($slug);
         event(new RecordBlog($blog));
 

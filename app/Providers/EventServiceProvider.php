@@ -8,6 +8,7 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use Illuminate\Support\Facades\Event;
 use App\Events\Blog\RecordBlog;
 use App\Listeners\Blog\BlogCountView;
+use Illuminate\Support\Facades\Log;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -33,6 +34,8 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
     }
+
+
 }
 
 
