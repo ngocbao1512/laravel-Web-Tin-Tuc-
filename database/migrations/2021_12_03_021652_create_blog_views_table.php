@@ -18,7 +18,7 @@ class CreateBlogViewsTable extends Migration
             $table->string('ip_address');
             $table->bigInteger('blog_id');
             $table->bigInTeger('user_id');
-            $table->bigInteger('view_count');
+            $table->string('time_view');
             $table->timestamps();
         });
     }
