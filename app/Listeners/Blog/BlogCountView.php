@@ -26,6 +26,7 @@ class BlogCountView
     public function handle(RecordBlog $event)
     {
         $blog = $event->blog;
+
         $data_viewer['blog_id'] = $blog['id'];
         $data_viewer['user_id'] = Auth::id() ?? -1;
         $data_viewer['ip_address'] = get_client_ip();
