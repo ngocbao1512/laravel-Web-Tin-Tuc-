@@ -41,6 +41,7 @@ class BlogCountView
             $this->redis->Enqueue('data_viewer', $str_data_viewer);
             Session::flash(get_client_ip(), 'true');
         }
+
     }
 }
 
